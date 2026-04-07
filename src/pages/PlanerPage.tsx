@@ -1,0 +1,567 @@
+import { useState, useMemo } from 'react';
+import {
+  Plus, Trash2, ChevronLeft, ChevronRight, Check,
+  Frown, Meh, Smile, SmilePlus, Star, BookText, RotateCcw,
+} from 'lucide-react';
+import Layout from '../components/Layout';
+import { useStore } from '../store';
+import { generateId } from '../utils';
+import type { Task, TaskPriority, TaskRecurring, DiaryEntry } from '../types';
+
+// ── Helpers ──────────────────────────────────────────────────────────────────
+
+function formatDate(dateStr: string): string {
+  const d = new Date(dateStr + 'T00:00:00');
+  const weekdays = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
+  const months = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
+  return `${weekdays[d.getDay()]}, ${d.getDate()}. ${months[d.getMonth()]}`;
+}
+
+function offsetDate(base: string, days: number): string {
+  const d = new Date(base + 'T00:00:00');
+  d.setDate(d.getDate() + days);
+  return d.toISOString().slice(0, 10);
+}
+
+// ── Mood ─────────────────────────────────────────────────────────────────────
+
+const MOODS = [
+  { value: 1 as const, label: 'Schlecht',  Icon: Frown,    hex: '#E24B4A' },
+  { value: 2 as const, label: 'Okay',      Icon: Meh,      hex: '#EF9F27' },
+  { value: 3 as const, label: 'Gut',       Icon: Smile,    hex: '#1D9E75' },
+  { value: 4 as const, label: 'Sehr gut',  Icon: SmilePlus, hex: '#378ADD' },
+  { value: 5 as const, label: 'Perfekt',   Icon: Star,     hex: '#7F77DD' },
+];
+
+const MOOD_CALENDAR_COLOR = ['', 'bg-red-400', 'bg-amber-400', 'bg-green-400', 'bg-blue-400', 'bg-violet-400'];
+
+// ── Priorität ────────────────────────────────────────────────────────────────
+
+const PRIORITY_LABELS: Record<TaskPriority, string> = { hoch: 'Hoch', mittel: 'Mittel', niedrig: 'Niedrig' };
+const PRIORITY_HEX: Record<TaskPriority, string> = {
+  hoch: '#E24B4A',
+  mittel: '#EF9F27',
+  niedrig: '#1D9E75',
+};
+
+// ── Tasks-Tab ────────────────────────────────────────────────────────────────
+
+function TasksTab() {
+  const today = new Date().toISOString().slice(0, 10);
+  const [selectedDate, setSelectedDate] = useState(today);
+  const tasks = useStore((s) => s.tasks);
+  const addTask = useStore((s) => s.addTask);
+  const removeTask = useStore((s) => s.removeTask);
+  const completeTask = useStore((s) => s.completeTask);
+
+  const [title, setTitle] = useState('');
+  const [priority, setPriority] = useState<TaskPriority>('mittel');
+  const [recurring, setRecurring] = useState<TaskRecurring>(null);
+  const [showForm, setShowForm] = useState(false);
+
+  const dayTasks = useMemo(() => {
+    return tasks.filter((t) => {
+      if (t.recurring === 'täglich') return true;
+      if (t.recurring === 'wöchentlich') {
+        const sel = new Date(selectedDate + 'T00:00:00');
+        const dayOfWeek = sel.getDay();
+        const startOfWeek = new Date(sel);
+        startOfWeek.setDate(startOfWeek.getDate() - dayOfWeek);
+        const startStr = startOfWeek.toISOString().slice(0, 10);
+        const alreadyDoneThisWeek = t.completedDates.some((d) => d >= startStr && d <= selectedDate);
+        return !alreadyDoneThisWeek;
+      }
+      return t.date === selectedDate;
+    });
+  }, [tasks, selectedDate]);
+
+  const isTaskDone = (t: Task) => {
+    if (t.recurring) return t.completedDates.includes(selectedDate);
+    return t.completed;
+  };
+
+  const PRIORITY_ORDER = { hoch: 0, mittel: 1, niedrig: 2 };
+  const sorted = [...dayTasks].sort((a, b) => {
+    const aDone = isTaskDone(a) ? 1 : 0;
+    const bDone = isTaskDone(b) ? 1 : 0;
+    if (aDone !== bDone) return aDone - bDone;
+    return PRIORITY_ORDER[a.priority] - PRIORITY_ORDER[b.priority];
+  });
+
+  const handleAdd = () => {
+    if (!title.trim()) return;
+    const task: Task = {
+      id: generateId(),
+      title: title.trim(),
+      priority,
+      date: selectedDate,
+      completed: false,
+      recurring,
+      completedDates: [],
+    };
+    addTask(task);
+    setTitle('');
+    setShowForm(false);
+  };
+
+  const doneCount = dayTasks.filter(isTaskDone).length;
+  const totalCount = dayTasks.length;
+
+  return (
+    <div>
+      {/* Datums-Navigation */}
+      <div className="flex items-center justify-between mb-4">
+        <button
+          onClick={() => setSelectedDate((d) => offsetDate(d, -1))}
+          className="p-1.5 rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors cursor-pointer"
+        >
+          <ChevronLeft size={18} />
+        </button>
+        <div className="text-center">
+          <p className="text-sm font-semibold text-gray-800 dark:text-gray-200">{formatDate(selectedDate)}</p>
+          {selectedDate !== today && (
+            <button
+              onClick={() => setSelectedDate(today)}
+              className="text-xs flex items-center gap-0.5 mx-auto mt-0.5 cursor-pointer" style={{ color: '#7F77DD' }}
+            >
+              <RotateCcw size={11} /> Heute
+            </button>
+          )}
+        </div>
+        <button
+          onClick={() => setSelectedDate((d) => offsetDate(d, 1))}
+          className="p-1.5 rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors cursor-pointer"
+        >
+          <ChevronRight size={18} />
+        </button>
+      </div>
+
+      {/* Fortschritt */}
+      {totalCount > 0 && (
+        <div className="mb-3">
+          <div className="flex justify-between text-xs text-gray-400 mb-1">
+            <span>{doneCount} von {totalCount} erledigt</span>
+            {doneCount === totalCount && <span style={{ color: '#1D9E75' }}>Alle fertig!</span>}
+          </div>
+          <div className="w-full h-1.5 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+            <div
+              className="h-full rounded-full transition-all"
+              style={{ width: `${totalCount > 0 ? (doneCount / totalCount) * 100 : 0}%`, backgroundColor: '#7F77DD' }}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Task-Liste */}
+      <div className="space-y-2 mb-4">
+        {sorted.length === 0 && (
+          <p className="text-sm text-gray-400 text-center py-6">Keine Aufgaben für diesen Tag</p>
+        )}
+        {sorted.map((task) => {
+          const done = isTaskDone(task);
+          return (
+            <div
+              key={task.id}
+              className="flex items-center gap-3 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl px-4 py-3"
+            >
+              <button
+                onClick={() => completeTask(task.id, selectedDate)}
+                className="w-5 h-5 rounded-full border-2 shrink-0 flex items-center justify-center transition-colors cursor-pointer"
+                style={done
+                  ? { borderColor: '#1D9E75', backgroundColor: '#1D9E75' }
+                  : { borderColor: '#d1d5db' }
+                }
+              >
+                {done && <Check size={11} className="text-white" strokeWidth={3} />}
+              </button>
+              <div className="flex-1 min-w-0">
+                <p className={`text-sm truncate transition-colors ${done ? 'text-gray-400 line-through' : 'text-gray-700 dark:text-gray-200'}`}>
+                  {task.title}
+                </p>
+                {task.recurring && (
+                  <p className="text-xs text-gray-400 mt-0.5">
+                    {task.recurring === 'täglich' ? 'Täglich wiederkehrend' : 'Wöchentlich wiederkehrend'}
+                  </p>
+                )}
+              </div>
+              <span
+                className="text-[10px] font-medium px-1.5 py-0.5 rounded-full shrink-0"
+                style={{ color: PRIORITY_HEX[task.priority], background: `${PRIORITY_HEX[task.priority]}18` }}
+              >
+                {PRIORITY_LABELS[task.priority]}
+              </span>
+              {!task.recurring && (
+                <button
+                  onClick={() => {
+                    if (window.confirm(`"${task.title}" löschen?`)) removeTask(task.id);
+                  }}
+                  className="text-gray-300 dark:text-gray-600 hover:text-red-400 transition-colors cursor-pointer shrink-0"
+                >
+                  <Trash2 size={14} />
+                </button>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Neue Aufgabe */}
+      {showForm ? (
+        <div className="bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 rounded-xl p-4 space-y-3">
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            onKeyDown={(e) => { if (e.key === 'Enter') handleAdd(); if (e.key === 'Escape') setShowForm(false); }}
+            placeholder="Aufgabe eingeben..."
+            autoFocus
+            className="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#7F77DD]/30"
+          />
+          <div className="flex gap-2 flex-wrap">
+            {(['hoch', 'mittel', 'niedrig'] as TaskPriority[]).map((p) => (
+              <button
+                key={p}
+                onClick={() => setPriority(p)}
+                className="text-xs px-2.5 py-1 rounded-lg border font-medium transition-colors cursor-pointer"
+                style={priority === p
+                  ? { color: PRIORITY_HEX[p], background: `${PRIORITY_HEX[p]}18`, borderColor: 'transparent' }
+                  : undefined
+                }
+              >
+                {PRIORITY_LABELS[p]}
+              </button>
+            ))}
+            <div className="w-px bg-gray-200 dark:bg-gray-700 mx-1" />
+            {([null, 'täglich', 'wöchentlich'] as TaskRecurring[]).map((r) => (
+              <button
+                key={String(r)}
+                onClick={() => setRecurring(r)}
+                className="text-xs px-2.5 py-1 rounded-lg border transition-colors cursor-pointer"
+                style={recurring === r
+                  ? { borderColor: '#7F77DD', background: 'rgba(127,119,221,0.1)', color: '#7F77DD' }
+                  : undefined
+                }
+              >
+                {r === null ? 'Einmalig' : r === 'täglich' ? 'Täglich' : 'Wöchentlich'}
+              </button>
+            ))}
+          </div>
+          <div className="flex gap-2">
+            <button
+              onClick={handleAdd}
+              disabled={!title.trim()}
+              className="disabled:bg-gray-200 dark:disabled:bg-gray-700 disabled:text-gray-400 text-white text-sm font-medium px-4 py-1.5 rounded-lg transition-colors cursor-pointer hover:opacity-90"
+              style={title.trim() ? { backgroundColor: '#7F77DD' } : undefined}
+            >
+              Hinzufügen
+            </button>
+            <button
+              onClick={() => { setShowForm(false); setTitle(''); }}
+              className="text-sm text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 px-3 py-1.5 cursor-pointer"
+            >
+              Abbrechen
+            </button>
+          </div>
+        </div>
+      ) : (
+        <button
+          onClick={() => setShowForm(true)}
+          className="flex items-center gap-2 text-sm font-medium cursor-pointer"
+          style={{ color: '#7F77DD' }}
+        >
+          <Plus size={16} /> Aufgabe hinzufügen
+        </button>
+      )}
+    </div>
+  );
+}
+
+// ── Tagebuch-Tab ─────────────────────────────────────────────────────────────
+
+function DiaryTab() {
+  const today = new Date().toISOString().slice(0, 10);
+  const [selectedDate, setSelectedDate] = useState(today);
+  const diaryEntries = useStore((s) => s.diaryEntries);
+  const saveDiary = useStore((s) => s.saveDiary);
+  const removeDiary = useStore((s) => s.removeDiary);
+
+  const existing = useMemo(
+    () => diaryEntries.find((e) => e.date === selectedDate) ?? null,
+    [diaryEntries, selectedDate]
+  );
+
+  const [mood, setMood] = useState<1 | 2 | 3 | 4 | 5>(existing?.mood ?? 3);
+  const [text, setText] = useState(existing?.text ?? '');
+  const [saved, setSaved] = useState(false);
+  const [showCalendar, setShowCalendar] = useState(false);
+
+  // Sync state wenn Datum wechselt
+  const [prevDate, setPrevDate] = useState(selectedDate);
+  if (selectedDate !== prevDate) {
+    setPrevDate(selectedDate);
+    setMood(existing?.mood ?? 3);
+    setText(existing?.text ?? '');
+    setSaved(false);
+  }
+
+  const handleSave = () => {
+    if (!text.trim() && !mood) return;
+    const now = Date.now();
+    const entry: DiaryEntry = {
+      id: existing?.id ?? generateId(),
+      date: selectedDate,
+      mood,
+      text: text.trim(),
+      createdAt: existing?.createdAt ?? now,
+      updatedAt: now,
+    };
+    saveDiary(entry);
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
+  };
+
+  // 7-Tage Rückblick
+  const lookbackDate = offsetDate(today, -7);
+  const lookbackEntry = diaryEntries.find((e) => e.date === lookbackDate);
+
+  // Kalender: aktueller Monat
+  const calYear = new Date(selectedDate + 'T00:00:00').getFullYear();
+  const calMonth = new Date(selectedDate + 'T00:00:00').getMonth();
+  const firstDay = new Date(calYear, calMonth, 1).getDay();
+  const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+  const calCells: (string | null)[] = [
+    ...Array(firstDay).fill(null),
+    ...Array.from({ length: daysInMonth }, (_, i) => {
+      const d = new Date(calYear, calMonth, i + 1);
+      return d.toISOString().slice(0, 10);
+    }),
+  ];
+  const MONTH_NAMES = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
+
+  const selectedMood = MOODS.find((m) => m.value === mood)!;
+
+  return (
+    <div>
+      {/* Datums-Navigation */}
+      <div className="flex items-center justify-between mb-4">
+        <button
+          onClick={() => setSelectedDate((d) => offsetDate(d, -1))}
+          className="p-1.5 rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors cursor-pointer"
+        >
+          <ChevronLeft size={18} />
+        </button>
+        <div className="text-center">
+          <p className="text-sm font-semibold text-gray-800 dark:text-gray-200">{formatDate(selectedDate)}</p>
+          {selectedDate !== today && (
+            <button
+              onClick={() => setSelectedDate(today)}
+              className="text-xs flex items-center gap-0.5 mx-auto mt-0.5 cursor-pointer" style={{ color: '#7F77DD' }}
+            >
+              <RotateCcw size={11} /> Heute
+            </button>
+          )}
+        </div>
+        <button
+          onClick={() => setSelectedDate((d) => offsetDate(d, 1))}
+          disabled={selectedDate >= today}
+          className="p-1.5 rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors cursor-pointer disabled:opacity-30 disabled:cursor-default"
+        >
+          <ChevronRight size={18} />
+        </button>
+      </div>
+
+      {/* Mood-Auswahl */}
+      <div className="flex gap-2 mb-4">
+        {MOODS.map(({ value, label, Icon, hex }) => (
+          <button
+            key={value}
+            onClick={() => setMood(value)}
+            title={label}
+            className="flex-1 flex flex-col items-center gap-1 py-2.5 rounded-xl border-2 transition-all cursor-pointer"
+            style={mood === value
+              ? { borderColor: hex, background: `${hex}18`, color: hex }
+              : { borderColor: 'rgba(209,213,219,0.5)', color: 'rgba(156,163,175,1)' }
+            }
+          >
+            <Icon size={20} />
+            <span className="text-[10px] font-medium leading-none">{label}</span>
+          </button>
+        ))}
+      </div>
+
+      {/* Text */}
+      <textarea
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        placeholder="Was beschäftigt dich heute? Gedanken, Erlebnisse, Gefühle..."
+        rows={5}
+        className="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#7F77DD]/30 resize-none mb-3"
+      />
+
+      <div className="flex gap-2 items-center mb-5">
+        <button
+          onClick={handleSave}
+          className="flex-1 font-medium py-2.5 rounded-lg transition-colors text-sm cursor-pointer text-white hover:opacity-90"
+          style={{ backgroundColor: saved ? '#1D9E75' : '#7F77DD' }}
+        >
+          {saved ? 'Gespeichert!' : existing ? 'Aktualisieren' : 'Eintrag speichern'}
+        </button>
+        {existing && (
+          <button
+            onClick={() => {
+              if (window.confirm('Eintrag löschen?')) {
+                removeDiary(existing.id);
+                setText('');
+                setMood(3);
+              }
+            }}
+            className="p-2.5 text-gray-400 hover:text-red-400 transition-colors cursor-pointer border border-gray-200 dark:border-gray-700 rounded-lg"
+          >
+            <Trash2 size={16} />
+          </button>
+        )}
+      </div>
+
+      {/* 7-Tage Rückblick */}
+      {lookbackEntry && selectedDate === today && (
+        <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-100 dark:border-amber-800/40 rounded-xl p-4 mb-5">
+          <p className="text-xs font-semibold text-amber-700 dark:text-amber-400 mb-1 flex items-center gap-1.5">
+            <BookText size={13} /> Vor 7 Tagen geschrieben
+          </p>
+          <div className="flex items-center gap-2 mb-1.5">
+            {(() => {
+              const m = MOODS.find((mo) => mo.value === lookbackEntry.mood)!;
+              const { Icon, hex, label } = m;
+              return <><Icon size={14} style={{ color: hex }} /><span className="text-xs text-gray-500 dark:text-gray-400">{label}</span></>;
+            })()}
+          </div>
+          {lookbackEntry.text && (
+            <p className="text-xs text-gray-600 dark:text-gray-300 italic leading-relaxed line-clamp-3">
+              "{lookbackEntry.text}"
+            </p>
+          )}
+        </div>
+      )}
+
+      {/* Kalender */}
+      <button
+        onClick={() => setShowCalendar((v) => !v)}
+        className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400 transition-colors mb-3 cursor-pointer font-medium"
+      >
+        <ChevronRight size={13} className={`transition-transform ${showCalendar ? 'rotate-90' : ''}`} />
+        Kalenderansicht
+      </button>
+
+      {showCalendar && (
+        <div className="bg-gray-50 dark:bg-gray-800/60 border border-gray-100 dark:border-gray-700 rounded-xl p-4">
+          <div className="flex items-center justify-between mb-3">
+            <button
+              onClick={() => {
+                const d = new Date(calYear, calMonth - 1, 1);
+                setSelectedDate(d.toISOString().slice(0, 10));
+              }}
+              className="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 cursor-pointer"
+            >
+              <ChevronLeft size={15} />
+            </button>
+            <p className="text-xs font-semibold text-gray-700 dark:text-gray-300">
+              {MONTH_NAMES[calMonth]} {calYear}
+            </p>
+            <button
+              onClick={() => {
+                const d = new Date(calYear, calMonth + 1, 1);
+                if (d.toISOString().slice(0, 7) <= today.slice(0, 7)) {
+                  setSelectedDate(d.toISOString().slice(0, 10));
+                }
+              }}
+              className="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 cursor-pointer"
+            >
+              <ChevronRight size={15} />
+            </button>
+          </div>
+          <div className="grid grid-cols-7 gap-1 text-center mb-1">
+            {['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'].map((d) => (
+              <span key={d} className="text-[10px] text-gray-400 font-medium">{d}</span>
+            ))}
+          </div>
+          <div className="grid grid-cols-7 gap-1">
+            {calCells.map((dateStr, i) => {
+              if (!dateStr) return <div key={i} />;
+              const entry = diaryEntries.find((e) => e.date === dateStr);
+              const isSelected = dateStr === selectedDate;
+              const isFuture = dateStr > today;
+              return (
+                <button
+                  key={dateStr}
+                  disabled={isFuture}
+                  onClick={() => setSelectedDate(dateStr)}
+                  className={`aspect-square rounded-lg text-[11px] font-medium flex items-center justify-center transition-colors cursor-pointer disabled:cursor-default ${
+                    isSelected
+                      ? 'ring-2 ring-[#7F77DD] ring-offset-1'
+                      : ''
+                  } ${
+                    entry
+                      ? MOOD_CALENDAR_COLOR[entry.mood] + ' text-white'
+                      : isFuture
+                        ? 'text-gray-300 dark:text-gray-700'
+                        : 'text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
+                  }`}
+                >
+                  {new Date(dateStr + 'T00:00:00').getDate()}
+                </button>
+              );
+            })}
+          </div>
+          <div className="flex items-center gap-3 flex-wrap mt-3 pt-2 border-t border-gray-200 dark:border-gray-700">
+            {MOODS.map(({ value, label }) => (
+              <div key={value} className="flex items-center gap-1">
+                <div className={`w-3 h-3 rounded-full ${MOOD_CALENDAR_COLOR[value]}`} />
+                <span className="text-[10px] text-gray-400">{label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ── PlanerPage ────────────────────────────────────────────────────────────────
+
+type Tab = 'tasks' | 'diary';
+
+export default function PlanerPage() {
+  const [activeTab, setActiveTab] = useState<Tab>('tasks');
+
+  return (
+    <Layout>
+      <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-4">Planer</h1>
+
+      {/* Tabs */}
+      <div className="flex bg-gray-100 dark:bg-gray-800 rounded-xl p-1 mb-5">
+        <button
+          onClick={() => setActiveTab('tasks')}
+          className={`flex-1 text-sm font-medium py-1.5 rounded-lg transition-colors cursor-pointer ${
+            activeTab === 'tasks'
+              ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm'
+              : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+          }`}
+        >
+          Aufgaben
+        </button>
+        <button
+          onClick={() => setActiveTab('diary')}
+          className={`flex-1 text-sm font-medium py-1.5 rounded-lg transition-colors cursor-pointer ${
+            activeTab === 'diary'
+              ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm'
+              : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+          }`}
+        >
+          Tagebuch
+        </button>
+      </div>
+
+      {activeTab === 'tasks' ? <TasksTab /> : <DiaryTab />}
+    </Layout>
+  );
+}

@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Klick-Feedback für alle interaktiven Elemente */
+button,
+a,
+[role="button"] {
+  transition-property: transform, opacity;
+  transition-duration: 150ms;
+  transition-timing-function: ease;
+}
+
+button:active,
+a:active,
+[role="button"]:active {
+  transform: scale(0.96);
+  opacity: 0.85;
+}
