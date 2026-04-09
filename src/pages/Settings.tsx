@@ -2,10 +2,11 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Moon, Sun, Shuffle, BarChart2, Trash2, Settings,
-  Medal, RotateCcw, Info, ChevronRight, Download, Upload, AlertCircle,
+  Medal, RotateCcw, Info, ChevronRight, Download, Upload, AlertCircle, LogOut,
 } from 'lucide-react';
 import Layout from '../components/Layout';
 import { useStore } from '../store';
+import { useAuth } from '../lib/AuthContext';
 
 const APP_VERSION = '1.0.0';
 
@@ -17,6 +18,7 @@ const ALL_STORAGE_KEYS = [
 
 export default function SettingsPage() {
   const navigate = useNavigate();
+  const { signOut, user } = useAuth();
   const darkMode = useStore((s) => s.darkMode);
   const toggleDarkMode = useStore((s) => s.toggleDarkMode);
   const [mixed, setMixed] = useState(() => localStorage.getItem('mixedMode') === 'true');
@@ -369,6 +371,31 @@ export default function SettingsPage() {
                 </div>
               )}
             </div>
+          </div>
+        </section>
+
+        {/* Konto */}
+        <section className="mb-6">
+          <h2 className="text-xs font-semibold text-gray-400 dark:text-white/30 uppercase tracking-wider mb-3">
+            Konto
+          </h2>
+          <div className="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl overflow-hidden">
+            {user && (
+              <div className="px-4 py-3 border-b border-gray-100 dark:border-white/8">
+                <p className="text-xs text-gray-400 dark:text-white/30">Angemeldet als</p>
+                <p className="text-sm font-medium text-gray-900 dark:text-white mt-0.5 truncate">{user.email}</p>
+              </div>
+            )}
+            <button
+              onClick={async () => { await signOut(); navigate('/login', { replace: true }); }}
+              className="w-full flex items-center gap-3 px-4 py-3.5 text-left transition-colors cursor-pointer"
+              style={{ color: '#E24B4A' }}
+              onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(226,75,74,0.07)')}
+              onMouseLeave={(e) => (e.currentTarget.style.background = '')}
+            >
+              <LogOut size={18} className="shrink-0" />
+              <p className="text-sm font-medium">Abmelden</p>
+            </button>
           </div>
         </section>
 
