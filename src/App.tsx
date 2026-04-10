@@ -8,6 +8,7 @@ import AuthGuard from './components/AuthGuard';
 
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import PasswortVergessenPage from './pages/PasswortVergessenPage';
 import Dashboard from './pages/Dashboard';
 import LernenPage from './pages/LernenPage';
 import PlanerPage from './pages/PlanerPage';
@@ -49,6 +50,7 @@ function AppRoutes() {
         {/* Öffentliche Routen */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/passwort-vergessen" element={<PasswortVergessenPage />} />
 
         {/* Geschützte Routen */}
         <Route path="/" element={<AuthGuard><Dashboard /></AuthGuard>} />

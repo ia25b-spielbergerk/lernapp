@@ -78,6 +78,12 @@ export default function LoginPage() {
             </div>
           </div>
 
+          <div className="flex justify-end -mt-1">
+            <Link to="/passwort-vergessen" className="text-xs hover:underline" style={{ color: '#7F77DD' }}>
+              Passwort vergessen?
+            </Link>
+          </div>
+
           {error && (
             <p className="text-sm rounded-xl px-4 py-3 border" style={{ color: '#E24B4A', background: 'rgba(226,75,74,0.08)', borderColor: 'rgba(226,75,74,0.2)' }}>
               {error}
