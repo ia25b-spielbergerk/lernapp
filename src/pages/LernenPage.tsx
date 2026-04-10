@@ -36,11 +36,11 @@ export default function LernenPage() {
   const sortedSets = [...sets].sort((a, b) => {
     if (sortBy === 'alpha') return a.name.localeCompare(b.name);
     if (sortBy === 'studied') {
-      const pa = progress[a.id]?.lastStudied ?? 0;
-      const pb = progress[b.id]?.lastStudied ?? 0;
-      return pb - pa;
+      const pa = progress[a.id]?.lastStudied ?? '';
+      const pb = progress[b.id]?.lastStudied ?? '';
+      return pb.localeCompare(pa);
     }
-    return b.createdAt - a.createdAt;
+    return b.createdAt.localeCompare(a.createdAt);
   });
 
   const importRef = useRef<HTMLInputElement>(null);

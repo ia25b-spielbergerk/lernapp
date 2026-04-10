@@ -103,7 +103,7 @@ export default function BlitzMode() {
       updateProgress({
         ...prev,
         setId: id!,
-        lastStudied: Date.now(),
+        lastStudied: new Date().toISOString(),
         totalSessions: prev.totalSessions + 1,
       });
       const score = Math.round((correctCount / cards.length) * 100);

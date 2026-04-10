@@ -87,7 +87,7 @@ export default function TestMode() {
       updateProgress({
         ...prev,
         setId: id!,
-        lastStudied: Date.now(),
+        lastStudied: new Date().toISOString(),
         bestTestScore: Math.max(prev.bestTestScore, finalScore),
         totalSessions: prev.totalSessions + 1,
       });

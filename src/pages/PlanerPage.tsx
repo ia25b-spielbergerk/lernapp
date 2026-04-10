@@ -306,7 +306,7 @@ function DiaryTab() {
 
   const handleSave = () => {
     if (!text.trim() && !mood) return;
-    const now = Date.now();
+    const now = new Date().toISOString();
     const entry: DiaryEntry = {
       id: existing?.id ?? generateId(),
       date: selectedDate,

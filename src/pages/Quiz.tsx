@@ -85,7 +85,7 @@ export default function Quiz() {
       updateProgress({
         ...prev,
         setId: id!,
-        lastStudied: Date.now(),
+        lastStudied: new Date().toISOString(),
         bestQuizScore: Math.max(prev.bestQuizScore, finalScore),
         totalSessions: prev.totalSessions + 1,
       });

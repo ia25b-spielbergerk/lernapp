@@ -87,7 +87,7 @@ function mapSet(row: Record<string, unknown>): CardSet {
     name: row.name as string,
     language1: row.language1 as string,
     language2: row.language2 as string,
-    createdAt: Number(row.created_at),
+    createdAt: row.created_at as string,
     cards: cardsRaw.map((c) => ({
       id: c.id as string,
       front: c.front as string,
@@ -151,7 +151,7 @@ export async function getAllProgress(userId: string): Promise<SetProgress[]> {
   if (error) { console.error('getAllProgress:', error.message); return []; }
   return (data ?? []).map((p) => ({
     setId: p.set_id as string,
-    lastStudied: Number(p.last_studied),
+    lastStudied: p.last_studied as string,
     bestQuizScore: (p.best_quiz_score as number) ?? 0,
     bestTestScore: (p.best_test_score as number) ?? 0,
     totalSessions: (p.total_sessions as number) ?? 0,
@@ -193,7 +193,7 @@ export async function getAllCardStats(userId: string): Promise<Record<string, Re
       setId,
       correct: (row.correct as number) ?? 0,
       incorrect: (row.incorrect as number) ?? 0,
-      lastSeen: Number(row.last_seen),
+      lastSeen: row.last_seen as string,
     };
   }
   return result;
@@ -211,9 +211,9 @@ export async function updateCardResult(
         ...existing,
         correct: existing.correct + (wasCorrect ? 1 : 0),
         incorrect: existing.incorrect + (wasCorrect ? 0 : 1),
-        lastSeen: Date.now(),
+        lastSeen: new Date().toISOString(),
       }
-    : { cardId, setId, correct: wasCorrect ? 1 : 0, incorrect: wasCorrect ? 0 : 1, lastSeen: Date.now() };
+    : { cardId, setId, correct: wasCorrect ? 1 : 0, incorrect: wasCorrect ? 0 : 1, lastSeen: new Date().toISOString() };
 
   const { error } = await supabase.from('card_stats').upsert(
     {
@@ -244,7 +244,7 @@ export async function getDailyChallenge(userId: string): Promise<DailyState | nu
 
   return {
     date: data.date as string,
-    cards: (data.cards as DailyCard[]) ?? [],
+    cards: (data.card_ids as DailyCard[]) ?? [],
     completed: data.completed as boolean,
     score: data.score as number | null,
     challengeStreak: (data.challenge_streak as number) ?? 0,
@@ -257,7 +257,7 @@ export async function saveDailyChallenge(daily: DailyState, userId: string): Pro
     {
       user_id: userId,
       date: daily.date,
-      cards: daily.cards,
+      card_ids: daily.cards,
       completed: daily.completed,
       score: daily.score,
       challenge_streak: daily.challengeStreak,
@@ -283,8 +283,8 @@ export async function getDiaryEntries(userId: string): Promise<DiaryEntry[]> {
     date: d.date as string,
     mood: d.mood as DiaryEntry['mood'],
     text: d.text as string,
-    createdAt: Number(d.created_at),
-    updatedAt: Number(d.updated_at),
+    createdAt: d.created_at as string,
+    updatedAt: d.updated_at as string,
   }));
 }
 
@@ -363,7 +363,7 @@ export async function getHabits(userId: string): Promise<Habit[]> {
     return {
       id: h.id as string,
       name: h.name as string,
-      createdAt: Number(h.created_at),
+      createdAt: h.created_at as string,
       streak: (h.streak as number) ?? 0,
       lastCheckedDate: (h.last_checked_date as string) ?? null,
       checkIns: checkins.map((c) => c.date),
@@ -423,8 +423,8 @@ export async function getNotes(userId: string): Promise<Note[]> {
     content: n.content as string,
     tags: (n.tags as string[]) ?? [],
     pinned: n.pinned as boolean,
-    createdAt: Number(n.created_at),
-    updatedAt: Number(n.updated_at),
+    createdAt: n.created_at as string,
+    updatedAt: n.updated_at as string,
   }));
 }
 

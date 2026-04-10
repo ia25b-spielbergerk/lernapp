@@ -5,8 +5,8 @@ import { useStore } from '../store';
 import { generateId } from '../utils';
 import type { Note } from '../types';
 
-function timeAgo(ts: number): string {
-  const diff = Date.now() - ts;
+function timeAgo(ts: string): string {
+  const diff = Date.now() - new Date(ts).getTime();
   const mins = Math.floor(diff / 60000);
   const hours = Math.floor(diff / 3600000);
   const days = Math.floor(diff / 86400000);
@@ -41,7 +41,7 @@ function NoteEditor({ initial, onSave, onCancel }: EditorProps) {
 
   const handleSave = () => {
     if (!title.trim() && !content.trim()) return;
-    const now = Date.now();
+    const now = new Date().toISOString();
     const note: Note = {
       id: initial?.id ?? generateId(),
       title: title.trim(),
@@ -163,7 +163,7 @@ export default function NotizenPage() {
     // Gepinnte oben
     return result.sort((a, b) => {
       if (a.pinned !== b.pinned) return a.pinned ? -1 : 1;
-      return b.updatedAt - a.updatedAt;
+      return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();
     });
   }, [notes, search, activeTag]);
 

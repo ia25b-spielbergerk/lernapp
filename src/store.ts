@@ -272,7 +272,7 @@ export const useStore = create<AppState>((set, get) => ({
 
   getSetProgress: (setId) => {
     const { progress } = get();
-    return progress[setId] ?? { setId, lastStudied: 0, bestQuizScore: 0, bestTestScore: 0, totalSessions: 0 };
+    return progress[setId] ?? { setId, lastStudied: new Date(0).toISOString(), bestQuizScore: 0, bestTestScore: 0, totalSessions: 0 };
   },
 
   // ── Badges ──────────────────────────────────────────────────────────────
@@ -359,9 +359,9 @@ export const useStore = create<AppState>((set, get) => ({
           ...existing,
           correct: existing.correct + (wasCorrect ? 1 : 0),
           incorrect: existing.incorrect + (wasCorrect ? 0 : 1),
-          lastSeen: Date.now(),
+          lastSeen: new Date().toISOString(),
         }
-      : { cardId, setId, correct: wasCorrect ? 1 : 0, incorrect: wasCorrect ? 0 : 1, lastSeen: Date.now() };
+      : { cardId, setId, correct: wasCorrect ? 1 : 0, incorrect: wasCorrect ? 0 : 1, lastSeen: new Date().toISOString() };
 
     set((state) => ({
       cardStats: {

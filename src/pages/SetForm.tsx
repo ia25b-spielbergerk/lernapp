@@ -102,7 +102,7 @@ export default function SetForm() {
       language1: lang1,
       language2: lang2,
       cards: validCards,
-      createdAt: existing?.createdAt ?? Date.now(),
+      createdAt: existing?.createdAt ?? new Date().toISOString(),
     };
 
     if (isEditing) {

@@ -10,12 +10,12 @@ export interface CardSet {
   language1: string; // z.B. "Deutsch"
   language2: string; // z.B. "Englisch"
   cards: Card[];
-  createdAt: number;
+  createdAt: string;
 }
 
 export interface SetProgress {
   setId: string;
-  lastStudied: number;
+  lastStudied: string;
   bestQuizScore: number;   // 0–100
   bestTestScore: number;   // 0–100
   totalSessions: number;
@@ -43,7 +43,7 @@ export interface CardStats {
   setId: string;
   correct: number;
   incorrect: number;
-  lastSeen: number;
+  lastSeen: string;
 }
 
 export type BadgeId =
@@ -93,8 +93,8 @@ export interface DiaryEntry {
   date: string;        // "2026-04-07"
   mood: 1 | 2 | 3 | 4 | 5;
   text: string;
-  createdAt: number;
-  updatedAt: number;
+  createdAt: string;
+  updatedAt: string;
 }
 
 // ── Tasks ───────────────────────────────────────────────────────────────────
@@ -117,7 +117,7 @@ export interface Task {
 export interface Habit {
   id: string;
   name: string;
-  createdAt: number;
+  createdAt: string;
   streak: number;
   lastCheckedDate: string | null; // "2026-04-07"
   checkIns: string[];             // Array von Datumsstrings
@@ -145,6 +145,6 @@ export interface Note {
   content: string;
   tags: string[];
   pinned: boolean;
-  createdAt: number;
-  updatedAt: number;
+  createdAt: string;
+  updatedAt: string;
 }

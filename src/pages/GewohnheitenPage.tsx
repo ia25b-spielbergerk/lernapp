@@ -35,7 +35,7 @@ export default function GewohnheitenPage() {
     const habit: Habit = {
       id: generateId(),
       name: newName.trim(),
-      createdAt: Date.now(),
+      createdAt: new Date().toISOString(),
       streak: 0,
       lastCheckedDate: null,
       checkIns: [],

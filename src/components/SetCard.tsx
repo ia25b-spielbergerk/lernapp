@@ -45,7 +45,7 @@ export default function SetCard({ set }: Props) {
         ...set,
         id: generateId(),
         name: `${set.name} (Kopie)`,
-        createdAt: Date.now(),
+        createdAt: new Date().toISOString(),
       });
     }
   };
