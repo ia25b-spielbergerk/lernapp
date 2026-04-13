@@ -90,7 +90,7 @@ export default function SettingsPage() {
         setImportData(parsed);
         setConfirmImport(true);
       } catch {
-        setImportError('Ungültige Datei. Bitte eine Lernapp-Backup-Datei auswählen.');
+        setImportError('Ungültige Datei. Bitte eine Arete-Backup-Datei auswählen.');
       }
     };
     reader.readAsText(file);
@@ -402,7 +402,7 @@ export default function SettingsPage() {
         {/* Version */}
         <div className="flex items-center gap-2 text-gray-400 dark:text-white/20 text-xs px-1">
           <Info size={13} />
-          <span>Lernapp v{APP_VERSION}</span>
+          <span>Arete v{APP_VERSION}</span>
         </div>
       </div>
 

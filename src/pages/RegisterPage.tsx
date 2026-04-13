@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Mail, Lock, UserPlus, BookOpen, Check } from 'lucide-react';
+import { Mail, Lock, UserPlus, Check } from 'lucide-react';
 import { useAuth } from '../lib/AuthContext';
 
 export default function RegisterPage() {
@@ -60,8 +60,8 @@ export default function RegisterPage() {
 
         {/* Logo */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl mb-4" style={{ backgroundColor: 'rgba(127,119,221,0.12)' }}>
-            <BookOpen size={28} style={{ color: '#7F77DD' }} />
+          <div className="inline-flex items-center justify-center rounded-2xl mb-4 p-4" style={{ backgroundColor: '#0f1117' }}>
+            <img src="/logo.svg" alt="Arete" className="h-12 w-auto" />
           </div>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Konto erstellen</h1>
           <p className="text-sm text-gray-400 dark:text-white/40 mt-1">Starte deine Lernreise</p>

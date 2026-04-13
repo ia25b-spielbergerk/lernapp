@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { LayoutDashboard, BookOpen, CalendarDays, Repeat2, ArrowRight, X, Sparkles, Lightbulb } from 'lucide-react';
+import { LayoutDashboard, BookOpen, CalendarDays, Repeat2, ArrowRight, X, Lightbulb } from 'lucide-react';
 
 type WelcomeScreen = { type: 'welcome' };
 type FeatureScreen = {
@@ -91,13 +91,13 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
         {screen.type === 'welcome' ? (
           <div className="max-w-sm">
             <div
-              className="w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-8"
-              style={{ background: 'rgba(127,119,221,0.12)' }}
+              className="inline-flex items-center justify-center rounded-3xl mx-auto mb-8 p-5"
+              style={{ backgroundColor: '#0f1117' }}
             >
-              <Sparkles size={48} style={{ color: '#7F77DD' }} />
+              <img src="/logo.svg" alt="Arete" className="h-16 w-auto" />
             </div>
             <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4 tracking-tight">
-              Willkommen bei Lernapp
+              Willkommen bei Arete
             </h1>
             <p className="text-gray-500 dark:text-gray-400 text-lg leading-relaxed">
               Dein persönlicher Begleiter für Vokabeln, Aufgaben und Gewohnheiten — alles in einer App.
