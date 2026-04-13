@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import Layout from '../components/Layout';
 import { useStore } from '../store';
+import { useAuth, getInitials } from '../lib/AuthContext';
 
 // Orange=#EF9F27 · Blue=#378ADD · Green=#1D9E75 · Purple=#7F77DD · Red=#E24B4A
 
@@ -96,8 +97,15 @@ function WeatherWidget() {
 const WEEKDAYS = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
 const MONTHS = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
 
+function getGreeting(hour: number): string {
+  if (hour >= 5 && hour < 11) return 'Guten Morgen';
+  if (hour >= 11 && hour < 18) return 'Guten Tag';
+  return 'Guten Abend';
+}
+
 export default function Dashboard() {
   const navigate = useNavigate();
+  const { profile } = useAuth();
   const user = useStore((s) => s.user);
   const daily = useStore((s) => s.daily);
   const tasks = useStore((s) => s.tasks);
@@ -157,7 +165,9 @@ export default function Dashboard() {
           <p className="text-2xl font-bold text-gray-900 dark:text-white">
             {WEEKDAYS[now.getDay()]}, {now.getDate()}. {MONTHS[now.getMonth()]}
           </p>
-          <p className="text-sm text-gray-400 dark:text-white/40 mt-0.5">Guten Tag!</p>
+          <p className="text-sm text-gray-400 dark:text-white/40 mt-0.5">
+            {getGreeting(now.getHours())}{profile?.username ? `, ${profile.username}` : ''}!
+          </p>
         </div>
         <div className="flex items-center gap-3 mt-1">
           <WeatherWidget />
@@ -167,6 +177,17 @@ export default function Dashboard() {
             aria-label="Einstellungen"
           >
             <Settings size={18} />
+          </Link>
+          <Link
+            to="/profil"
+            aria-label="Mein Profil"
+          >
+            <div
+              className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold hover:opacity-80 transition-opacity"
+              style={{ backgroundColor: profile?.avatar_color ?? '#7F77DD' }}
+            >
+              {profile?.username ? getInitials(profile.username) || '?' : '?'}
+            </div>
           </Link>
         </div>
       </div>

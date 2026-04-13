@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Mail, Lock, UserPlus, Check } from 'lucide-react';
+import { Mail, Lock, UserPlus, Check, User } from 'lucide-react';
 import { useAuth } from '../lib/AuthContext';
 
 export default function RegisterPage() {
   const navigate = useNavigate();
   const { signUp } = useAuth();
 
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
@@ -19,10 +20,10 @@ export default function RegisterPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email.trim() || !password || !passwordsMatch || !passwordLongEnough) return;
+    if (!username.trim() || !email.trim() || !password || !passwordsMatch || !passwordLongEnough) return;
     setLoading(true);
     setError(null);
-    const err = await signUp(email.trim(), password);
+    const err = await signUp(email.trim(), password, username.trim());
     if (err) {
       setError(mapError(err));
       setLoading(false);
@@ -69,6 +70,24 @@ export default function RegisterPage() {
 
         {/* Formular */}
         <form onSubmit={handleSubmit} className="space-y-4">
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-white/70 mb-1.5">
+              Benutzername
+            </label>
+            <div className="relative">
+              <User size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-white/30 pointer-events-none" />
+              <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Dein Benutzername"
+                required
+                autoComplete="username"
+                className="w-full pl-9 pr-4 py-2.5 border border-gray-200 dark:border-white/10 rounded-xl bg-white dark:bg-white/5 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-white/25 focus:outline-none focus:border-[#7F77DD] dark:focus:border-[#7F77DD] transition-colors text-sm"
+              />
+            </div>
+          </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-white/70 mb-1.5">
@@ -139,7 +158,7 @@ export default function RegisterPage() {
 
           <button
             type="submit"
-            disabled={loading || !email.trim() || !password || !passwordsMatch || !passwordLongEnough}
+            disabled={loading || !username.trim() || !email.trim() || !password || !passwordsMatch || !passwordLongEnough}
             className="w-full flex items-center justify-center gap-2 text-white font-medium py-2.5 rounded-xl transition-opacity disabled:opacity-50 cursor-pointer hover:opacity-90"
             style={{ backgroundColor: '#7F77DD' }}
           >

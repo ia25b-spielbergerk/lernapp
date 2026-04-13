@@ -2,11 +2,11 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Moon, Sun, Shuffle, BarChart2, Trash2, Settings,
-  Medal, RotateCcw, Info, ChevronRight, Download, Upload, AlertCircle, LogOut,
+  Medal, RotateCcw, Info, ChevronRight, Download, Upload, AlertCircle, LogOut, User,
 } from 'lucide-react';
 import Layout from '../components/Layout';
 import { useStore } from '../store';
-import { useAuth } from '../lib/AuthContext';
+import { useAuth, getInitials } from '../lib/AuthContext';
 
 const APP_VERSION = '1.0.0';
 
@@ -18,7 +18,7 @@ const ALL_STORAGE_KEYS = [
 
 export default function SettingsPage() {
   const navigate = useNavigate();
-  const { signOut, user } = useAuth();
+  const { signOut, user, profile } = useAuth();
   const darkMode = useStore((s) => s.darkMode);
   const toggleDarkMode = useStore((s) => s.toggleDarkMode);
   const [mixed, setMixed] = useState(() => localStorage.getItem('mixedMode') === 'true');
@@ -379,13 +379,31 @@ export default function SettingsPage() {
           <h2 className="text-xs font-semibold text-gray-400 dark:text-white/30 uppercase tracking-wider mb-3">
             Konto
           </h2>
-          <div className="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl overflow-hidden">
-            {user && (
-              <div className="px-4 py-3 border-b border-gray-100 dark:border-white/8">
-                <p className="text-xs text-gray-400 dark:text-white/30">Angemeldet als</p>
-                <p className="text-sm font-medium text-gray-900 dark:text-white mt-0.5 truncate">{user.email}</p>
+          <div className="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl overflow-hidden divide-y divide-gray-100 dark:divide-white/8">
+
+            {/* Profil-Link */}
+            <button
+              onClick={() => navigate('/profil')}
+              className="w-full flex items-center justify-between px-4 py-3.5 hover:bg-gray-100 dark:hover:bg-white/5 transition-colors cursor-pointer"
+            >
+              <div className="flex items-center gap-3">
+                <div
+                  className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0"
+                  style={{ backgroundColor: profile?.avatar_color ?? '#7F77DD' }}
+                >
+                  {profile?.username ? getInitials(profile.username) || '?' : '?'}
+                </div>
+                <div className="text-left">
+                  <p className="text-sm font-medium text-gray-900 dark:text-white">
+                    {profile?.username ?? user?.email ?? '—'}
+                  </p>
+                  <p className="text-xs text-gray-400 dark:text-white/30 mt-0.5">Profil bearbeiten</p>
+                </div>
               </div>
-            )}
+              <ChevronRight size={16} className="text-gray-300 dark:text-white/20" />
+            </button>
+
+            {/* Abmelden */}
             <button
               onClick={async () => { await signOut(); navigate('/login', { replace: true }); }}
               className="w-full flex items-center gap-3 px-4 py-3.5 text-left transition-colors cursor-pointer"

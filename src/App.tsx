@@ -27,6 +27,7 @@ import ShopPage from './pages/ShopPage';
 import StatsPage from './pages/StatsPage';
 import MehrPage from './pages/MehrPage';
 import SettingsPage from './pages/Settings';
+import ProfilPage from './pages/ProfilPage';
 
 function AppRoutes() {
   const darkMode = useStore((s) => s.darkMode);
@@ -72,6 +73,7 @@ function AppRoutes() {
         <Route path="/statistiken" element={<AuthGuard><StatsPage /></AuthGuard>} />
         <Route path="/mehr" element={<AuthGuard><MehrPage /></AuthGuard>} />
         <Route path="/settings" element={<AuthGuard><SettingsPage /></AuthGuard>} />
+        <Route path="/profil" element={<AuthGuard><ProfilPage /></AuthGuard>} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </div>
