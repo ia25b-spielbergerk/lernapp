@@ -45,20 +45,24 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   useEffect(() => {
+    // Session sofort aus localStorage lesen — kein Netzwerk-Roundtrip
     supabase.auth.getSession().then(({ data }) => {
-      setSession(data.session);
-      const userId = data.session?.user?.id ?? null;
+      const session = data.session;
+      setSession(session);
+      setLoading(false); // sofort — Session kommt aus Cache
+      const userId = session?.user?.id ?? null;
       const store = useStore.getState();
       store.setCurrentUser(userId);
       if (userId) {
-        store.loadAllData();
+        // Kritische Daten zuerst, Rest im Hintergrund
+        store.loadCriticalData().then(() => store.loadBackgroundData());
         loadProfile(userId);
       }
-      setLoading(false);
     });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
+      setLoading(false);
       const userId = session?.user?.id ?? null;
       const store = useStore.getState();
       store.setCurrentUser(userId);

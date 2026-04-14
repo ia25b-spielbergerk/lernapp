@@ -68,6 +68,8 @@ interface AppState {
   // Auth
   setCurrentUser: (id: string | null) => void;
   loadAllData: () => void;
+  loadCriticalData: () => Promise<void>;
+  loadBackgroundData: () => void;
 
   // Sets
   addSet: (set: CardSet) => void;
@@ -174,33 +176,45 @@ export const useStore = create<AppState>((set, get) => ({
     }
   },
 
-  loadAllData: () => {
+  // Kritische Daten zuerst (User, Tasks, Habits) — Dashboard sofort nutzbar
+  loadCriticalData: async () => {
     const userId = get().currentUserId;
-    console.log('[loadAllData] userId:', userId);
     if (!userId) return;
-
     set({ isLoading: true });
+    try {
+      const [user, tasks, habits] = await Promise.all([
+        getUser(userId),
+        getTasks(userId),
+        getHabits(userId),
+      ]);
+      set({ user, tasks, habits, isLoading: false });
+    } catch {
+      set({ isLoading: false });
+    }
+  },
 
+  // Restliche Daten im Hintergrund nachladen
+  loadBackgroundData: () => {
+    const userId = get().currentUserId;
+    if (!userId) return;
     Promise.all([
       getSets(userId),
-      getUser(userId),
       getAllProgress(userId),
       getAllCardStats(userId),
       getDailyChallenge(userId),
       getDiaryEntries(userId),
-      getTasks(userId),
-      getHabits(userId),
       getNotes(userId),
       getDailyCrystalTracker(userId),
-    ]).then(([sets, user, progressArr, cardStats, daily, diaryEntries, tasks, habits, notes, dailyCrystals]) => {
-      console.log('[loadAllData] loaded — sets:', sets.length, 'tasks:', tasks.length, 'habits:', habits.length, 'notes:', notes.length, 'diary:', diaryEntries.length);
+    ]).then(([sets, progressArr, cardStats, daily, diaryEntries, notes, dailyCrystals]) => {
       const progress = Object.fromEntries(progressArr.map((p) => [p.setId, p]));
-      set({ sets, user, progress, cardStats, daily, diaryEntries, tasks, habits, notes, dailyCrystals, isLoading: false });
+      set({ sets, progress, cardStats, daily, diaryEntries, notes, dailyCrystals });
       get().initDaily();
-    }).catch((err) => {
-      console.error('[loadAllData] Promise.all failed:', err);
-      set({ isLoading: false });
-    });
+    }).catch(console.error);
+  },
+
+  loadAllData: () => {
+    const store = get();
+    store.loadCriticalData().then(() => store.loadBackgroundData());
   },
 
   // ── Sets ────────────────────────────────────────────────────────────────
