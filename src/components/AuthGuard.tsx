@@ -8,8 +8,12 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
   // isLoading (Daten) blockiert nicht mehr — Dashboard zeigt Skeleton/Leerstand
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-[#0f1117] flex items-center justify-center">
-        <div className="w-8 h-8 rounded-full border-2 border-[#7F77DD] border-t-transparent animate-spin" />
+      <div className="min-h-screen bg-[#0f1117] flex flex-col items-center justify-center gap-4">
+        <div className="p-4 rounded-2xl" style={{ backgroundColor: 'rgba(255,255,255,0.05)' }}>
+          <img src="/logo.svg" alt="Arete" className="h-14 w-auto" />
+        </div>
+        <p className="text-white text-xl font-bold tracking-wide">Arete</p>
+        <div className="w-7 h-7 rounded-full border-2 border-[#7F77DD] border-t-transparent animate-spin mt-1" />
       </div>
     );
   }
