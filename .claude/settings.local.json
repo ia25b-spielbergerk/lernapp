@@ -35,7 +35,8 @@
       "Bash(echo \"EXIT:$?\")",
       "Bash(npm uninstall:*)",
       "Bash(powershell:*)",
-      "Bash(grep -o 'prefers-color-scheme.*dark' dist/assets/*.css)"
+      "Bash(grep -o 'prefers-color-scheme.*dark' dist/assets/*.css)",
+      "mcp__claude_ai_Supabase__apply_migration"
     ]
   }
 }
