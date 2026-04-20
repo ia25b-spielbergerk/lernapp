@@ -43,7 +43,7 @@ export default function StudyMenu() {
     return (
       <Layout>
         <div className="text-center py-20">
-          <p className="text-gray-400">Set nicht gefunden.</p>
+          <p style={{ color: '#888888' }}>Set nicht gefunden.</p>
           <Link to="/lernen" className="text-sm mt-2 inline-block" style={{ color: '#7F77DD' }}>← Zurück</Link>
         </div>
       </Layout>
@@ -53,13 +53,16 @@ export default function StudyMenu() {
   return (
     <Layout>
       <div className="max-w-xl mx-auto">
-        <Link to="/lernen" className="text-sm text-gray-400 dark:text-white/40 hover:text-gray-600 dark:hover:text-white/60 mb-6 inline-block">
+        <Link to="/lernen" className="text-sm transition-colors mb-6 inline-block" style={{ color: '#888888' }}
+          onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text-1)')}
+          onMouseLeave={(e) => (e.currentTarget.style.color = '#888888')}
+        >
           ← Zurück
         </Link>
 
         <div className="mb-8">
-          <h1 className="text-2xl font-bold app-text">{set.name}</h1>
-          <p className="text-gray-400 dark:text-white/40 text-sm mt-1">
+          <h1 className="text-2xl font-semibold app-text">{set.name}</h1>
+          <p className="text-sm mt-1" style={{ color: '#888888' }}>
             {set.language1} → {set.language2} · {set.cards.length} Karten
           </p>
 
@@ -79,7 +82,7 @@ export default function StudyMenu() {
           )}
         </div>
 
-        {/* Schwache Karten Banner — Orange */}
+        {/* Schwache Karten Banner */}
         {weakCardIds.length > 0 && (
           <div
             className="rounded-xl p-4 mb-6 flex items-center justify-between gap-3 border"
@@ -103,41 +106,30 @@ export default function StudyMenu() {
           </div>
         )}
 
-        {/* Beide Richtungen Toggle — Violett */}
+        {/* Beide Richtungen Toggle */}
         <button
           onClick={toggleMixed}
           className="w-full flex items-center justify-between px-4 py-3 rounded-xl border mb-5 transition-all text-left bg-card"
           style={mixed
             ? { borderColor: 'rgba(127,119,221,0.35)', background: 'rgba(127,119,221,0.07)' }
-            : { borderColor: undefined }
+            : { borderColor: 'var(--border)' }
           }
         >
           <div className="flex items-center gap-3">
-            <Shuffle size={18} style={{ color: mixed ? '#7F77DD' : undefined }} className={!mixed ? 'text-gray-400 dark:text-white/30' : ''} />
+            <Shuffle size={18} style={{ color: mixed ? '#7F77DD' : '#888888' }} />
             <div>
-              <p className="text-sm font-semibold" style={mixed ? { color: '#7F77DD' } : undefined}>
-                {!mixed && <span className="app-text">Beide Richtungen</span>}
-                {mixed && 'Beide Richtungen'}
-              </p>
-              <p className="text-xs text-gray-400 dark:text-white/30 mt-0.5">
+              <p className="text-sm font-semibold app-text">Beide Richtungen</p>
+              <p className="text-xs mt-0.5" style={{ color: '#888888' }}>
                 {set.language1} → {set.language2} und {set.language2} → {set.language1} gemischt
               </p>
             </div>
           </div>
-          <div
-            className="relative w-10 h-6 rounded-full transition-colors shrink-0"
-            style={{ backgroundColor: mixed ? '#7F77DD' : undefined }}
-            data-mixed={mixed}
-          >
-            <div className="relative w-10 h-6 rounded-full bg-gray-200 dark:bg-white/15 transition-colors" style={mixed ? { backgroundColor: '#7F77DD' } : {}}>
-              <span className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow-sm transition-transform duration-200 ${mixed ? 'translate-x-4' : 'translate-x-0'}`} />
-            </div>
+          <div className="relative w-10 h-6 rounded-full shrink-0 transition-colors" style={{ backgroundColor: mixed ? '#7F77DD' : '#ebebeb' }}>
+            <span className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow-sm transition-transform duration-200 ${mixed ? 'translate-x-4' : 'translate-x-0'}`} />
           </div>
         </button>
 
-        <h2 className="text-sm font-medium text-gray-500 dark:text-white/40 uppercase tracking-wide mb-3">
-          Lernmodus wählen
-        </h2>
+        <h2 className="section-label mb-3">Lernmodus wählen</h2>
 
         <div className="space-y-3">
           {MODES.map((mode) => {
@@ -150,20 +142,20 @@ export default function StudyMenu() {
                 className={`w-full flex items-center gap-4 p-4 rounded-xl border text-left transition-all bg-card ${
                   disabled
                     ? 'app-border opacity-50 cursor-not-allowed'
-                    : 'app-border hover:border-[#7F77DD]/40 hover:shadow-sm cursor-pointer'
+                    : 'app-border hover:border-[#d0d0d0] dark:hover:border-[#3a3a3a] cursor-pointer'
                 }`}
               >
                 <mode.icon size={24} className="shrink-0" style={{ color: '#7F77DD' }} />
                 <div className="flex-1">
                   <p className="font-semibold app-text text-sm">{mode.title}</p>
-                  <p className="text-xs text-gray-400 dark:text-white/40 mt-0.5">{mode.description}</p>
+                  <p className="text-xs mt-0.5" style={{ color: '#888888' }}>{mode.description}</p>
                   {disabled && (
                     <p className="text-xs mt-0.5" style={{ color: '#E24B4A' }}>
                       Mindestens {mode.minCards} Karten nötig
                     </p>
                   )}
                 </div>
-                <span className="text-gray-300 dark:text-white/20 text-lg">›</span>
+                <span className="text-lg" style={{ color: '#bbbbbb' }}>›</span>
               </button>
             );
           })}

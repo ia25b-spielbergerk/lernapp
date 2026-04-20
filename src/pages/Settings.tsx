@@ -105,19 +105,20 @@ export default function SettingsPage() {
     window.location.href = '/';
   };
 
+  const TOGGLE_CLS = 'w-10 h-6 rounded-full transition-colors';
+  const KNOB_CLS = 'absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow-sm transition-transform duration-200';
+
   return (
     <Layout>
       <div className="max-w-lg mx-auto">
         <div className="flex items-center gap-2 mb-8">
           <Settings size={20} style={{ color: '#7F77DD' }} />
-          <h1 className="text-2xl font-bold app-text">Einstellungen</h1>
+          <h1 className="text-2xl font-semibold app-text">Einstellungen</h1>
         </div>
 
         {/* Darstellung */}
         <section className="mb-6">
-          <h2 className="text-xs font-semibold text-gray-400 dark:text-white/30 uppercase tracking-wider mb-3">
-            Darstellung
-          </h2>
+          <h2 className="section-label mb-3">Darstellung</h2>
           <div className="bg-card border app-border rounded-xl overflow-hidden">
             <button
               onClick={toggleDarkMode}
@@ -127,25 +128,21 @@ export default function SettingsPage() {
               <div className="flex items-center gap-3">
                 {darkMode
                   ? <Moon size={18} style={{ color: '#7F77DD' }} />
-                  : <Sun size={18} className="text-amber-400" />
+                  : <Sun size={18} style={{ color: '#EF9F27' }} />
                 }
                 <div className="text-left">
                   <p className="text-sm font-medium app-text">Dark Mode</p>
-                  <p className="text-xs text-gray-400 dark:text-white/40 mt-0.5">
+                  <p className="text-xs mt-0.5" style={{ color: '#888888' }}>
                     {darkMode ? 'Dunkles Design aktiv' : 'Helles Design aktiv'}
                   </p>
                 </div>
               </div>
               <div className="relative w-10 h-6 rounded-full shrink-0">
                 <div
-                  className="w-10 h-6 rounded-full transition-colors"
-                  style={darkMode ? { backgroundColor: '#7F77DD' } : { backgroundColor: '#e5e7eb' }}
+                  className={TOGGLE_CLS}
+                  style={{ backgroundColor: darkMode ? '#7F77DD' : '#ebebeb' }}
                 >
-                  <span
-                    className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow-sm transition-transform duration-200 ${
-                      darkMode ? 'translate-x-4' : 'translate-x-0'
-                    }`}
-                  />
+                  <span className={`${KNOB_CLS} ${darkMode ? 'translate-x-4' : 'translate-x-0'}`} />
                 </div>
               </div>
             </button>
@@ -154,9 +151,7 @@ export default function SettingsPage() {
 
         {/* Lernen */}
         <section className="mb-6">
-          <h2 className="text-xs font-semibold text-gray-400 dark:text-white/30 uppercase tracking-wider mb-3">
-            Lernen
-          </h2>
+          <h2 className="section-label mb-3">Lernen</h2>
           <div className="bg-card border app-border rounded-xl overflow-hidden">
             <button
               onClick={toggleMixed}
@@ -164,28 +159,20 @@ export default function SettingsPage() {
               aria-pressed={mixed}
             >
               <div className="flex items-center gap-3">
-                <Shuffle
-                  size={18}
-                  style={mixed ? { color: '#7F77DD' } : undefined}
-                  className={!mixed ? 'text-gray-400 dark:text-white/30' : ''}
-                />
+                <Shuffle size={18} style={{ color: mixed ? '#7F77DD' : '#888888' }} />
                 <div className="text-left">
                   <p className="text-sm font-medium app-text">Beide Richtungen</p>
-                  <p className="text-xs text-gray-400 dark:text-white/40 mt-0.5">
+                  <p className="text-xs mt-0.5" style={{ color: '#888888' }}>
                     Karten in beiden Sprachen gemischt abfragen
                   </p>
                 </div>
               </div>
               <div className="relative w-10 h-6 rounded-full shrink-0">
                 <div
-                  className="w-10 h-6 rounded-full transition-colors"
-                  style={mixed ? { backgroundColor: '#7F77DD' } : { backgroundColor: '#e5e7eb' }}
+                  className={TOGGLE_CLS}
+                  style={{ backgroundColor: mixed ? '#7F77DD' : '#ebebeb' }}
                 >
-                  <span
-                    className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow-sm transition-transform duration-200 ${
-                      mixed ? 'translate-x-4' : 'translate-x-0'
-                    }`}
-                  />
+                  <span className={`${KNOB_CLS} ${mixed ? 'translate-x-4' : 'translate-x-0'}`} />
                 </div>
               </div>
             </button>
@@ -194,9 +181,7 @@ export default function SettingsPage() {
 
         {/* Fortschritt */}
         <section className="mb-6">
-          <h2 className="text-xs font-semibold text-gray-400 dark:text-white/30 uppercase tracking-wider mb-3">
-            Fortschritt
-          </h2>
+          <h2 className="section-label mb-3">Fortschritt</h2>
           <div className="bg-card border app-border rounded-xl overflow-hidden">
             <button
               onClick={() => navigate('/badges')}
@@ -206,56 +191,47 @@ export default function SettingsPage() {
                 <Medal size={18} style={{ color: '#7F77DD' }} />
                 <div className="text-left">
                   <p className="text-sm font-medium app-text">Badges</p>
-                  <p className="text-xs text-gray-400 dark:text-white/40 mt-0.5">
+                  <p className="text-xs mt-0.5" style={{ color: '#888888' }}>
                     Errungenschaften und Fortschritt ansehen
                   </p>
                 </div>
               </div>
-              <ChevronRight size={16} className="text-gray-300 dark:text-white/20" />
+              <ChevronRight size={16} style={{ color: '#bbbbbb' }} />
             </button>
           </div>
         </section>
 
         {/* App */}
         <section className="mb-6">
-          <h2 className="text-xs font-semibold text-gray-400 dark:text-white/30 uppercase tracking-wider mb-3">
-            App
-          </h2>
+          <h2 className="section-label mb-3">App</h2>
           <div className="bg-card border app-border rounded-xl overflow-hidden divide-y app-divide">
 
-            {/* Onboarding erneut */}
             <button
               onClick={handleResetOnboarding}
               className="w-full flex items-center gap-3 px-4 py-3.5 text-left app-hover transition-colors cursor-pointer"
             >
               <RotateCcw size={18} style={{ color: '#7F77DD' }} className="shrink-0" />
               <div>
-                <p className="text-sm font-medium app-text">
-                  Einführung erneut anzeigen
-                </p>
-                <p className="text-xs text-gray-400 dark:text-white/40 mt-0.5">
+                <p className="text-sm font-medium app-text">Einführung erneut anzeigen</p>
+                <p className="text-xs mt-0.5" style={{ color: '#888888' }}>
                   Zeigt das Onboarding beim nächsten Start wieder an
                 </p>
               </div>
             </button>
 
-            {/* Statistiken zurücksetzen */}
             <button
               onClick={handleResetStats}
               className="w-full flex items-center gap-3 px-4 py-3.5 text-left app-hover transition-colors cursor-pointer"
             >
               <BarChart2 size={18} style={{ color: '#EF9F27' }} className="shrink-0" />
               <div>
-                <p className="text-sm font-medium app-text">
-                  Lernstatistiken zurücksetzen
-                </p>
-                <p className="text-xs text-gray-400 dark:text-white/40 mt-0.5">
+                <p className="text-sm font-medium app-text">Lernstatistiken zurücksetzen</p>
+                <p className="text-xs mt-0.5" style={{ color: '#888888' }}>
                   Kartenfehler, Fortschritt und Bestscores löschen
                 </p>
               </div>
             </button>
 
-            {/* App zurücksetzen */}
             <div>
               {!confirmReset ? (
                 <button
@@ -268,7 +244,7 @@ export default function SettingsPage() {
                   <Trash2 size={18} className="shrink-0" />
                   <div>
                     <p className="text-sm font-medium">App zurücksetzen</p>
-                    <p className="text-xs text-gray-400 dark:text-white/40 mt-0.5">
+                    <p className="text-xs mt-0.5" style={{ color: '#888888' }}>
                       Alle Daten löschen und Onboarding neu starten
                     </p>
                   </div>
@@ -278,13 +254,13 @@ export default function SettingsPage() {
                   <p className="text-sm font-semibold mb-0.5" style={{ color: '#E24B4A' }}>
                     Wirklich alles löschen?
                   </p>
-                  <p className="text-xs text-gray-400 dark:text-white/40 mb-4 leading-relaxed">
-                    Sets, Aufgaben, Gewohnheiten, Notizen, Tagebuch, XP und Kristalle werden unwiderruflich gelöscht. Das Onboarding wird erneut angezeigt.
+                  <p className="text-xs mb-4 leading-relaxed" style={{ color: '#888888' }}>
+                    Sets, Aufgaben, Gewohnheiten, Notizen, Tagebuch, XP und Kristalle werden unwiderruflich gelöscht.
                   </p>
                   <div className="flex gap-2">
                     <button
                       onClick={() => setConfirmReset(false)}
-                      className="flex-1 border app-border text-gray-600 dark:text-gray-400 text-sm font-medium py-2 rounded-lg app-hover transition-colors cursor-pointer"
+                      className="flex-1 border border-[#ebebeb] dark:border-[#2a2a2a] app-text text-sm font-medium py-2 rounded-lg app-hover transition-colors cursor-pointer"
                     >
                       Abbrechen
                     </button>
@@ -304,12 +280,9 @@ export default function SettingsPage() {
 
         {/* Daten */}
         <section className="mb-6">
-          <h2 className="text-xs font-semibold text-gray-400 dark:text-white/30 uppercase tracking-wider mb-3">
-            Daten
-          </h2>
+          <h2 className="section-label mb-3">Daten</h2>
           <div className="bg-card border app-border rounded-xl overflow-hidden divide-y app-divide">
 
-            {/* Export */}
             <button
               onClick={handleExport}
               className="w-full flex items-center gap-3 px-4 py-3.5 text-left app-hover transition-colors cursor-pointer"
@@ -317,13 +290,10 @@ export default function SettingsPage() {
               <Download size={18} style={{ color: '#7F77DD' }} className="shrink-0" />
               <div>
                 <p className="text-sm font-medium app-text">Daten exportieren</p>
-                <p className="text-xs text-gray-400 dark:text-white/40 mt-0.5">
-                  Alle Daten als JSON-Datei herunterladen
-                </p>
+                <p className="text-xs mt-0.5" style={{ color: '#888888' }}>Alle Daten als JSON-Datei herunterladen</p>
               </div>
             </button>
 
-            {/* Import */}
             <div>
               <input
                 ref={fileInputRef}
@@ -340,30 +310,25 @@ export default function SettingsPage() {
                   <Upload size={18} style={{ color: '#7F77DD' }} className="shrink-0" />
                   <div>
                     <p className="text-sm font-medium app-text">Daten importieren</p>
-                    <p className="text-xs text-gray-400 dark:text-white/40 mt-0.5">
-                      Backup-Datei einlesen und Daten wiederherstellen
-                    </p>
+                    <p className="text-xs mt-0.5" style={{ color: '#888888' }}>Backup-Datei einlesen und Daten wiederherstellen</p>
                   </div>
                 </button>
               ) : (
                 <div className="px-4 py-4" style={{ background: 'rgba(127,119,221,0.07)' }}>
-                  <p className="text-sm font-semibold mb-0.5" style={{ color: '#7F77DD' }}>
-                    Daten importieren?
-                  </p>
-                  <p className="text-xs text-gray-400 dark:text-white/40 mb-4 leading-relaxed">
-                    Alle aktuellen Daten werden durch die Backup-Datei überschrieben. Diese Aktion kann nicht rückgängig gemacht werden.
+                  <p className="text-sm font-semibold mb-0.5" style={{ color: '#7F77DD' }}>Daten importieren?</p>
+                  <p className="text-xs mb-4 leading-relaxed" style={{ color: '#888888' }}>
+                    Alle aktuellen Daten werden durch die Backup-Datei überschrieben.
                   </p>
                   <div className="flex gap-2">
                     <button
                       onClick={() => { setConfirmImport(false); setImportData(null); }}
-                      className="flex-1 border app-border text-gray-600 dark:text-gray-400 text-sm font-medium py-2 rounded-lg app-hover transition-colors cursor-pointer"
+                      className="flex-1 border border-[#ebebeb] dark:border-[#2a2a2a] app-text text-sm font-medium py-2 rounded-lg app-hover transition-colors cursor-pointer"
                     >
                       Abbrechen
                     </button>
                     <button
                       onClick={handleConfirmImport}
-                      className="flex-1 text-white text-sm font-medium py-2 rounded-lg transition-opacity hover:opacity-90 cursor-pointer"
-                      style={{ backgroundColor: '#7F77DD' }}
+                      className="flex-1 text-white text-sm font-medium py-2 rounded-lg transition-opacity hover:opacity-90 cursor-pointer bg-[#111111] dark:bg-white dark:text-[#111111]"
                     >
                       Importieren
                     </button>
@@ -376,12 +341,9 @@ export default function SettingsPage() {
 
         {/* Konto */}
         <section className="mb-6">
-          <h2 className="text-xs font-semibold text-gray-400 dark:text-white/30 uppercase tracking-wider mb-3">
-            Konto
-          </h2>
+          <h2 className="section-label mb-3">Konto</h2>
           <div className="bg-card border app-border rounded-xl overflow-hidden divide-y app-divide">
 
-            {/* Profil-Link */}
             <button
               onClick={() => navigate('/profil')}
               className="w-full flex items-center justify-between px-4 py-3.5 app-hover transition-colors cursor-pointer"
@@ -397,13 +359,12 @@ export default function SettingsPage() {
                   <p className="text-sm font-medium app-text">
                     {profile?.username ?? user?.email ?? '—'}
                   </p>
-                  <p className="text-xs text-gray-400 dark:text-white/30 mt-0.5">Profil bearbeiten</p>
+                  <p className="text-xs mt-0.5" style={{ color: '#888888' }}>Profil bearbeiten</p>
                 </div>
               </div>
-              <ChevronRight size={16} className="text-gray-300 dark:text-white/20" />
+              <ChevronRight size={16} style={{ color: '#bbbbbb' }} />
             </button>
 
-            {/* Abmelden */}
             <button
               onClick={async () => { await signOut(); navigate('/login', { replace: true }); }}
               className="w-full flex items-center gap-3 px-4 py-3.5 text-left transition-colors cursor-pointer"
@@ -418,7 +379,7 @@ export default function SettingsPage() {
         </section>
 
         {/* Version */}
-        <div className="flex items-center gap-2 text-gray-400 dark:text-white/20 text-xs px-1">
+        <div className="flex items-center gap-2 text-xs px-1" style={{ color: '#bbbbbb' }}>
           <Info size={13} />
           <span>Arete v{APP_VERSION}</span>
         </div>

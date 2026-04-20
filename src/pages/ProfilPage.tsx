@@ -60,25 +60,25 @@ export default function ProfilPage() {
         <div className="flex items-center gap-3 mb-8">
           <button
             onClick={() => navigate(-1)}
-            className="text-gray-400 dark:text-white/30 hover:text-gray-600 dark:hover:text-white/60 transition-colors cursor-pointer"
+            className="app-text-2 hover:app-text transition-colors cursor-pointer"
           >
             <ChevronLeft size={22} />
           </button>
           <div className="flex items-center gap-2">
             <User size={20} style={{ color: '#7F77DD' }} />
-            <h1 className="text-2xl font-bold app-text">Mein Profil</h1>
+            <h1 className="text-2xl font-semibold app-text">Mein Profil</h1>
           </div>
         </div>
 
         {/* Avatar */}
         <div className="flex flex-col items-center mb-8">
           <div
-            className="w-20 h-20 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-sm mb-2"
+            className="w-20 h-20 rounded-full flex items-center justify-center text-white text-2xl font-bold mb-2"
             style={{ backgroundColor: avatarColor }}
           >
             {initials}
           </div>
-          <p className="text-xs text-gray-400 dark:text-white/30">Avatar wird automatisch aus deinen Initialen erstellt</p>
+          <p className="text-xs" style={{ color: '#888888' }}>Avatar wird automatisch aus deinen Initialen erstellt</p>
         </div>
 
         {/* Felder */}
@@ -86,8 +86,8 @@ export default function ProfilPage() {
 
           {/* Benutzername */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-white/70 mb-1.5">
-              Benutzername <span className="text-[#E24B4A]">*</span>
+            <label className="block text-sm font-medium app-text mb-1.5">
+              Benutzername <span style={{ color: '#E24B4A' }}>*</span>
             </label>
             <input
               type="text"
@@ -95,25 +95,25 @@ export default function ProfilPage() {
               onChange={(e) => setUsername(e.target.value)}
               placeholder="Dein Benutzername"
               maxLength={50}
-              className="w-full px-4 py-2.5 border app-border rounded-xl bg-card app-text placeholder-gray-400 dark:placeholder-white/25 focus:outline-none focus:border-[#7F77DD] dark:focus:border-[#7F77DD] transition-colors text-sm"
+              className="w-full px-4 py-2.5 border border-[#ebebeb] dark:border-[#2a2a2a] rounded-lg bg-white dark:bg-[#1a1a1a] app-text placeholder-[#bbbbbb] focus:outline-none focus:border-[#111111] dark:focus:border-white transition-colors text-sm"
             />
           </div>
 
           {/* E-Mail (nur anzeigen) */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-white/70 mb-1.5">
+            <label className="block text-sm font-medium app-text mb-1.5">
               E-Mail-Adresse
             </label>
-            <div className="w-full px-4 py-2.5 border app-border rounded-xl bg-gray-50 dark:bg-white/3 text-gray-400 dark:text-white/30 text-sm select-none">
+            <div className="w-full px-4 py-2.5 border border-[#ebebeb] dark:border-[#2a2a2a] rounded-lg bg-[#f9f9f9] dark:bg-[#1a1a1a] text-sm select-none" style={{ color: '#888888' }}>
               {user?.email ?? '—'}
             </div>
-            <p className="text-xs text-gray-400 dark:text-white/25 mt-1">Die E-Mail-Adresse kann nicht geändert werden.</p>
+            <p className="text-xs mt-1" style={{ color: '#888888' }}>Die E-Mail-Adresse kann nicht geändert werden.</p>
           </div>
 
           {/* Bio */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-white/70 mb-1.5">
-              Kurze Bio <span className="text-gray-400 dark:text-white/30 font-normal">(optional)</span>
+            <label className="block text-sm font-medium app-text mb-1.5">
+              Kurze Bio <span className="font-normal" style={{ color: '#888888' }}>(optional)</span>
             </label>
             <textarea
               value={bio}
@@ -122,14 +122,14 @@ export default function ProfilPage() {
               }}
               placeholder="Erzähl kurz etwas über dich…"
               rows={3}
-              className="w-full px-4 py-2.5 border app-border rounded-xl bg-card app-text placeholder-gray-400 dark:placeholder-white/25 focus:outline-none focus:border-[#7F77DD] dark:focus:border-[#7F77DD] transition-colors text-sm resize-none"
+              className="w-full px-4 py-2.5 border border-[#ebebeb] dark:border-[#2a2a2a] rounded-lg bg-white dark:bg-[#1a1a1a] app-text placeholder-[#bbbbbb] focus:outline-none focus:border-[#111111] dark:focus:border-white transition-colors text-sm resize-none"
             />
-            <p className="text-xs text-gray-400 dark:text-white/25 mt-1 text-right">{bio.length}/150</p>
+            <p className="text-xs mt-1 text-right" style={{ color: '#888888' }}>{bio.length}/150</p>
           </div>
 
           {/* Farbe */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-white/70 mb-3">
+            <label className="block text-sm font-medium app-text mb-3">
               Avatar-Farbe
             </label>
             <div className="flex gap-3 flex-wrap">
@@ -153,7 +153,7 @@ export default function ProfilPage() {
 
           {/* Fehler */}
           {error && (
-            <div className="flex items-center gap-2 text-sm px-4 py-3 rounded-xl border" style={{ color: '#E24B4A', background: 'rgba(226,75,74,0.08)', borderColor: 'rgba(226,75,74,0.2)' }}>
+            <div className="flex items-center gap-2 text-sm px-4 py-3 rounded-lg border" style={{ color: '#E24B4A', background: 'rgba(226,75,74,0.08)', borderColor: 'rgba(226,75,74,0.2)' }}>
               <AlertCircle size={16} className="shrink-0" />
               {error}
             </div>
@@ -163,8 +163,8 @@ export default function ProfilPage() {
           <button
             onClick={handleSave}
             disabled={saving || !username.trim()}
-            className="w-full flex items-center justify-center gap-2 text-white font-medium py-2.5 rounded-xl transition-opacity disabled:opacity-50 cursor-pointer hover:opacity-90"
-            style={{ backgroundColor: saved ? '#1D9E75' : '#7F77DD' }}
+            className="w-full flex items-center justify-center gap-2 font-medium py-2.5 rounded-lg transition-opacity disabled:opacity-50 cursor-pointer hover:opacity-90"
+            style={{ backgroundColor: saved ? '#1D9E75' : '#111111', color: '#ffffff' }}
           >
             {saving ? (
               <span className="w-4 h-4 rounded-full border-2 border-white border-t-transparent animate-spin" />

@@ -32,22 +32,22 @@ export default function LoginPage() {
 
         {/* Logo */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center rounded-2xl mb-4 p-4" style={{ backgroundColor: '#0f1117' }}>
+          <div className="inline-flex items-center justify-center rounded-2xl mb-4 p-4 bg-[#111111]">
             <img src="/logo.svg" alt="Arete" className="h-12 w-auto" />
           </div>
-          <h1 className="text-2xl font-bold app-text">Arete</h1>
-          <p className="text-sm text-gray-400 dark:text-white/40 mt-1">Melde dich an um weiterzulernen</p>
+          <h1 className="text-2xl font-semibold app-text">Arete</h1>
+          <p className="text-sm mt-1" style={{ color: '#888888' }}>Melde dich an um weiterzulernen</p>
         </div>
 
         {/* Formular */}
         <form onSubmit={handleSubmit} className="space-y-4">
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-white/70 mb-1.5">
+            <label className="block text-sm font-medium app-text mb-1.5">
               E-Mail
             </label>
             <div className="relative">
-              <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-white/30 pointer-events-none" />
+              <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: '#888888' }} />
               <input
                 type="email"
                 value={email}
@@ -55,17 +55,17 @@ export default function LoginPage() {
                 placeholder="name@beispiel.de"
                 required
                 autoComplete="email"
-                className="w-full pl-9 pr-4 py-2.5 border app-border rounded-xl bg-card app-text placeholder-gray-400 dark:placeholder-white/25 focus:outline-none focus:border-[#7F77DD] dark:focus:border-[#7F77DD] transition-colors text-sm"
+                className="w-full pl-9 pr-4 py-2.5 border border-[#ebebeb] dark:border-[#2a2a2a] rounded-lg bg-white dark:bg-[#1a1a1a] app-text placeholder-[#bbbbbb] focus:outline-none focus:border-[#111111] dark:focus:border-white transition-colors text-sm"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-white/70 mb-1.5">
+            <label className="block text-sm font-medium app-text mb-1.5">
               Passwort
             </label>
             <div className="relative">
-              <Lock size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-white/30 pointer-events-none" />
+              <Lock size={16} className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: '#888888' }} />
               <input
                 type="password"
                 value={password}
@@ -73,7 +73,7 @@ export default function LoginPage() {
                 placeholder="Dein Passwort"
                 required
                 autoComplete="current-password"
-                className="w-full pl-9 pr-4 py-2.5 border app-border rounded-xl bg-card app-text placeholder-gray-400 dark:placeholder-white/25 focus:outline-none focus:border-[#7F77DD] dark:focus:border-[#7F77DD] transition-colors text-sm"
+                className="w-full pl-9 pr-4 py-2.5 border border-[#ebebeb] dark:border-[#2a2a2a] rounded-lg bg-white dark:bg-[#1a1a1a] app-text placeholder-[#bbbbbb] focus:outline-none focus:border-[#111111] dark:focus:border-white transition-colors text-sm"
               />
             </div>
           </div>
@@ -85,7 +85,7 @@ export default function LoginPage() {
           </div>
 
           {error && (
-            <p className="text-sm rounded-xl px-4 py-3 border" style={{ color: '#E24B4A', background: 'rgba(226,75,74,0.08)', borderColor: 'rgba(226,75,74,0.2)' }}>
+            <p className="text-sm rounded-lg px-4 py-3 border" style={{ color: '#E24B4A', background: 'rgba(226,75,74,0.08)', borderColor: 'rgba(226,75,74,0.2)' }}>
               {error}
             </p>
           )}
@@ -93,11 +93,10 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading || !email.trim() || !password}
-            className="w-full flex items-center justify-center gap-2 text-white font-medium py-2.5 rounded-xl transition-opacity disabled:opacity-50 cursor-pointer hover:opacity-90"
-            style={{ backgroundColor: '#7F77DD' }}
+            className="w-full flex items-center justify-center gap-2 font-medium py-2.5 rounded-lg transition-opacity disabled:opacity-50 cursor-pointer hover:opacity-90 bg-[#111111] dark:bg-white text-white dark:text-[#111111]"
           >
             {loading ? (
-              <span className="w-4 h-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
+              <span className="w-4 h-4 rounded-full border-2 border-current border-t-transparent animate-spin" />
             ) : (
               <LogIn size={16} />
             )}
@@ -105,7 +104,7 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <p className="text-center text-sm text-gray-400 dark:text-white/40 mt-6">
+        <p className="text-center text-sm mt-6" style={{ color: '#888888' }}>
           Noch kein Konto?{' '}
           <Link to="/register" className="font-medium hover:underline" style={{ color: '#7F77DD' }}>
             Jetzt registrieren

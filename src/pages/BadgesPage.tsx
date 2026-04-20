@@ -34,7 +34,7 @@ export default function BadgesPage() {
         </div>
 
         {/* Fortschrittsbalken — Violett */}
-        <div className="w-full bg-gray-100 dark:bg-white/10 rounded-full h-2 mb-8">
+        <div className="w-full bg-[#ebebeb] dark:bg-[#2a2a2a] rounded-full h-2 mb-8">
           <div
             className="h-2 rounded-full transition-all duration-500"
             style={{ width: `${(earned.length / BADGES.length) * 100}%`, backgroundColor: '#7F77DD' }}
@@ -43,7 +43,7 @@ export default function BadgesPage() {
 
         {earnedBadges.length > 0 && (
           <div className="mb-8">
-            <h2 className="text-xs font-semibold text-gray-500 dark:text-white/40 uppercase tracking-wide mb-3">Erreicht</h2>
+            <h2 className="section-label mb-3">Erreicht</h2>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {earnedBadges.map((badge) => {
                 const Icon = badge.icon;
@@ -66,7 +66,7 @@ export default function BadgesPage() {
 
         {lockedBadges.length > 0 && (
           <div>
-            <h2 className="text-xs font-semibold text-gray-400 dark:text-white/30 uppercase tracking-wide mb-3">Noch zu verdienen</h2>
+            <h2 className="section-label mb-3">Noch zu verdienen</h2>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {lockedBadges.map((badge) => {
                 const Icon = badge.icon;
@@ -85,7 +85,7 @@ export default function BadgesPage() {
                         <span>{current} / {max}</span>
                         <span>{pct}%</span>
                       </div>
-                      <div className="w-full bg-gray-200 dark:bg-white/10 rounded-full h-1.5">
+                      <div className="w-full bg-[#ebebeb] dark:bg-[#2a2a2a] rounded-full h-1.5">
                         <div
                           className="h-1.5 rounded-full transition-all duration-500"
                           style={{ width: `${pct}%`, backgroundColor: badge.color }}

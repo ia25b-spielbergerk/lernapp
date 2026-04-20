@@ -94,52 +94,52 @@ export default function LernenPage() {
     <Layout>
       {/* Kompakte Stats-Leiste */}
       <div className={`flex items-center bg-card border app-border rounded-xl px-4 py-2.5 gap-0 ${daily?.completed ? 'mb-2' : 'mb-4'}`}>
-        {/* Streak — Orange */}
+        {/* Streak */}
         <div className="flex items-center gap-1.5 pr-4 border-r app-border">
-          <Flame size={15} style={{ color: activeToday ? '#EF9F27' : undefined }} className={!activeToday ? 'text-gray-300 dark:text-white/20' : ''} />
-          <span className="text-sm font-semibold" style={{ color: activeToday ? '#EF9F27' : undefined }}>
+          <Flame size={15} style={{ color: activeToday ? '#EF9F27' : '#bbbbbb' }} />
+          <span className="text-sm font-semibold" style={{ color: activeToday ? '#EF9F27' : '#bbbbbb' }}>
             {user.streak}
           </span>
-          <span className="text-xs text-gray-400 dark:text-white/30">Streak</span>
+          <span className="text-xs" style={{ color: '#888888' }}>Streak</span>
         </div>
 
-        {/* XP / Level — Violett */}
+        {/* XP / Level */}
         <div className="flex items-center gap-2 px-4 border-r app-border flex-1 min-w-0">
           <span className="text-xs font-semibold whitespace-nowrap" style={{ color: '#7F77DD' }}>
             Lvl {levelInfo.level}
           </span>
-          <span className="text-xs font-medium text-gray-500 dark:text-white/40 whitespace-nowrap hidden sm:inline">
+          <span className="text-xs font-medium whitespace-nowrap hidden sm:inline" style={{ color: '#888888' }}>
             {levelInfo.name}
           </span>
-          <div className="w-28 shrink-0 h-1.5 bg-gray-200 dark:bg-white/10 rounded-full overflow-hidden">
+          <div className="w-28 shrink-0 h-1.5 bg-[#ebebeb] dark:bg-[#2a2a2a] rounded-full overflow-hidden">
             <div
               className="h-full rounded-full transition-all duration-500"
               style={{ width: `${Math.round(levelInfo.progressInLevel * 100)}%`, backgroundColor: '#7F77DD' }}
             />
           </div>
-          <span className="text-xs text-gray-400 dark:text-white/30 whitespace-nowrap">
+          <span className="text-xs whitespace-nowrap" style={{ color: '#888888' }}>
             {levelInfo.xpForNext !== null
               ? `${levelInfo.xpInCurrentLevel} / ${levelInfo.xpInCurrentLevel + levelInfo.xpForNext} XP`
               : 'Max'}
           </span>
         </div>
 
-        {/* Badges — Violett */}
+        {/* Badges */}
         <Link
           to="/badges"
           className="flex items-center gap-1.5 pl-4 transition-opacity hover:opacity-70"
         >
-          <Medal size={14} style={{ color: badgeCount > 0 ? '#7F77DD' : undefined }} className={badgeCount === 0 ? 'text-gray-400 dark:text-white/20' : ''} />
-          <span className="text-sm font-semibold text-gray-700 dark:text-white/70">{badgeCount}</span>
-          <span className="text-xs text-gray-400 dark:text-white/30 hidden sm:inline">Badges</span>
+          <Medal size={14} style={{ color: badgeCount > 0 ? '#7F77DD' : '#bbbbbb' }} />
+          <span className="text-sm font-semibold app-text">{badgeCount}</span>
+          <span className="text-xs hidden sm:inline" style={{ color: '#888888' }}>Badges</span>
         </Link>
       </div>
 
       {/* Tages-Herausforderung */}
       {daily && daily.cards.length > 0 && (
         daily.completed ? (
-          <div className="flex items-center gap-1.5 text-xs text-green-600 dark:text-green-500 mb-3 px-0.5">
-            <CircleCheck size={13} className="shrink-0" style={{ color: '#1D9E75' }} />
+          <div className="flex items-center gap-1.5 text-xs mb-3 px-0.5" style={{ color: '#1D9E75' }}>
+            <CircleCheck size={13} className="shrink-0" />
             <span className="flex items-center gap-1 flex-wrap">
               Tägliche Challenge erledigt – {daily.score}%
               {daily.challengeStreak > 1 && (
@@ -171,31 +171,29 @@ export default function LernenPage() {
 
       {/* Sets */}
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+        <h2 className="text-lg font-semibold app-text">
           Meine Sets{' '}
           {sets.length > 0 && (
-            <span className="text-gray-400 font-normal text-base">({sets.length})</span>
+            <span className="font-normal text-base" style={{ color: '#888888' }}>({sets.length})</span>
           )}
         </h2>
         {sets.length > 1 && (
           <div ref={sortRef} className="relative">
             <button
               onClick={() => setSortOpen((v) => !v)}
-              className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg px-2.5 py-1.5 hover:border-gray-300 dark:hover:border-gray-600 transition-colors cursor-pointer"
+              className="flex items-center gap-1 text-xs bg-white dark:bg-[#1a1a1a] border border-[#ebebeb] dark:border-[#2a2a2a] rounded-lg px-2.5 py-1.5 hover:border-[#d0d0d0] dark:hover:border-[#3a3a3a] transition-colors cursor-pointer app-text"
             >
               {SORT_LABELS[sortBy]}
-              <span className="text-gray-300 dark:text-gray-600">▾</span>
+              <span style={{ color: '#bbbbbb' }}>▾</span>
             </button>
             {sortOpen && (
-              <div className="absolute right-0 top-full mt-1 w-44 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg z-20 py-1 overflow-hidden">
+              <div className="absolute right-0 top-full mt-1 w-44 bg-white dark:bg-[#1a1a1a] border border-[#ebebeb] dark:border-[#2a2a2a] rounded-xl shadow-lg z-20 py-1 overflow-hidden">
                 {(Object.keys(SORT_LABELS) as SortOption[]).map((opt) => (
                   <button
                     key={opt}
                     onClick={() => { setSortBy(opt); setSortOpen(false); }}
-                    className={`w-full text-left px-3 py-2 text-xs transition-colors cursor-pointer ${
-                      sortBy === opt
-                        ? 'font-medium'
-                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                    className={`w-full text-left px-3 py-2 text-xs transition-colors cursor-pointer app-hover ${
+                      sortBy === opt ? 'font-semibold app-text' : 'app-text'
                     }`}
                   >
                     {SORT_LABELS[opt]}
@@ -208,16 +206,15 @@ export default function LernenPage() {
       </div>
 
       {sets.length === 0 ? (
-        <div className="text-center py-20 border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-2xl">
-          <PackageOpen size={56} className="mx-auto mb-4 text-gray-300 dark:text-gray-600" />
-          <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-2">Noch keine Sets</h3>
-          <p className="text-gray-400 text-sm mb-6">
+        <div className="text-center py-20 border-2 border-dashed border-[#ebebeb] dark:border-[#2a2a2a] rounded-2xl">
+          <PackageOpen size={56} className="mx-auto mb-4" style={{ color: '#bbbbbb' }} />
+          <h3 className="text-lg font-semibold app-text mb-2">Noch keine Sets</h3>
+          <p className="text-sm mb-6" style={{ color: '#888888' }}>
             Erstelle dein erstes Vokabelset und fang an zu lernen!
           </p>
           <Link
             to="/sets/new"
-            className="inline-block text-white font-medium px-6 py-2.5 rounded-lg transition-opacity hover:opacity-80"
-            style={{ backgroundColor: '#7F77DD' }}
+            className="inline-block font-medium px-6 py-2.5 rounded-lg transition-opacity hover:opacity-80 bg-[#111111] dark:bg-white text-white dark:text-[#111111]"
           >
             Erstes Set erstellen
           </Link>
@@ -229,7 +226,10 @@ export default function LernenPage() {
           ))}
           <Link
             to="/sets/new"
-            className="flex flex-col items-center justify-center border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-xl p-5 text-gray-400 dark:text-gray-600 hover:border-[#7F77DD]/40 hover:text-[#7F77DD] transition-all min-h-[160px]"
+            className="flex flex-col items-center justify-center border-2 border-dashed border-[#ebebeb] dark:border-[#2a2a2a] rounded-xl p-5 transition-all min-h-[160px] hover:border-[#d0d0d0] dark:hover:border-[#3a3a3a]"
+            style={{ color: '#888888' }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text-1)')}
+            onMouseLeave={(e) => (e.currentTarget.style.color = '#888888')}
           >
             <span className="text-3xl mb-2">+</span>
             <span className="text-sm font-medium">Neues Set</span>
@@ -237,16 +237,22 @@ export default function LernenPage() {
         </div>
       )}
       {sets.length > 0 && (
-        <div className="flex items-center justify-center gap-4 mt-8 pt-6 border-t border-gray-100 dark:border-gray-800">
+        <div className="flex items-center justify-center gap-4 mt-8 pt-6 border-t border-[#ebebeb] dark:border-[#2a2a2a]">
           <button
             onClick={handleExport}
-            className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors cursor-pointer"
+            className="flex items-center gap-1.5 text-xs transition-colors cursor-pointer"
+            style={{ color: '#888888' }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text-1)')}
+            onMouseLeave={(e) => (e.currentTarget.style.color = '#888888')}
           >
             <Download size={13} /> Daten exportieren
           </button>
           <button
             onClick={() => importRef.current?.click()}
-            className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors cursor-pointer"
+            className="flex items-center gap-1.5 text-xs transition-colors cursor-pointer"
+            style={{ color: '#888888' }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text-1)')}
+            onMouseLeave={(e) => (e.currentTarget.style.color = '#888888')}
           >
             <Upload size={13} /> Daten importieren
           </button>

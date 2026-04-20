@@ -53,11 +53,11 @@ export default function SetCard({ set }: Props) {
   const bestScore = Math.max(progress?.bestQuizScore ?? 0, progress?.bestTestScore ?? 0);
 
   return (
-    <div className="bg-card border app-border rounded-xl p-5 hover:border-[#7F77DD]/50 hover:shadow-md transition-all">
+    <div className="bg-card border app-border rounded-xl p-5 hover:border-[#d0d0d0] dark:hover:border-[#3a3a3a] transition-all">
       <div className="flex items-start justify-between gap-2 mb-3">
         <div className="min-w-0">
-          <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-base truncate">{set.name}</h3>
-          <p className="text-sm text-gray-400 mt-0.5 truncate">
+          <h3 className="font-semibold app-text text-base truncate">{set.name}</h3>
+          <p className="text-sm mt-0.5 truncate" style={{ color: '#888888' }}>
             {set.language1} → {set.language2}
           </p>
         </div>
@@ -66,25 +66,28 @@ export default function SetCard({ set }: Props) {
         <div ref={menuRef} className="relative shrink-0">
           <button
             onClick={(e) => { e.preventDefault(); setMenuOpen((v) => !v); }}
-            className="p-1.5 rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors cursor-pointer"
+            className="p-1.5 rounded-lg transition-colors cursor-pointer"
+            style={{ color: '#888888' }}
+            onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--bg-hover)')}
+            onMouseLeave={(e) => (e.currentTarget.style.background = '')}
           >
             <MoreVertical size={16} />
           </button>
 
           {menuOpen && (
-            <div className="absolute right-0 top-full mt-1 w-40 bg-white dark:bg-[#1a1d26] border app-border rounded-xl shadow-lg z-20 py-1 overflow-hidden">
+            <div className="absolute right-0 top-full mt-1 w-40 bg-white dark:bg-[#1a1a1a] border border-[#ebebeb] dark:border-[#2a2a2a] rounded-xl shadow-lg z-20 py-1 overflow-hidden">
               <Link
                 to={`/sets/${set.id}/edit`}
                 onClick={() => setMenuOpen(false)}
-                className="flex items-center gap-2.5 px-3 py-2 text-sm text-gray-700 dark:text-white/70 app-hover transition-colors cursor-pointer"
+                className="flex items-center gap-2.5 px-3 py-2 text-sm app-text app-hover transition-colors cursor-pointer"
               >
-                <Pencil size={14} className="text-gray-400 dark:text-white/30" /> Bearbeiten
+                <Pencil size={14} style={{ color: '#888888' }} /> Bearbeiten
               </Link>
               <button
                 onClick={handleDuplicate}
-                className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-gray-700 dark:text-white/70 app-hover transition-colors cursor-pointer"
+                className="w-full flex items-center gap-2.5 px-3 py-2 text-sm app-text app-hover transition-colors cursor-pointer"
               >
-                <Copy size={14} className="text-gray-400 dark:text-white/30" /> Kopieren
+                <Copy size={14} style={{ color: '#888888' }} /> Kopieren
               </button>
               <button
                 onClick={handleDelete}
@@ -101,7 +104,7 @@ export default function SetCard({ set }: Props) {
       </div>
 
       <div className="flex items-center gap-3 mb-4 flex-wrap">
-        <span className="text-sm text-gray-500 dark:text-gray-400">
+        <span className="text-sm" style={{ color: '#888888' }}>
           {set.cards.length} {set.cards.length === 1 ? 'Karte' : 'Karten'}
         </span>
         {bestScore > 0 && (
@@ -118,8 +121,7 @@ export default function SetCard({ set }: Props) {
 
       <Link
         to={`/sets/${set.id}/study`}
-        className="block w-full text-center text-white text-sm font-medium py-2 rounded-lg transition-opacity hover:opacity-80"
-        style={{ backgroundColor: '#7F77DD' }}
+        className="block w-full text-center text-sm font-medium py-2 rounded-lg transition-opacity hover:opacity-80 bg-[#111111] dark:bg-white text-white dark:text-[#111111]"
       >
         Lernen
       </Link>

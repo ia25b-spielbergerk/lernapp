@@ -39,14 +39,13 @@ export default function RegisterPage() {
           <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl mb-4" style={{ backgroundColor: 'rgba(29,158,117,0.12)' }}>
             <Check size={28} style={{ color: '#1D9E75' }} />
           </div>
-          <h2 className="text-xl font-bold app-text mb-2">Registrierung erfolgreich!</h2>
-          <p className="text-sm text-gray-400 dark:text-white/40 mb-6">
-            Wir haben dir eine Bestätigungs-E-Mail an <strong className="text-gray-700 dark:text-white/70">{email}</strong> geschickt. Bitte bestätige deine E-Mail-Adresse und melde dich dann an.
+          <h2 className="text-xl font-semibold app-text mb-2">Registrierung erfolgreich!</h2>
+          <p className="text-sm mb-6" style={{ color: '#888888' }}>
+            Wir haben dir eine Bestätigungs-E-Mail an <strong className="app-text">{email}</strong> geschickt. Bitte bestätige deine E-Mail-Adresse und melde dich dann an.
           </p>
           <button
             onClick={() => navigate('/login', { replace: true })}
-            className="text-white font-medium px-6 py-2.5 rounded-xl transition-opacity hover:opacity-90 cursor-pointer"
-            style={{ backgroundColor: '#7F77DD' }}
+            className="bg-[#111111] dark:bg-white text-white dark:text-[#111111] font-medium px-6 py-2.5 rounded-lg transition-opacity hover:opacity-90 cursor-pointer"
           >
             Zum Login
           </button>
@@ -61,22 +60,22 @@ export default function RegisterPage() {
 
         {/* Logo */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center rounded-2xl mb-4 p-4" style={{ backgroundColor: '#0f1117' }}>
+          <div className="inline-flex items-center justify-center rounded-2xl mb-4 p-4 bg-[#111111]">
             <img src="/logo.svg" alt="Arete" className="h-12 w-auto" />
           </div>
-          <h1 className="text-2xl font-bold app-text">Konto erstellen</h1>
-          <p className="text-sm text-gray-400 dark:text-white/40 mt-1">Starte deine Lernreise</p>
+          <h1 className="text-2xl font-semibold app-text">Konto erstellen</h1>
+          <p className="text-sm mt-1" style={{ color: '#888888' }}>Starte deine Lernreise</p>
         </div>
 
         {/* Formular */}
         <form onSubmit={handleSubmit} className="space-y-4">
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-white/70 mb-1.5">
+            <label className="block text-sm font-medium app-text mb-1.5">
               Benutzername
             </label>
             <div className="relative">
-              <User size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-white/30 pointer-events-none" />
+              <User size={16} className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: '#888888' }} />
               <input
                 type="text"
                 value={username}
@@ -84,17 +83,17 @@ export default function RegisterPage() {
                 placeholder="Dein Benutzername"
                 required
                 autoComplete="username"
-                className="w-full pl-9 pr-4 py-2.5 border app-border rounded-xl bg-card app-text placeholder-gray-400 dark:placeholder-white/25 focus:outline-none focus:border-[#7F77DD] dark:focus:border-[#7F77DD] transition-colors text-sm"
+                className="w-full pl-9 pr-4 py-2.5 border border-[#ebebeb] dark:border-[#2a2a2a] rounded-lg bg-white dark:bg-[#1a1a1a] app-text placeholder-[#bbbbbb] focus:outline-none focus:border-[#111111] dark:focus:border-white transition-colors text-sm"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-white/70 mb-1.5">
+            <label className="block text-sm font-medium app-text mb-1.5">
               E-Mail
             </label>
             <div className="relative">
-              <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-white/30 pointer-events-none" />
+              <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: '#888888' }} />
               <input
                 type="email"
                 value={email}
@@ -102,17 +101,17 @@ export default function RegisterPage() {
                 placeholder="name@beispiel.de"
                 required
                 autoComplete="email"
-                className="w-full pl-9 pr-4 py-2.5 border app-border rounded-xl bg-card app-text placeholder-gray-400 dark:placeholder-white/25 focus:outline-none focus:border-[#7F77DD] dark:focus:border-[#7F77DD] transition-colors text-sm"
+                className="w-full pl-9 pr-4 py-2.5 border border-[#ebebeb] dark:border-[#2a2a2a] rounded-lg bg-white dark:bg-[#1a1a1a] app-text placeholder-[#bbbbbb] focus:outline-none focus:border-[#111111] dark:focus:border-white transition-colors text-sm"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-white/70 mb-1.5">
-              Passwort <span className="text-gray-400 dark:text-white/30 font-normal">(mind. 6 Zeichen)</span>
+            <label className="block text-sm font-medium app-text mb-1.5">
+              Passwort <span className="font-normal" style={{ color: '#888888' }}>(mind. 6 Zeichen)</span>
             </label>
             <div className="relative">
-              <Lock size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-white/30 pointer-events-none" />
+              <Lock size={16} className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: '#888888' }} />
               <input
                 type="password"
                 value={password}
@@ -120,17 +119,17 @@ export default function RegisterPage() {
                 placeholder="Passwort wählen"
                 required
                 autoComplete="new-password"
-                className="w-full pl-9 pr-4 py-2.5 border app-border rounded-xl bg-card app-text placeholder-gray-400 dark:placeholder-white/25 focus:outline-none focus:border-[#7F77DD] dark:focus:border-[#7F77DD] transition-colors text-sm"
+                className="w-full pl-9 pr-4 py-2.5 border border-[#ebebeb] dark:border-[#2a2a2a] rounded-lg bg-white dark:bg-[#1a1a1a] app-text placeholder-[#bbbbbb] focus:outline-none focus:border-[#111111] dark:focus:border-white transition-colors text-sm"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-white/70 mb-1.5">
+            <label className="block text-sm font-medium app-text mb-1.5">
               Passwort bestätigen
             </label>
             <div className="relative">
-              <Lock size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-white/30 pointer-events-none" />
+              <Lock size={16} className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: '#888888' }} />
               <input
                 type="password"
                 value={confirm}
@@ -138,10 +137,10 @@ export default function RegisterPage() {
                 placeholder="Passwort wiederholen"
                 required
                 autoComplete="new-password"
-                className={`w-full pl-9 pr-4 py-2.5 border rounded-xl bg-card app-text placeholder-gray-400 dark:placeholder-white/25 focus:outline-none transition-colors text-sm ${
+                className={`w-full pl-9 pr-4 py-2.5 border rounded-lg bg-white dark:bg-[#1a1a1a] app-text placeholder-[#bbbbbb] focus:outline-none transition-colors text-sm ${
                   confirm && !passwordsMatch
                     ? 'border-[#E24B4A] focus:border-[#E24B4A]'
-                    : 'app-border focus:border-[#7F77DD] dark:focus:border-[#7F77DD]'
+                    : 'border-[#ebebeb] dark:border-[#2a2a2a] focus:border-[#111111] dark:focus:border-white'
                 }`}
               />
             </div>
@@ -151,7 +150,7 @@ export default function RegisterPage() {
           </div>
 
           {error && (
-            <p className="text-sm rounded-xl px-4 py-3 border" style={{ color: '#E24B4A', background: 'rgba(226,75,74,0.08)', borderColor: 'rgba(226,75,74,0.2)' }}>
+            <p className="text-sm rounded-lg px-4 py-3 border" style={{ color: '#E24B4A', background: 'rgba(226,75,74,0.08)', borderColor: 'rgba(226,75,74,0.2)' }}>
               {error}
             </p>
           )}
@@ -159,11 +158,10 @@ export default function RegisterPage() {
           <button
             type="submit"
             disabled={loading || !username.trim() || !email.trim() || !password || !passwordsMatch || !passwordLongEnough}
-            className="w-full flex items-center justify-center gap-2 text-white font-medium py-2.5 rounded-xl transition-opacity disabled:opacity-50 cursor-pointer hover:opacity-90"
-            style={{ backgroundColor: '#7F77DD' }}
+            className="w-full flex items-center justify-center gap-2 font-medium py-2.5 rounded-lg transition-opacity disabled:opacity-50 cursor-pointer hover:opacity-90 bg-[#111111] dark:bg-white text-white dark:text-[#111111]"
           >
             {loading ? (
-              <span className="w-4 h-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
+              <span className="w-4 h-4 rounded-full border-2 border-current border-t-transparent animate-spin" />
             ) : (
               <UserPlus size={16} />
             )}
@@ -171,7 +169,7 @@ export default function RegisterPage() {
           </button>
         </form>
 
-        <p className="text-center text-sm text-gray-400 dark:text-white/40 mt-6">
+        <p className="text-center text-sm mt-6" style={{ color: '#888888' }}>
           Bereits ein Konto?{' '}
           <Link to="/login" className="font-medium hover:underline" style={{ color: '#7F77DD' }}>
             Anmelden

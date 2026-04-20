@@ -81,7 +81,7 @@ export default function Results() {
         {/* Falsche Antworten */}
         {wrong.length > 0 && (
           <div className="mb-8">
-            <h2 className="text-sm font-semibold text-gray-700 dark:text-white/70 mb-3">Noch zu lernen:</h2>
+            <h2 className="text-sm font-semibold app-text mb-3">Noch zu lernen:</h2>
             <div className="space-y-2">
               {wrong.map((a, i) => (
                 <div
@@ -104,14 +104,13 @@ export default function Results() {
         <div className="flex gap-3">
           <button
             onClick={() => navigate(`/sets/${state.setId}/${state.mode}`)}
-            className="flex-1 border app-border text-gray-600 dark:text-white/60 app-hover font-medium py-2.5 rounded-lg transition-colors text-sm cursor-pointer"
+            className="flex-1 border app-border app-text app-hover font-medium py-2.5 rounded-lg transition-colors text-sm cursor-pointer"
           >
             Nochmal
           </button>
           <button
             onClick={() => navigate('/lernen')}
-            className="flex-1 text-white font-medium py-2.5 rounded-lg transition-opacity hover:opacity-80 text-sm cursor-pointer"
-            style={{ backgroundColor: '#7F77DD' }}
+            className="flex-1 font-medium py-2.5 rounded-lg transition-opacity hover:opacity-80 text-sm cursor-pointer bg-[#111111] dark:bg-white text-white dark:text-[#111111]"
           >
             Zurück zum Lernen
           </button>

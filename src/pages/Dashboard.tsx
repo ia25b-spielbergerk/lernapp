@@ -77,15 +77,15 @@ function WeatherWidget() {
 
   if (loading) return (
     <div className="flex items-center gap-1.5 animate-pulse">
-      <div className="w-4 h-4 rounded bg-gray-200 dark:bg-white/10" />
-      <div className="w-12 h-3 rounded bg-gray-200 dark:bg-white/10" />
+      <div className="w-4 h-4 rounded bg-[#ebebeb] dark:bg-[#2a2a2a]" />
+      <div className="w-12 h-3 rounded bg-[#ebebeb] dark:bg-[#2a2a2a]" />
     </div>
   );
   if (!weather) return null;
 
   const Icon = getWeatherIcon(weather.code);
   return (
-    <div className="flex items-center gap-1.5 text-gray-400 dark:text-white/50">
+    <div className="flex items-center gap-1.5" style={{ color: '#888888' }}>
       <Icon size={16} />
       <span className="text-sm font-medium">{weather.temp}°C</span>
     </div>
@@ -165,7 +165,7 @@ export default function Dashboard() {
           <p className="text-2xl font-bold app-text">
             {WEEKDAYS[now.getDay()]}, {now.getDate()}. {MONTHS[now.getMonth()]}
           </p>
-          <p className="text-sm text-gray-400 dark:text-white/40 mt-0.5">
+          <p className="text-sm mt-0.5" style={{ color: '#888888' }}>
             {getGreeting(now.getHours())}{profile?.username ? `, ${profile.username}` : ''}!
           </p>
         </div>
@@ -173,7 +173,8 @@ export default function Dashboard() {
           <WeatherWidget />
           <Link
             to="/settings"
-            className="text-gray-400 dark:text-white/30 hover:text-gray-600 dark:hover:text-white/60 transition-colors"
+            className="transition-colors"
+            style={{ color: '#888888' }}
             aria-label="Einstellungen"
           >
             <Settings size={18} />
@@ -201,13 +202,12 @@ export default function Dashboard() {
           <h2 className="text-lg font-bold app-text mb-1">
             Bereit loszulegen?
           </h2>
-          <p className="text-sm text-gray-500 dark:text-white/40 mb-4 leading-relaxed">
+          <p className="text-sm mb-4 leading-relaxed" style={{ color: '#888888' }}>
             Erstelle dein erstes Vokabelset und fang noch heute an zu lernen.
           </p>
           <Link
             to="/sets/new"
-            className="flex items-center justify-center gap-2 text-white font-semibold py-3 rounded-xl text-sm hover:opacity-90 transition-opacity mb-3"
-            style={{ backgroundColor: '#7F77DD' }}
+            className="flex items-center justify-center gap-2 font-semibold py-3 rounded-xl text-sm hover:opacity-90 transition-opacity mb-3 bg-[#111111] dark:bg-white text-white dark:text-[#111111]"
           >
             <BookOpen size={16} /> Erstes Set erstellen <ArrowRight size={15} />
           </Link>
@@ -242,7 +242,7 @@ export default function Dashboard() {
             <p className="text-xl font-bold leading-none" style={{ color: activeToday ? '#EF9F27' : 'rgba(239,159,39,0.4)' }}>
               {user.streak}
             </p>
-            <p className="text-xs text-gray-400 dark:text-white/40 mt-0.5">Tage Streak</p>
+            <p className="text-xs mt-0.5" style={{ color: '#888888' }}>Tage Streak</p>
           </div>
         </div>
         {/* Kristalle — Blau */}
@@ -255,7 +255,7 @@ export default function Dashboard() {
             <p className="text-xl font-bold leading-none" style={{ color: '#378ADD' }}>
               {user.crystals ?? 0}
             </p>
-            <p className="text-xs text-gray-400 dark:text-white/40 mt-0.5">Kristalle</p>
+            <p className="text-xs mt-0.5" style={{ color: '#888888' }}>Kristalle</p>
           </div>
         </div>
       </div>
@@ -277,7 +277,7 @@ export default function Dashboard() {
             }
             <div>
               <p className="text-sm font-medium" style={{ color: '#1D9E75' }}>Tägliche Challenge</p>
-              <p className="text-xs text-gray-400 dark:text-white/40">
+              <p className="text-xs" style={{ color: '#888888' }}>
                 {daily.completed ? `Erledigt · ${daily.score}%` : `${daily.cards.length} Karten warten`}
               </p>
             </div>
@@ -302,7 +302,7 @@ export default function Dashboard() {
         >
           <div className="flex items-center gap-1 mb-1">
             <Zap size={11} style={{ color: '#7F77DD' }} />
-            <p className="text-[10px] text-gray-400 dark:text-white/40">XP heute</p>
+            <p className="text-[10px]" style={{ color: '#888888' }}>XP heute</p>
           </div>
           <p className="text-lg font-bold leading-none" style={{ color: '#7F77DD' }}>{xpToday}</p>
         </div>
@@ -312,7 +312,7 @@ export default function Dashboard() {
         >
           <div className="flex items-center gap-1 mb-1">
             <BookOpen size={11} style={{ color: '#7F77DD' }} />
-            <p className="text-[10px] text-gray-400 dark:text-white/40">Sessions</p>
+            <p className="text-[10px]" style={{ color: '#888888' }}>Sessions</p>
           </div>
           <p className="text-lg font-bold leading-none" style={{ color: '#7F77DD' }}>{sessionsToday}</p>
         </div>
@@ -322,7 +322,7 @@ export default function Dashboard() {
         >
           <div className="flex items-center gap-1 mb-1">
             <Repeat2 size={11} style={{ color: '#EF9F27' }} />
-            <p className="text-[10px] text-gray-400 dark:text-white/40">Habits</p>
+            <p className="text-[10px]" style={{ color: '#888888' }}>Habits</p>
           </div>
           <p className="text-lg font-bold leading-none" style={{ color: '#EF9F27' }}>
             {habitsDoneToday}<span className="text-xs font-normal opacity-50">/{habits.length}</span>
@@ -333,14 +333,14 @@ export default function Dashboard() {
       {/* Heutige Tasks */}
       <div className="mb-4">
         <div className="flex items-center justify-between mb-2">
-          <h2 className="text-sm font-semibold text-gray-700 dark:text-white/70">Heutige Aufgaben</h2>
+          <h2 className="text-sm font-semibold app-text">Heutige Aufgaben</h2>
           <Link to="/planer" className="flex items-center gap-0.5 text-xs transition-opacity hover:opacity-70" style={{ color: '#1D9E75' }}>
             Alle <ChevronRight size={13} />
           </Link>
         </div>
         <div className="bg-card border app-border rounded-xl overflow-hidden">
           {previewTasks.length === 0 ? (
-            <p className="text-xs text-gray-400 dark:text-white/30 px-4 py-3 text-center">
+            <p className="text-xs px-4 py-3 text-center" style={{ color: '#888888' }}>
               {todayTasks.filter(isTaskDone).length === todayTasks.length && todayTasks.length > 0
                 ? 'Alle Aufgaben erledigt!'
                 : 'Keine Aufgaben für heute'}
@@ -354,8 +354,8 @@ export default function Dashboard() {
                   i < previewTasks.length - 1 ? 'border-b app-border' : ''
                 }`}
               >
-                <div className="w-4 h-4 rounded-full border-2 border-gray-300 dark:border-white/20 shrink-0" />
-                <span className="flex-1 text-sm text-gray-700 dark:text-white/80 truncate">{task.title}</span>
+                <div className="w-4 h-4 rounded-full border-2 border-[#d0d0d0] dark:border-[#3a3a3a] shrink-0" />
+                <span className="flex-1 text-sm app-text truncate">{task.title}</span>
                 <span className={`w-2 h-2 rounded-full shrink-0 ${PRIORITY_DOT[task.priority]}`} />
               </button>
             ))
@@ -366,14 +366,14 @@ export default function Dashboard() {
       {/* Heutige Habits — Orange */}
       <div className="mb-4">
         <div className="flex items-center justify-between mb-2">
-          <h2 className="text-sm font-semibold text-gray-700 dark:text-white/70">Gewohnheiten heute</h2>
+          <h2 className="text-sm font-semibold app-text">Gewohnheiten heute</h2>
           <Link to="/gewohnheiten" className="flex items-center gap-0.5 text-xs transition-opacity hover:opacity-70" style={{ color: '#EF9F27' }}>
             Alle <ChevronRight size={13} />
           </Link>
         </div>
         <div className="bg-card border app-border rounded-xl overflow-hidden">
           {habits.length === 0 ? (
-            <p className="text-xs text-gray-400 dark:text-white/30 px-4 py-3 text-center">Noch keine Gewohnheiten angelegt</p>
+            <p className="text-xs px-4 py-3 text-center" style={{ color: '#888888' }}>Noch keine Gewohnheiten angelegt</p>
           ) : (
             habits.map((habit, i) => {
               const done = habit.checkIns.includes(today);
@@ -394,7 +394,8 @@ export default function Dashboard() {
                   >
                     {done && <Check size={10} className="text-white" strokeWidth={3} />}
                   </div>
-                  <span className={`flex-1 text-sm truncate transition-colors ${done ? 'line-through text-gray-400 dark:text-white/30' : 'text-gray-700 dark:text-white/80'}`}>
+                  <span className={`flex-1 text-sm truncate transition-colors ${done ? 'line-through' : 'app-text'}`}
+                        style={done ? { color: '#888888' } : undefined}>
                     {habit.name}
                   </span>
                   {habit.streak > 0 && (
@@ -411,8 +412,8 @@ export default function Dashboard() {
 
       {/* Tageszitat */}
       <div className="flex gap-3 bg-card border app-border rounded-xl px-4 py-3">
-        <Quote size={16} className="text-gray-300 dark:text-white/20 shrink-0 mt-0.5" />
-        <p className="text-xs text-gray-400 dark:text-white/40 italic leading-relaxed">{quote}</p>
+        <Quote size={16} className="shrink-0 mt-0.5" style={{ color: '#bbbbbb' }} />
+        <p className="text-xs italic leading-relaxed" style={{ color: '#888888' }}>{quote}</p>
       </div>
     </Layout>
   );

@@ -55,31 +55,32 @@ function NoteEditor({ initial, onSave, onCancel }: EditorProps) {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4 space-y-3">
+    <div className="bg-white dark:bg-[#1a1a1a] border border-[#ebebeb] dark:border-[#2a2a2a] rounded-xl p-4 space-y-3">
       <input
         type="text"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         placeholder="Titel..."
         autoFocus
-        className="w-full border-0 bg-transparent text-gray-900 dark:text-gray-100 text-base font-semibold placeholder-gray-300 dark:placeholder-gray-600 focus:outline-none"
+        className="w-full border-0 bg-transparent app-text text-base font-semibold placeholder-[#bbbbbb] focus:outline-none"
       />
       <textarea
         value={content}
         onChange={(e) => setContent(e.target.value)}
         placeholder="Notiz schreiben..."
         rows={5}
-        className="w-full border-0 bg-transparent text-gray-700 dark:text-gray-300 text-sm placeholder-gray-300 dark:placeholder-gray-600 resize-none focus:outline-none"
+        className="w-full border-0 bg-transparent text-sm placeholder-[#bbbbbb] resize-none focus:outline-none"
+        style={{ color: '#444444' }}
       />
 
       {/* Tags */}
-      <div className="border-t border-gray-100 dark:border-gray-700 pt-3">
+      <div className="border-t border-[#ebebeb] dark:border-[#2a2a2a] pt-3">
         <div className="flex flex-wrap gap-1.5 mb-2">
           {tags.map((tag) => (
             <span key={tag} className="flex items-center gap-1 text-xs px-2 py-0.5 rounded-full" style={{ background: 'rgba(127,119,221,0.12)', color: '#7F77DD' }}>
               <Tag size={9} />
               {tag}
-              <button onClick={() => removeTag(tag)} className="hover:text-red-400 cursor-pointer ml-0.5">
+              <button onClick={() => removeTag(tag)} className="cursor-pointer ml-0.5 hover:opacity-70">
                 <X size={9} />
               </button>
             </span>
@@ -92,7 +93,7 @@ function NoteEditor({ initial, onSave, onCancel }: EditorProps) {
             onChange={(e) => setTagInput(e.target.value)}
             onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); addTag(); } }}
             placeholder="Tag hinzufügen..."
-            className="flex-1 text-xs border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg px-2.5 py-1.5 focus:outline-none focus:ring-1 focus:ring-[#7F77DD]/40"
+            className="flex-1 text-xs border border-[#ebebeb] dark:border-[#2a2a2a] bg-[#f9f9f9] dark:bg-[#111111] app-text rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-[#111111] dark:focus:border-white placeholder-[#bbbbbb]"
           />
           <button
             onClick={addTag}
@@ -109,14 +110,16 @@ function NoteEditor({ initial, onSave, onCancel }: EditorProps) {
         <button
           onClick={handleSave}
           disabled={!title.trim() && !content.trim()}
-          className="disabled:bg-gray-200 dark:disabled:bg-gray-700 disabled:text-gray-400 text-white text-sm font-medium px-4 py-1.5 rounded-lg transition-colors cursor-pointer hover:opacity-90"
-          style={(title.trim() || content.trim()) ? { backgroundColor: '#7F77DD' } : undefined}
+          className="text-white text-sm font-medium px-4 py-1.5 rounded-lg transition-opacity hover:opacity-90 disabled:opacity-40 cursor-pointer bg-[#111111] dark:bg-white dark:text-[#111111]"
         >
           {initial ? 'Speichern' : 'Notiz erstellen'}
         </button>
         <button
           onClick={onCancel}
-          className="text-sm text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 px-3 py-1.5 cursor-pointer"
+          className="text-sm px-3 py-1.5 cursor-pointer transition-colors"
+          style={{ color: '#888888' }}
+          onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text-1)')}
+          onMouseLeave={(e) => (e.currentTarget.style.color = '#888888')}
         >
           Abbrechen
         </button>
@@ -139,7 +142,6 @@ export default function NotizenPage() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [showTagFilter, setShowTagFilter] = useState(false);
 
-  // Alle vorhandenen Tags
   const allTags = useMemo(() => {
     const set = new Set<string>();
     notes.forEach((n) => n.tags.forEach((t) => set.add(t)));
@@ -160,7 +162,6 @@ export default function NotizenPage() {
     if (activeTag) {
       result = result.filter((n) => n.tags.includes(activeTag));
     }
-    // Gepinnte oben
     return result.sort((a, b) => {
       if (a.pinned !== b.pinned) return a.pinned ? -1 : 1;
       return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();
@@ -174,11 +175,10 @@ export default function NotizenPage() {
   return (
     <Layout>
       <div className="flex items-center justify-between mb-4">
-        <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100">Notizen</h1>
+        <h1 className="text-xl font-semibold app-text">Notizen</h1>
         <button
           onClick={() => { setCreating(true); setEditingId(null); }}
-          className="flex items-center gap-1.5 text-white text-sm font-medium px-3 py-1.5 rounded-lg transition-colors cursor-pointer hover:opacity-90"
-          style={{ backgroundColor: '#7F77DD' }}
+          className="flex items-center gap-1.5 text-white text-sm font-medium px-3 py-1.5 rounded-lg transition-opacity hover:opacity-90 cursor-pointer bg-[#111111] dark:bg-white dark:text-[#111111]"
         >
           <Plus size={15} /> Neu
         </button>
@@ -186,18 +186,21 @@ export default function NotizenPage() {
 
       {/* Suche */}
       <div className="relative mb-3">
-        <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+        <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: '#888888' }} />
         <input
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Suchen..."
-          className="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-xl pl-9 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#7F77DD]/30"
+          className="w-full border border-[#ebebeb] dark:border-[#2a2a2a] bg-white dark:bg-[#1a1a1a] app-text rounded-xl pl-9 pr-3 py-2 text-sm focus:outline-none focus:border-[#111111] dark:focus:border-white placeholder-[#bbbbbb]"
         />
         {search && (
           <button
             onClick={() => setSearch('')}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 cursor-pointer"
+            className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer transition-colors"
+            style={{ color: '#888888' }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text-1)')}
+            onMouseLeave={(e) => (e.currentTarget.style.color = '#888888')}
           >
             <X size={14} />
           </button>
@@ -209,7 +212,10 @@ export default function NotizenPage() {
         <div className="mb-4">
           <button
             onClick={() => setShowTagFilter((v) => !v)}
-            className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 mb-2 cursor-pointer"
+            className="flex items-center gap-1 text-xs mb-2 cursor-pointer transition-colors"
+            style={{ color: '#888888' }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text-1)')}
+            onMouseLeave={(e) => (e.currentTarget.style.color = '#888888')}
           >
             <Tag size={11} />
             Tags filtern
@@ -222,7 +228,7 @@ export default function NotizenPage() {
                 className="text-xs px-2.5 py-1 rounded-full border transition-colors cursor-pointer"
                 style={activeTag === null
                   ? { borderColor: '#7F77DD', background: 'rgba(127,119,221,0.1)', color: '#7F77DD' }
-                  : undefined
+                  : { borderColor: '#ebebeb', color: '#888888' }
                 }
               >
                 Alle
@@ -234,7 +240,7 @@ export default function NotizenPage() {
                   className="text-xs px-2.5 py-1 rounded-full border transition-colors cursor-pointer"
                   style={activeTag === tag
                     ? { borderColor: '#7F77DD', background: 'rgba(127,119,221,0.1)', color: '#7F77DD' }
-                    : undefined
+                    : { borderColor: '#ebebeb', color: '#888888' }
                   }
                 >
                   {tag}
@@ -257,11 +263,11 @@ export default function NotizenPage() {
 
       {/* Notizen-Liste */}
       {filtered.length === 0 && !creating ? (
-        <div className="text-center py-12 border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-2xl">
-          <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">
+        <div className="text-center py-12 border-2 border-dashed border-[#ebebeb] dark:border-[#2a2a2a] rounded-2xl">
+          <p className="text-sm app-text mb-1">
             {notes.length === 0 ? 'Noch keine Notizen' : 'Keine Treffer'}
           </p>
-          <p className="text-xs text-gray-400">
+          <p className="text-xs" style={{ color: '#888888' }}>
             {notes.length === 0 ? 'Erstelle deine erste Notiz' : 'Andere Suche oder Filter versuchen'}
           </p>
         </div>
@@ -280,17 +286,17 @@ export default function NotizenPage() {
               <div
                 key={note.id}
                 onClick={() => setEditingId(note.id)}
-                className="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl p-4 cursor-pointer hover:border-[#7F77DD]/30 hover:shadow-sm transition-all group"
+                className="bg-card border app-border rounded-xl p-4 cursor-pointer hover:border-[#d0d0d0] dark:hover:border-[#3a3a3a] transition-all group"
               >
                 <div className="flex items-start justify-between gap-2 mb-1.5">
-                  <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200 flex-1 min-w-0 truncate">
-                    {note.title || <span className="text-gray-400 font-normal italic">Ohne Titel</span>}
+                  <h3 className="text-sm font-semibold app-text flex-1 min-w-0 truncate">
+                    {note.title || <span className="font-normal italic" style={{ color: '#888888' }}>Ohne Titel</span>}
                   </h3>
                   <div className="flex items-center gap-1 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
                     <button
                       onClick={(e) => { e.stopPropagation(); togglePin(note); }}
                       className="p-1 rounded transition-colors cursor-pointer"
-                      style={note.pinned ? { color: '#7F77DD' } : { color: '#9ca3af' }}
+                      style={note.pinned ? { color: '#7F77DD' } : { color: '#bbbbbb' }}
                       title={note.pinned ? 'Unpin' : 'Pinnen'}
                     >
                       {note.pinned ? <Pin size={13} /> : <PinOff size={13} />}
@@ -300,14 +306,17 @@ export default function NotizenPage() {
                         e.stopPropagation();
                         if (window.confirm(`"${note.title || 'Notiz'}" löschen?`)) removeNote(note.id);
                       }}
-                      className="p-1 rounded text-gray-400 hover:text-red-400 transition-colors cursor-pointer"
+                      className="p-1 rounded transition-colors cursor-pointer"
+                      style={{ color: '#bbbbbb' }}
+                      onMouseEnter={(e) => (e.currentTarget.style.color = '#E24B4A')}
+                      onMouseLeave={(e) => (e.currentTarget.style.color = '#bbbbbb')}
                     >
                       <Trash2 size={13} />
                     </button>
                   </div>
                 </div>
                 {note.content && (
-                  <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-3 mb-2 leading-relaxed">
+                  <p className="text-xs line-clamp-3 mb-2 leading-relaxed" style={{ color: '#888888' }}>
                     {note.content}
                   </p>
                 )}
@@ -320,7 +329,7 @@ export default function NotizenPage() {
                     ))}
                   </div>
                 )}
-                <p className="text-[10px] text-gray-300 dark:text-gray-600">{timeAgo(note.updatedAt)}</p>
+                <p className="text-[10px]" style={{ color: '#bbbbbb' }}>{timeAgo(note.updatedAt)}</p>
               </div>
             )
           )}

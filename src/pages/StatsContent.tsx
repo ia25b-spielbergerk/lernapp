@@ -47,7 +47,7 @@ function SectionCard({ children, title, icon: Icon, color }: {
     <div className="bg-card border app-border rounded-2xl p-5 mb-4">
       <div className="flex items-center gap-2 mb-4">
         <Icon size={15} style={{ color }} />
-        <h2 className="text-xs font-semibold text-gray-500 dark:text-white/40 uppercase tracking-wider">{title}</h2>
+        <h2 className="section-label">{title}</h2>
       </div>
       {children}
     </div>
@@ -69,12 +69,12 @@ export default function StatsContent() {
   const dates = useMemo(() => getDates(days), [days]);
 
   const tooltipStyle = {
-    backgroundColor: darkMode ? '#1a1d27' : '#fff',
-    border: `1px solid ${darkMode ? 'rgba(255,255,255,0.1)' : '#e5e7eb'}`,
+    backgroundColor: darkMode ? '#1a1a1a' : '#ffffff',
+    border: `1px solid ${darkMode ? '#2a2a2a' : '#ebebeb'}`,
     borderRadius: '8px',
     fontSize: '12px',
-    color: darkMode ? '#e5e7eb' : '#111827',
-    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+    color: darkMode ? '#ffffff' : '#111111',
+    boxShadow: '0 4px 12px rgba(0,0,0,0.12)',
   };
 
   const axisColor = darkMode ? 'rgba(255,255,255,0.25)' : '#9ca3af';
@@ -186,16 +186,17 @@ export default function StatsContent() {
             <BarChart2 size={20} style={{ color: '#7F77DD' }} />
             <h1 className="text-2xl font-bold app-text">Statistiken</h1>
           </div>
-          <div className="flex bg-gray-100 dark:bg-white/10 rounded-lg p-0.5">
+          <div className="flex bg-[#f5f5f5] dark:bg-[#1a1a1a] rounded-lg p-0.5">
             {(['7', '30'] as Period[]).map((p) => (
               <button
                 key={p}
                 onClick={() => setPeriod(p)}
                 className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors cursor-pointer ${
                   period === p
-                    ? 'bg-white dark:bg-white/15 app-text shadow-sm'
-                    : 'text-gray-500 dark:text-white/40'
+                    ? 'bg-white dark:bg-[#2a2a2a] app-text shadow-sm'
+                    : ''
                 }`}
+                style={period !== p ? { color: '#888888' } : undefined}
               >
                 {p} Tage
               </button>
@@ -268,7 +269,7 @@ export default function StatsContent() {
                     ].map(({ label, value, color }) => (
                       <div key={label} className="flex items-center gap-3">
                         <span className="text-xs text-gray-500 dark:text-white/40 w-12 text-right shrink-0">{label}</span>
-                        <div className="flex-1 bg-gray-100 dark:bg-white/10 rounded-full h-3.5 overflow-hidden">
+                        <div className="flex-1 bg-[#ebebeb] dark:bg-[#2a2a2a] rounded-full h-3.5 overflow-hidden">
                           <div
                             className="h-3.5 rounded-full transition-all duration-500"
                             style={{
@@ -485,7 +486,7 @@ export default function StatsContent() {
                   <Bar
                     dataKey="offen"
                     name="Offen"
-                    fill={darkMode ? 'rgba(255,255,255,0.08)' : '#e5e7eb'}
+                    fill={darkMode ? '#2a2a2a' : '#ebebeb'}
                     stackId="a"
                     radius={[3, 3, 0, 0]}
                   />

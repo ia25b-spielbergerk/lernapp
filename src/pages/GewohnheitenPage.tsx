@@ -11,7 +11,6 @@ function offsetDate(base: string, days: number): string {
   return d.toISOString().slice(0, 10);
 }
 
-// Letzte 7 Tage für das Wochengrid
 function getLast7Days(today: string): string[] {
   return Array.from({ length: 7 }, (_, i) => offsetDate(today, i - 6));
 }
@@ -50,7 +49,7 @@ export default function GewohnheitenPage() {
   return (
     <Layout>
       <div className="flex items-center justify-between mb-5">
-        <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100">Gewohnheiten</h1>
+        <h1 className="text-xl font-semibold app-text">Gewohnheiten</h1>
         {allDoneToday && (
           <span className="text-xs font-medium flex items-center gap-1" style={{ color: '#1D9E75' }}>
             <Check size={13} /> Alle erledigt!
@@ -59,10 +58,10 @@ export default function GewohnheitenPage() {
       </div>
 
       {habits.length === 0 ? (
-        <div className="text-center py-12 border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-2xl mb-4">
-          <Flame size={40} className="mx-auto mb-3 text-gray-300 dark:text-gray-600" />
-          <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Noch keine Gewohnheiten</p>
-          <p className="text-xs text-gray-400">Erstelle deine erste Gewohnheit und baue Streaks auf</p>
+        <div className="text-center py-12 border-2 border-dashed border-[#ebebeb] dark:border-[#2a2a2a] rounded-2xl mb-4">
+          <Flame size={40} className="mx-auto mb-3" style={{ color: '#bbbbbb' }} />
+          <p className="text-sm app-text mb-1">Noch keine Gewohnheiten</p>
+          <p className="text-xs" style={{ color: '#888888' }}>Erstelle deine erste Gewohnheit und baue Streaks auf</p>
         </div>
       ) : (
         <div className="space-y-3 mb-5">
@@ -72,7 +71,7 @@ export default function GewohnheitenPage() {
             <div className="flex gap-1 shrink-0">
               {last7.map((d) => (
                 <div key={d} className="w-8 text-center">
-                  <span className="text-[10px] text-gray-400 font-medium">
+                  <span className="text-[10px] font-medium" style={{ color: '#888888' }}>
                     {WEEKDAY_SHORT[new Date(d + 'T00:00:00').getDay()]}
                   </span>
                 </div>
@@ -86,7 +85,7 @@ export default function GewohnheitenPage() {
             return (
               <div
                 key={habit.id}
-                className="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl px-4 py-3"
+                className="bg-card border app-border rounded-xl px-4 py-3"
               >
                 <div className="flex items-center gap-3 mb-2">
                   {/* Check-Button */}
@@ -95,20 +94,21 @@ export default function GewohnheitenPage() {
                     className="w-6 h-6 rounded-full border-2 shrink-0 flex items-center justify-center transition-colors cursor-pointer"
                     style={doneToday
                       ? { borderColor: '#1D9E75', backgroundColor: '#1D9E75' }
-                      : { borderColor: '#9ca3af' }
+                      : { borderColor: '#d0d0d0' }
                     }
                   >
                     {doneToday && <Check size={12} className="text-white" strokeWidth={3} />}
                   </button>
 
-                  {/* Name + Streak */}
+                  {/* Name */}
                   <div className="flex-1 min-w-0">
-                    <p className={`text-sm font-medium truncate transition-colors ${doneToday ? 'text-gray-400' : 'text-gray-800 dark:text-gray-200'}`}>
+                    <p className={`text-sm font-medium truncate transition-colors ${doneToday ? '' : 'app-text'}`}
+                       style={doneToday ? { color: '#888888' } : undefined}>
                       {habit.name}
                     </p>
                   </div>
 
-                  {/* Streak-Zähler */}
+                  {/* Streak */}
                   {habit.streak > 0 && (
                     <div className="flex items-center gap-1 shrink-0" style={{ color: '#EF9F27' }}>
                       <Flame size={13} />
@@ -133,10 +133,10 @@ export default function GewohnheitenPage() {
                                 ? 'bg-[#1D9E75]'
                                 : 'bg-[#1D9E75]/60'
                               : isToday
-                                ? 'bg-gray-100 dark:bg-gray-700 border-2 border-dashed border-gray-300 dark:border-gray-600'
+                                ? 'bg-[#ebebeb] dark:bg-[#2a2a2a] border-2 border-dashed border-[#d0d0d0] dark:border-[#3a3a3a]'
                                 : d > today
-                                  ? 'bg-gray-50 dark:bg-gray-800 opacity-40'
-                                  : 'bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600'
+                                  ? 'bg-[#f9f9f9] dark:bg-[#1a1a1a] opacity-40'
+                                  : 'bg-[#ebebeb] dark:bg-[#2a2a2a] hover:bg-[#e0e0e0] dark:hover:bg-[#333]'
                           }`}
                         />
                       );
@@ -148,7 +148,10 @@ export default function GewohnheitenPage() {
                     onClick={() => {
                       if (window.confirm(`"${habit.name}" und alle Check-ins löschen?`)) removeHabit(habit.id);
                     }}
-                    className="text-gray-300 dark:text-gray-600 hover:text-red-400 transition-colors cursor-pointer shrink-0"
+                    className="transition-colors cursor-pointer shrink-0"
+                    style={{ color: '#bbbbbb' }}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = '#E24B4A')}
+                    onMouseLeave={(e) => (e.currentTarget.style.color = '#bbbbbb')}
                   >
                     <Trash2 size={14} />
                   </button>
@@ -168,7 +171,7 @@ export default function GewohnheitenPage() {
 
       {/* Neue Gewohnheit */}
       {showForm ? (
-        <div className="bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 rounded-xl p-4 space-y-3">
+        <div className="bg-[#f9f9f9] dark:bg-[#1a1a1a] border border-[#ebebeb] dark:border-[#2a2a2a] rounded-xl p-4 space-y-3">
           <input
             type="text"
             value={newName}
@@ -176,20 +179,23 @@ export default function GewohnheitenPage() {
             onKeyDown={(e) => { if (e.key === 'Enter') handleAdd(); if (e.key === 'Escape') setShowForm(false); }}
             placeholder="Name der Gewohnheit..."
             autoFocus
-            className="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#EF9F27]/30"
+            className="w-full border border-[#ebebeb] dark:border-[#2a2a2a] bg-white dark:bg-[#1a1a1a] app-text rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#111111] dark:focus:border-white placeholder-[#bbbbbb]"
           />
           <div className="flex gap-2">
             <button
               onClick={handleAdd}
               disabled={!newName.trim()}
-              className="disabled:bg-gray-200 dark:disabled:bg-gray-700 disabled:text-gray-400 text-white text-sm font-medium px-4 py-1.5 rounded-lg transition-colors cursor-pointer hover:opacity-90"
-              style={newName.trim() ? { backgroundColor: '#EF9F27' } : undefined}
+              className="text-white text-sm font-medium px-4 py-1.5 rounded-lg transition-opacity hover:opacity-90 disabled:opacity-40 cursor-pointer"
+              style={{ backgroundColor: '#EF9F27' }}
             >
               Erstellen
             </button>
             <button
               onClick={() => { setShowForm(false); setNewName(''); }}
-              className="text-sm text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 px-3 py-1.5 cursor-pointer"
+              className="text-sm px-3 py-1.5 cursor-pointer transition-colors"
+              style={{ color: '#888888' }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text-1)')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = '#888888')}
             >
               Abbrechen
             </button>
