@@ -116,7 +116,7 @@ export default function Sidebar() {
               </span>
             </button>
             <button
-              onClick={() => { setMenuOpen(false); navigate('/einstellungen'); }}
+              onClick={() => { setMenuOpen(false); navigate('/settings'); }}
               className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-left cursor-pointer app-text app-hover"
             >
               <Settings size={15} style={{ color: 'var(--text-2)' }} />
