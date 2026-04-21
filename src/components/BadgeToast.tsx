@@ -37,14 +37,14 @@ export default function BadgeToast() {
         visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
       }`}
     >
-      <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-xl rounded-2xl px-5 py-3.5 flex items-center gap-3.5 min-w-[260px]">
+      <div className="bg-white dark:bg-[#1a1a1a] border border-[#ebebeb] dark:border-[#2a2a2a] shadow-xl rounded-2xl px-5 py-3.5 flex items-center gap-3.5 min-w-[260px]">
         <div className="rounded-xl p-2.5 shrink-0" style={{ background: `${badge.color}20` }}>
           <Icon size={24} style={{ color: badge.color }} />
         </div>
         <div>
-          <p className="text-xs text-gray-400 font-medium uppercase tracking-wide">Badge freigeschaltet</p>
-          <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">{badge.name}</p>
-          <p className="text-xs text-gray-400 mt-0.5">{badge.description}</p>
+          <p className="text-xs text-[#888888] font-medium uppercase tracking-wide">Badge freigeschaltet</p>
+          <p className="text-sm font-semibold text-[#111111] dark:text-white">{badge.name}</p>
+          <p className="text-xs text-[#888888] mt-0.5">{badge.description}</p>
         </div>
       </div>
     </div>

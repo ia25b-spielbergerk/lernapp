@@ -76,7 +76,7 @@ export default function BlitzMode() {
     return (
       <Layout>
         <div className="text-center py-20">
-          <p className="text-gray-400">Set nicht gefunden.</p>
+          <p className="text-[#888888]">Set nicht gefunden.</p>
           <Link to="/" className="text-sm mt-2 inline-block" style={{ color: '#7F77DD' }}>← Zurück</Link>
         </div>
       </Layout>
@@ -149,7 +149,7 @@ export default function BlitzMode() {
           <div className="text-center mb-8">
             <div className="flex justify-center mb-3"><ScoreIcon size={52} style={{ color: scoreColor }} /></div>
             <p className="text-6xl font-bold" style={{ color: scoreColor }}>{score}%</p>
-            <p className="text-gray-400 text-sm mt-2">
+            <p className="text-[#888888] text-sm mt-2">
               {score === 100 ? 'Perfekt! Alles aus dem Gedächtnis!' : score >= 80 ? 'Starkes Gedächtnis!' : score >= 50 ? 'Gut, weiter üben!' : 'Noch etwas Übung nötig'}
             </p>
           </div>
@@ -157,21 +157,21 @@ export default function BlitzMode() {
           <div className="grid grid-cols-3 gap-4 mb-8">
             <div className="text-center bg-card border app-border rounded-xl p-4">
               <p className="text-2xl font-bold app-text">{cards.length}</p>
-              <p className="text-xs text-gray-400 mt-1">Karten</p>
+              <p className="text-xs text-[#888888] mt-1">Karten</p>
             </div>
             <div className="text-center rounded-xl p-4 border" style={{ background: 'rgba(29,158,117,0.09)', borderColor: 'rgba(29,158,117,0.22)' }}>
               <p className="text-2xl font-bold" style={{ color: '#1D9E75' }}>{correctCount}</p>
-              <p className="text-xs text-gray-400 mt-1">Richtig</p>
+              <p className="text-xs text-[#888888] mt-1">Richtig</p>
             </div>
             <div className="text-center rounded-xl p-4 border" style={{ background: 'rgba(226,75,74,0.09)', borderColor: 'rgba(226,75,74,0.22)' }}>
               <p className="text-2xl font-bold" style={{ color: '#E24B4A' }}>{wrong.length}</p>
-              <p className="text-xs text-gray-400 mt-1">Falsch</p>
+              <p className="text-xs text-[#888888] mt-1">Falsch</p>
             </div>
           </div>
 
           {wrong.length > 0 && (
             <div className="mb-8">
-              <h2 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Noch zu lernen:</h2>
+              <h2 className="text-sm font-semibold text-[#333333] dark:text-[#cccccc] mb-3">Noch zu lernen:</h2>
               <div className="space-y-2">
                 {wrong.map((a, i) => (
                   <div
@@ -180,7 +180,7 @@ export default function BlitzMode() {
                     style={{ background: 'rgba(226,75,74,0.07)', borderColor: 'rgba(226,75,74,0.18)' }}
                   >
                     <div>
-                      <p className="text-xs text-gray-400 mb-0.5">{a.card.front}</p>
+                      <p className="text-xs text-[#888888] mb-0.5">{a.card.front}</p>
                       <p className="text-sm line-through" style={{ color: '#E24B4A' }}>{a.input || '—'}</p>
                     </div>
                     <p className="text-sm font-semibold shrink-0" style={{ color: '#1D9E75' }}>→ {a.card.back}</p>
@@ -193,7 +193,7 @@ export default function BlitzMode() {
           <div className="flex gap-3">
             <button
               onClick={() => navigate(`/sets/${id}/study`)}
-              className="flex-1 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 font-medium py-2.5 rounded-lg transition-colors text-sm cursor-pointer"
+              className="flex-1 border border-[#ebebeb] dark:border-[#2a2a2a] text-[#555555] dark:text-[#888888] hover:bg-[#f0f0f0] dark:hover:bg-[#222222] font-medium py-2.5 rounded-lg transition-colors text-sm cursor-pointer"
             >
               Zurück
             </button>
@@ -218,15 +218,15 @@ export default function BlitzMode() {
         <div className="flex items-center justify-between mb-4">
           <button
             onClick={() => setConfirmLeave(true)}
-            className="text-sm text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+            className="text-sm text-[#888888] hover:text-[#555555] dark:hover:text-[#cccccc]"
           >
             ← Zurück
           </button>
-          <span className="text-sm text-gray-400">{index + 1} / {cards.length}</span>
+          <span className="text-sm text-[#888888]">{index + 1} / {cards.length}</span>
         </div>
 
         {/* Gesamt-Fortschrittsbalken */}
-        <div className="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-1.5 mb-6">
+        <div className="w-full bg-[#ebebeb] dark:bg-[#2a2a2a] rounded-full h-1.5 mb-6">
           <div
             role="progressbar"
             aria-valuenow={Math.round((index / cards.length) * 100)}
@@ -242,16 +242,16 @@ export default function BlitzMode() {
         {phase === 'showing' && (
           <>
             {/* Countdown-Balken */}
-            <div className="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-2.5 mb-6 overflow-hidden">
+            <div className="w-full bg-[#ebebeb] dark:bg-[#2a2a2a] rounded-full h-2.5 mb-6 overflow-hidden">
               <div
                 className="h-2.5 rounded-full transition-none"
                 style={{ width: `${timeLeft}%`, backgroundColor: timerBg }}
               />
             </div>
 
-            <div className="rounded-2xl p-10 text-center shadow-sm border-2 border-gray-100 dark:border-white/10 bg-card">
-              <p className="text-xs text-gray-400 mb-4 uppercase tracking-wide">{card.reversed ? set.language2 : set.language1}</p>
-              <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">{card.front}</p>
+            <div className="rounded-2xl p-10 text-center shadow-sm border-2 border-[#ebebeb] dark:border-white/10 bg-card">
+              <p className="text-xs text-[#888888] mb-4 uppercase tracking-wide">{card.reversed ? set.language2 : set.language1}</p>
+              <p className="text-3xl font-bold text-[#111111] dark:text-white">{card.front}</p>
               <p className="text-xs mt-8" style={{ color: '#7F77DD' }}>Präge es dir ein!</p>
             </div>
           </>
@@ -260,9 +260,9 @@ export default function BlitzMode() {
         {/* Input-Phase */}
         {phase === 'input' && (
           <>
-            <div className="bg-gray-50 dark:bg-gray-800/60 border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-2xl p-10 text-center mb-6">
-              <HelpCircle size={44} className="mx-auto mb-3 text-gray-300 dark:text-gray-600" />
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+            <div className="bg-[#f9f9f9] dark:bg-[#1a1a1a]/60 border-2 border-dashed border-[#ebebeb] dark:border-[#2a2a2a] rounded-2xl p-10 text-center mb-6">
+              <HelpCircle size={44} className="mx-auto mb-3 text-[#cccccc] dark:text-[#444444]" />
+              <p className="text-sm text-[#888888]">
                 Was war das Wort auf <span className="font-semibold">{card.reversed ? set.language1 : set.language2}</span>?
               </p>
             </div>
@@ -274,17 +274,17 @@ export default function BlitzMode() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder={`Übersetzung auf ${card.reversed ? set.language1 : set.language2}...`}
-                className="w-full border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 dark:text-gray-100 rounded-xl px-4 py-3 text-base focus:outline-none focus:border-[#7F77DD] transition-colors mb-3"
+                className="w-full border-2 border-[#ebebeb] dark:border-[#2a2a2a] bg-white dark:bg-[#1a1a1a] dark:text-white rounded-xl px-4 py-3 text-base focus:outline-none focus:border-[#7F77DD] transition-colors mb-3"
               />
               <button
                 type="submit"
                 disabled={!input.trim()}
-                className="w-full disabled:bg-gray-200 dark:disabled:bg-gray-700 disabled:text-gray-400 text-white font-medium py-3 rounded-xl transition-colors cursor-pointer"
+                className="w-full disabled:bg-[#ebebeb] dark:disabled:bg-[#2a2a2a] disabled:text-[#888888] text-white font-medium py-3 rounded-xl transition-colors cursor-pointer"
                 style={input.trim() ? { backgroundColor: '#7F77DD' } : undefined}
               >
                 Prüfen
               </button>
-              <p className="text-center text-xs text-gray-300 dark:text-gray-600 mt-2">Kleine Tippfehler werden akzeptiert</p>
+              <p className="text-center text-xs text-[#cccccc] dark:text-[#444444] mt-2">Kleine Tippfehler werden akzeptiert</p>
             </form>
           </>
         )}
@@ -307,8 +307,8 @@ export default function BlitzMode() {
               <p className="text-xs uppercase tracking-wide font-semibold mb-3" style={{ color: lastAnswer.correct ? '#1D9E75' : '#E24B4A' }}>
                 {lastAnswer.correct ? 'Richtig!' : 'Falsch'}
               </p>
-              <p className="text-xs text-gray-400 mb-1">{card.front}</p>
-              <p className="text-xl font-bold text-gray-900 dark:text-gray-100">{card.back}</p>
+              <p className="text-xs text-[#888888] mb-1">{card.front}</p>
+              <p className="text-xl font-bold text-[#111111] dark:text-white">{card.back}</p>
               {!lastAnswer.correct && lastAnswer.input && (
                 <p className="text-sm mt-2 line-through" style={{ color: '#E24B4A' }}>{lastAnswer.input}</p>
               )}

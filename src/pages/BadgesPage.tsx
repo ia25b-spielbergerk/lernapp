@@ -24,11 +24,11 @@ export default function BadgesPage() {
         <div className="flex items-center justify-between mb-6">
           <div>
             <h1 className="text-2xl font-bold app-text">Badges</h1>
-            <p className="text-sm text-gray-400 dark:text-white/40 mt-1">
+            <p className="text-sm text-[#888888] dark:text-white/40 mt-1">
               {earned.length} von {BADGES.length} freigeschaltet
             </p>
           </div>
-          <button onClick={() => navigate(-1)} className="text-sm text-gray-400 dark:text-white/40 hover:text-gray-600 dark:hover:text-white/60 cursor-pointer">
+          <button onClick={() => navigate(-1)} className="text-sm text-[#888888] dark:text-white/40 hover:text-[#555555] dark:hover:text-white/60 cursor-pointer">
             ← Zurück
           </button>
         </div>
@@ -77,11 +77,11 @@ export default function BadgesPage() {
                     key={badge.id}
                     className="flex flex-col items-center text-center bg-card border app-border rounded-xl p-4"
                   >
-                    <Icon size={36} className="mb-2 text-gray-300 dark:text-white/20" />
-                    <p className="text-sm font-semibold text-gray-500 dark:text-white/40">{badge.name}</p>
-                    <p className="text-xs text-gray-400 dark:text-white/30 mt-1 mb-3">{badge.description}</p>
+                    <Icon size={36} className="mb-2 text-[#cccccc] dark:text-white/20" />
+                    <p className="text-sm font-semibold text-[#888888] dark:text-white/40">{badge.name}</p>
+                    <p className="text-xs text-[#888888] dark:text-white/30 mt-1 mb-3">{badge.description}</p>
                     <div className="w-full mt-auto">
-                      <div className="flex items-center justify-between text-xs text-gray-400 dark:text-white/30 mb-1">
+                      <div className="flex items-center justify-between text-xs text-[#888888] dark:text-white/30 mb-1">
                         <span>{current} / {max}</span>
                         <span>{pct}%</span>
                       </div>

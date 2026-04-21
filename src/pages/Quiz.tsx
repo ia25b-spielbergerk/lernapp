@@ -57,7 +57,7 @@ export default function Quiz() {
     return (
       <Layout>
         <div className="text-center py-20">
-          <p className="text-gray-400">Set nicht gefunden.</p>
+          <p className="text-[#888888]">Set nicht gefunden.</p>
           <Link to="/" className="text-sm mt-2 inline-block" style={{ color: '#7F77DD' }}>← Zurück</Link>
         </div>
       </Layout>
@@ -112,7 +112,7 @@ export default function Quiz() {
 
   const optionStyle = (option: string) => {
     if (selected === null) {
-      return { className: 'border-gray-200 dark:border-gray-700 hover:border-[#7F77DD]/40 hover:bg-[#7F77DD]/10 cursor-pointer dark:text-gray-100' };
+      return { className: 'border-[#ebebeb] dark:border-[#2a2a2a] hover:border-[#7F77DD]/40 hover:bg-[#7F77DD]/10 cursor-pointer dark:text-white' };
     }
     if (option === q.correct) return {
       className: 'border-2',
@@ -122,7 +122,7 @@ export default function Quiz() {
       className: 'border-2',
       style: { borderColor: 'rgba(226,75,74,0.5)', background: 'rgba(226,75,74,0.09)', color: '#E24B4A' },
     };
-    return { className: 'border-gray-100 dark:border-gray-700 text-gray-300 dark:text-gray-600' };
+    return { className: 'border-[#ebebeb] dark:border-[#2a2a2a] text-[#cccccc] dark:text-[#444444]' };
   };
 
   return (
@@ -131,16 +131,16 @@ export default function Quiz() {
         <div className="flex items-center justify-between mb-4">
           <button
             onClick={() => setConfirmLeave(true)}
-            className="text-sm text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+            className="text-sm text-[#888888] hover:text-[#555555] dark:hover:text-[#cccccc]"
           >
             ← Zurück
           </button>
-          <span className="text-sm text-gray-400">
+          <span className="text-sm text-[#888888]">
             {qIndex + 1} / {questions.length}
           </span>
         </div>
 
-        <div className="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-1.5 mb-8">
+        <div className="w-full bg-[#ebebeb] dark:bg-[#2a2a2a] rounded-full h-1.5 mb-8">
           <div
             role="progressbar"
             aria-valuenow={Math.round(progress)}
@@ -152,10 +152,10 @@ export default function Quiz() {
           />
         </div>
 
-        <div className="rounded-2xl p-6 mb-6 text-center border border-gray-100 dark:border-white/10 bg-card">
-          <p className="text-xs text-gray-400 mb-3 uppercase tracking-wide">{q.card.reversed ? set.language2 : set.language1}</p>
-          <p className="text-2xl font-semibold text-gray-900 dark:text-gray-100">{q.card.front}</p>
-          <p className="text-xs text-gray-300 dark:text-gray-600 mt-2">Wähle die richtige Übersetzung</p>
+        <div className="rounded-2xl p-6 mb-6 text-center border border-[#ebebeb] dark:border-white/10 bg-card">
+          <p className="text-xs text-[#888888] mb-3 uppercase tracking-wide">{q.card.reversed ? set.language2 : set.language1}</p>
+          <p className="text-2xl font-semibold text-[#111111] dark:text-white">{q.card.front}</p>
+          <p className="text-xs text-[#cccccc] dark:text-[#444444] mt-2">Wähle die richtige Übersetzung</p>
         </div>
 
         <div className="grid grid-cols-2 gap-3 mb-6">

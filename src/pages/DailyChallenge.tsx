@@ -64,7 +64,7 @@ export default function DailyChallenge() {
               </span>
             </div>
           )}
-          <p className="text-gray-400 dark:text-white/40 text-sm mb-8">Morgen gibt es neue Karten</p>
+          <p className="text-[#888888] dark:text-white/40 text-sm mb-8">Morgen gibt es neue Karten</p>
           <button
             onClick={() => navigate('/')}
             className="text-white font-medium px-6 py-2.5 rounded-lg transition-opacity hover:opacity-80 cursor-pointer"
@@ -82,9 +82,9 @@ export default function DailyChallenge() {
     return (
       <Layout>
         <div className="text-center py-20">
-          <PackageOpen size={56} className="mx-auto mb-4 text-gray-300 dark:text-gray-600" />
-          <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-2">Keine Karten verfügbar</h3>
-          <p className="text-gray-400 text-sm mb-6">Erstelle zuerst ein Vokabelset</p>
+          <PackageOpen size={56} className="mx-auto mb-4 text-[#cccccc] dark:text-[#444444]" />
+          <h3 className="text-lg font-semibold text-[#333333] dark:text-[#cccccc] mb-2">Keine Karten verfügbar</h3>
+          <p className="text-[#888888] text-sm mb-6">Erstelle zuerst ein Vokabelset</p>
           <Link
             to="/sets/new"
             className="text-white font-medium px-6 py-2.5 rounded-lg transition-opacity hover:opacity-80"
@@ -135,7 +135,7 @@ export default function DailyChallenge() {
       <div className="max-w-lg mx-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
-          <Link to="/" className="text-sm text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+          <Link to="/" className="text-sm text-[#888888] hover:text-[#555555] dark:hover:text-[#cccccc]">
             ← Zurück
           </Link>
           <div className="flex items-center gap-3">
@@ -144,7 +144,7 @@ export default function DailyChallenge() {
                 <Flame size={11} />{daily.challengeStreak}
               </span>
             )}
-            <span className="text-sm text-gray-400">{index + 1} / {studyCards.length}</span>
+            <span className="text-sm text-[#888888]">{index + 1} / {studyCards.length}</span>
           </div>
         </div>
 
@@ -157,7 +157,7 @@ export default function DailyChallenge() {
         </div>
 
         {/* Fortschrittsbalken */}
-        <div className="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-1.5 mb-8">
+        <div className="w-full bg-[#ebebeb] dark:bg-[#2a2a2a] rounded-full h-1.5 mb-8">
           <div
             role="progressbar"
             aria-valuenow={Math.round(progress)}
@@ -170,9 +170,9 @@ export default function DailyChallenge() {
         </div>
 
         {/* Karte */}
-        <div className="rounded-2xl p-6 mb-6 text-center border border-gray-100 dark:border-white/10 bg-card">
-          <p className="text-xs text-gray-400 mb-1 uppercase tracking-wide">{card.setName}</p>
-          <p className="text-2xl font-semibold text-gray-900 dark:text-gray-100">{card.front}</p>
+        <div className="rounded-2xl p-6 mb-6 text-center border border-[#ebebeb] dark:border-white/10 bg-card">
+          <p className="text-xs text-[#888888] mb-1 uppercase tracking-wide">{card.setName}</p>
+          <p className="text-2xl font-semibold text-[#111111] dark:text-white">{card.front}</p>
         </div>
 
         {/* Eingabe */}
@@ -184,19 +184,19 @@ export default function DailyChallenge() {
             onChange={(e) => setInput(e.target.value)}
             disabled={submitted}
             placeholder="Übersetzung eingeben..."
-            className={`w-full border-2 rounded-xl px-4 py-3 text-base focus:outline-none transition-colors bg-white dark:bg-gray-800 ${
+            className={`w-full border-2 rounded-xl px-4 py-3 text-base focus:outline-none transition-colors bg-white dark:bg-[#1a1a1a] ${
               submitted
                 ? lastAnswer?.correct
                   ? 'border-green-400 bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-400'
                   : 'border-red-400 bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-400'
-                : 'border-gray-200 dark:border-white/15 dark:text-white focus:border-[#1D9E75] dark:focus:border-[#1D9E75]'
+                : 'border-[#ebebeb] dark:border-white/15 dark:text-white focus:border-[#1D9E75] dark:focus:border-[#1D9E75]'
             }`}
           />
           {!submitted && (
             <button
               type="submit"
               disabled={!input.trim()}
-              className="w-full mt-3 disabled:bg-gray-200 dark:disabled:bg-gray-700 disabled:text-gray-400 text-white font-medium py-3 rounded-xl transition-colors cursor-pointer"
+              className="w-full mt-3 disabled:bg-[#ebebeb] dark:disabled:bg-[#2a2a2a] disabled:text-[#888888] text-white font-medium py-3 rounded-xl transition-colors cursor-pointer"
               style={input.trim() ? { backgroundColor: '#7F77DD' } : undefined}
             >
               Prüfen

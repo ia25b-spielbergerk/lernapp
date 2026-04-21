@@ -35,7 +35,7 @@ export default function PasswortVergessenPage() {
             <BookOpen size={28} style={{ color: '#7F77DD' }} />
           </div>
           <h1 className="text-2xl font-bold app-text">Passwort zurücksetzen</h1>
-          <p className="text-sm text-gray-400 dark:text-white/40 mt-1">
+          <p className="text-sm text-[#888888] dark:text-white/40 mt-1">
             Wir schicken dir einen Reset-Link per E-Mail
           </p>
         </div>
@@ -45,12 +45,12 @@ export default function PasswortVergessenPage() {
             <div className="rounded-xl px-4 py-4 text-sm border text-center" style={{ color: '#1D9E75', background: 'rgba(29,158,117,0.08)', borderColor: 'rgba(29,158,117,0.2)' }}>
               Falls ein Konto mit dieser E-Mail existiert, wurde eine Reset-E-Mail gesendet.
             </div>
-            <p className="text-xs text-center text-gray-400 dark:text-white/30">
+            <p className="text-xs text-center text-[#888888] dark:text-white/30">
               Bitte auch den Spam-Ordner prüfen.
             </p>
             <Link
               to="/login"
-              className="flex items-center justify-center gap-2 w-full text-sm font-medium py-2.5 rounded-xl border app-border text-gray-600 dark:text-white/60 hover:border-[#7F77DD] transition-colors"
+              className="flex items-center justify-center gap-2 w-full text-sm font-medium py-2.5 rounded-xl border app-border text-[#555555] dark:text-white/60 hover:border-[#7F77DD] transition-colors"
             >
               <ArrowLeft size={15} />
               Zurück zum Login
@@ -59,11 +59,11 @@ export default function PasswortVergessenPage() {
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-white/70 mb-1.5">
+              <label className="block text-sm font-medium text-[#333333] dark:text-white/70 mb-1.5">
                 E-Mail
               </label>
               <div className="relative">
-                <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-white/30 pointer-events-none" />
+                <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#888888] dark:text-white/30 pointer-events-none" />
                 <input
                   type="email"
                   value={email}
@@ -93,7 +93,7 @@ export default function PasswortVergessenPage() {
               {loading ? 'Wird gesendet...' : 'Reset-Link senden'}
             </button>
 
-            <p className="text-center text-sm text-gray-400 dark:text-white/40">
+            <p className="text-center text-sm text-[#888888] dark:text-white/40">
               <Link to="/login" className="hover:underline inline-flex items-center gap-1" style={{ color: '#7F77DD' }}>
                 <ArrowLeft size={13} />
                 Zurück zum Login

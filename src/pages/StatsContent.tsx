@@ -31,7 +31,7 @@ const MOOD_LABELS: Record<number, string> = {
 
 function EmptyState({ text }: { text: string }) {
   return (
-    <div className="flex items-center justify-center py-10 text-sm text-gray-300 dark:text-white/20 text-center">
+    <div className="flex items-center justify-center py-10 text-sm text-[#cccccc] dark:text-white/20 text-center">
       {text}
     </div>
   );
@@ -213,7 +213,7 @@ export default function StatsContent() {
             >
               <div className="flex items-center gap-1.5 mb-2">
                 <Icon size={13} style={{ color }} />
-                <p className="text-xs text-gray-400 dark:text-white/40 leading-tight">{label}</p>
+                <p className="text-xs text-[#888888] dark:text-white/40 leading-tight">{label}</p>
               </div>
               <p className="text-2xl font-bold app-text">{value}</p>
             </div>
@@ -226,7 +226,7 @@ export default function StatsContent() {
             <EmptyState text={`Noch keine Lernaktivität in den letzten ${days} Tagen.`} />
           ) : (
             <>
-              <p className="text-xs text-gray-400 dark:text-white/40 mb-3">Karten gelernt pro Tag</p>
+              <p className="text-xs text-[#888888] dark:text-white/40 mb-3">Karten gelernt pro Tag</p>
               <ResponsiveContainer width="100%" height={140}>
                 <LineChart data={studyData} margin={{ top: 4, right: 4, left: -20, bottom: 0 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
@@ -261,14 +261,14 @@ export default function StatsContent() {
               {/* Richtig vs. Falsch */}
               {totalAnswers > 0 && (
                 <div className="mt-5">
-                  <p className="text-xs text-gray-400 dark:text-white/40 mb-3">Richtig vs. Falsch (gesamt)</p>
+                  <p className="text-xs text-[#888888] dark:text-white/40 mb-3">Richtig vs. Falsch (gesamt)</p>
                   <div className="space-y-2">
                     {[
                       { label: 'Richtig', value: totalCorrect, color: '#1D9E75' },
                       { label: 'Falsch', value: totalIncorrect, color: '#E24B4A' },
                     ].map(({ label, value, color }) => (
                       <div key={label} className="flex items-center gap-3">
-                        <span className="text-xs text-gray-500 dark:text-white/40 w-12 text-right shrink-0">{label}</span>
+                        <span className="text-xs text-[#888888] dark:text-white/40 w-12 text-right shrink-0">{label}</span>
                         <div className="flex-1 bg-[#ebebeb] dark:bg-[#2a2a2a] rounded-full h-3.5 overflow-hidden">
                           <div
                             className="h-3.5 rounded-full transition-all duration-500"
@@ -278,7 +278,7 @@ export default function StatsContent() {
                             }}
                           />
                         </div>
-                        <span className="text-xs font-semibold text-gray-700 dark:text-white w-8 shrink-0">{value}</span>
+                        <span className="text-xs font-semibold text-[#333333] dark:text-white w-8 shrink-0">{value}</span>
                       </div>
                     ))}
                   </div>
@@ -288,11 +288,11 @@ export default function StatsContent() {
               {/* Set-Scores */}
               {setScores.length > 0 && (
                 <div className="mt-5">
-                  <p className="text-xs text-gray-400 dark:text-white/40 mb-3">Beste Scores</p>
+                  <p className="text-xs text-[#888888] dark:text-white/40 mb-3">Beste Scores</p>
                   <div className="space-y-2.5">
                     {setScores.map((s) => (
                       <div key={s.name} className="flex items-center gap-2 min-w-0">
-                        <p className="text-xs text-gray-600 dark:text-white/60 truncate flex-1">{s.name}</p>
+                        <p className="text-xs text-[#555555] dark:text-white/60 truncate flex-1">{s.name}</p>
                         <div className="flex gap-1.5 shrink-0">
                           {s.quiz > 0 && (
                             <span className="text-xs px-2 py-0.5 rounded-full font-medium" style={{ background: 'rgba(127,119,221,0.12)', color: '#7F77DD' }}>
@@ -331,7 +331,7 @@ export default function StatsContent() {
                       return (
                         <div key={date} className="flex-1 flex justify-center">
                           {showLabel && (
-                            <span className="text-[9px] text-gray-300 dark:text-white/20">
+                            <span className="text-[9px] text-[#cccccc] dark:text-white/20">
                               {new Date(date + 'T12:00:00').getDate()}.
                             </span>
                           )}
@@ -343,7 +343,7 @@ export default function StatsContent() {
 
                 {habitGridData.map((habit) => (
                   <div key={habit.name} className="flex items-center mb-1.5">
-                    <p className="text-xs text-gray-500 dark:text-white/50 w-24 shrink-0 truncate pr-2">{habit.name}</p>
+                    <p className="text-xs text-[#888888] dark:text-white/50 w-24 shrink-0 truncate pr-2">{habit.name}</p>
                     <div className="flex flex-1 gap-0.5">
                       {habit.daysChecked.map((checked, i) => (
                         <div
@@ -366,8 +366,8 @@ export default function StatsContent() {
               <div className="space-y-2 mb-4">
                 {habitGridData.map((h) => (
                   <div key={h.name} className="flex items-center gap-2">
-                    <p className="text-xs text-gray-600 dark:text-white/60 truncate flex-1">{h.name}</p>
-                    <span className="text-xs text-gray-400 dark:text-white/30 shrink-0">{h.total}/{days} Tage</span>
+                    <p className="text-xs text-[#555555] dark:text-white/60 truncate flex-1">{h.name}</p>
+                    <span className="text-xs text-[#888888] dark:text-white/30 shrink-0">{h.total}/{days} Tage</span>
                     <span
                       className="text-xs font-semibold px-2 py-0.5 rounded-full shrink-0 flex items-center gap-1"
                       style={{ background: 'rgba(239,159,39,0.12)', color: '#EF9F27' }}
@@ -381,7 +381,7 @@ export default function StatsContent() {
 
               {bestHabit && (
                 <div className="pt-3 border-t app-border">
-                  <p className="text-xs text-gray-400 dark:text-white/40">
+                  <p className="text-xs text-[#888888] dark:text-white/40">
                     Konstanteste Gewohnheit:{' '}
                     <span className="font-semibold" style={{ color: '#EF9F27' }}>{bestHabit.name}</span>
                     {' '}({bestHabit.total}/{days} Tage)
@@ -403,14 +403,14 @@ export default function StatsContent() {
                   <p className="text-3xl font-bold" style={{ color: '#378ADD' }}>
                     {avgMood!.toFixed(1)}
                   </p>
-                  <p className="text-xs text-gray-400 dark:text-white/40 mt-0.5">Ø Stimmung</p>
+                  <p className="text-xs text-[#888888] dark:text-white/40 mt-0.5">Ø Stimmung</p>
                 </div>
-                <p className="text-sm text-gray-500 dark:text-white/50">
+                <p className="text-sm text-[#888888] dark:text-white/50">
                   {MOOD_LABELS[Math.round(avgMood!)]}
                 </p>
               </div>
 
-              <p className="text-xs text-gray-400 dark:text-white/40 mb-3">Stimmungsverlauf</p>
+              <p className="text-xs text-[#888888] dark:text-white/40 mb-3">Stimmungsverlauf</p>
               <ResponsiveContainer width="100%" height={130}>
                 <LineChart data={moodData} margin={{ top: 4, right: 4, left: -20, bottom: 0 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
@@ -458,14 +458,14 @@ export default function StatsContent() {
                   <p className="text-3xl font-bold" style={{ color: '#1D9E75' }}>
                     {taskRate !== null ? `${taskRate}%` : '–'}
                   </p>
-                  <p className="text-xs text-gray-400 dark:text-white/40 mt-0.5">Erledigungsrate</p>
+                  <p className="text-xs text-[#888888] dark:text-white/40 mt-0.5">Erledigungsrate</p>
                 </div>
-                <p className="text-sm text-gray-500 dark:text-white/50">
+                <p className="text-sm text-[#888888] dark:text-white/50">
                   {totalTasksDone} von {totalTasksAll} erledigt
                 </p>
               </div>
 
-              <p className="text-xs text-gray-400 dark:text-white/40 mb-3">Erledigt vs. Offen pro Tag</p>
+              <p className="text-xs text-[#888888] dark:text-white/40 mb-3">Erledigt vs. Offen pro Tag</p>
               <ResponsiveContainer width="100%" height={140}>
                 <BarChart data={taskData} margin={{ top: 4, right: 4, left: -20, bottom: 0 }} barSize={barSize}>
                   <CartesianGrid strokeDasharray="3 3" stroke={gridColor} vertical={false} />

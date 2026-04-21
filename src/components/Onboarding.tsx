@@ -69,7 +69,7 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
         {step > 0 ? (
           <button
             onClick={() => setStep((s) => s - 1)}
-            className="text-sm text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 cursor-pointer transition-colors"
+            className="text-sm text-[#888888] hover:text-[#555555] dark:hover:text-[#cccccc] cursor-pointer transition-colors"
           >
             ← Zurück
           </button>
@@ -79,7 +79,7 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
         {!isLast && (
           <button
             onClick={onComplete}
-            className="text-sm text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 flex items-center gap-1 cursor-pointer transition-colors"
+            className="text-sm text-[#888888] hover:text-[#555555] dark:hover:text-[#cccccc] flex items-center gap-1 cursor-pointer transition-colors"
           >
             Überspringen <X size={13} />
           </button>
@@ -99,10 +99,10 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
             <h1 className="text-4xl font-bold app-text mb-4 tracking-tight">
               Willkommen bei Arete
             </h1>
-            <p className="text-gray-500 dark:text-gray-400 text-lg leading-relaxed">
+            <p className="text-[#888888] text-lg leading-relaxed">
               Dein persönlicher Begleiter für Vokabeln, Aufgaben und Gewohnheiten — alles in einer App.
             </p>
-            <p className="text-gray-400 dark:text-white/30 text-sm mt-4">
+            <p className="text-[#888888] dark:text-white/30 text-sm mt-4">
               Kurze Einführung in 4 Schritten
             </p>
           </div>
@@ -120,7 +120,7 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
             <h2 className="text-2xl font-bold app-text mb-3">
               {screen.title}
             </h2>
-            <p className="text-gray-500 dark:text-gray-400 text-base leading-relaxed mb-6">
+            <p className="text-[#888888] text-base leading-relaxed mb-6">
               {screen.description}
             </p>
 

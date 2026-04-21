@@ -54,7 +54,7 @@ export default function Flashcards() {
     return (
       <Layout>
         <div className="text-center py-20">
-          <p className="text-gray-400">Set nicht gefunden.</p>
+          <p className="text-[#888888]">Set nicht gefunden.</p>
           <Link to="/" className="text-sm mt-2 inline-block" style={{ color: '#7F77DD' }}>← Zurück</Link>
         </div>
       </Layout>
@@ -88,23 +88,23 @@ export default function Flashcards() {
       <Layout>
         <div className="max-w-md mx-auto text-center py-12">
           <CreditCard size={56} className="mx-auto mb-4" style={{ color: '#7F77DD' }} />
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+          <h1 className="text-2xl font-bold text-[#111111] dark:text-white mb-2">
             {weakOnly ? 'Schwache Karten geübt!' : 'Fertig!'}
           </h1>
-          <p className="text-gray-400 text-sm mb-8">{total} Karten durchgegangen</p>
+          <p className="text-[#888888] text-sm mb-8">{total} Karten durchgegangen</p>
 
           <div className="flex justify-center gap-8 mb-8">
             <div className="text-center">
               <p className="text-3xl font-bold" style={{ color: '#1D9E75' }}>{known}</p>
-              <p className="text-sm text-gray-400">Gewusst</p>
+              <p className="text-sm text-[#888888]">Gewusst</p>
             </div>
             <div className="text-center">
               <p className="text-3xl font-bold" style={{ color: '#E24B4A' }}>{unknown}</p>
-              <p className="text-sm text-gray-400">Nicht gewusst</p>
+              <p className="text-sm text-[#888888]">Nicht gewusst</p>
             </div>
           </div>
 
-          <div className="w-full bg-gray-100 dark:bg-white/10 rounded-full h-2 mb-8">
+          <div className="w-full bg-[#ebebeb] dark:bg-white/10 rounded-full h-2 mb-8">
             <div
               className="h-2 rounded-full transition-all"
               style={{ width: `${pct}%`, backgroundColor: '#1D9E75' }}
@@ -114,7 +114,7 @@ export default function Flashcards() {
           <div className="flex gap-3">
             <button
               onClick={() => navigate(`/sets/${id}/study`)}
-              className="flex-1 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 font-medium py-2.5 rounded-lg transition-colors text-sm cursor-pointer"
+              className="flex-1 border border-[#ebebeb] dark:border-[#2a2a2a] text-[#555555] dark:text-[#888888] hover:bg-[#f0f0f0] dark:hover:bg-[#222222] font-medium py-2.5 rounded-lg transition-colors text-sm cursor-pointer"
             >
               Zurück
             </button>
@@ -137,17 +137,17 @@ export default function Flashcards() {
         <div className="flex items-center justify-between mb-4">
           <button
             onClick={() => setConfirmLeave(true)}
-            className="text-sm text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+            className="text-sm text-[#888888] hover:text-[#555555] dark:hover:text-[#cccccc]"
           >
             ← Zurück
           </button>
-          <span className="text-sm text-gray-400">
+          <span className="text-sm text-[#888888]">
             {index + 1} / {cards.length}
           </span>
         </div>
 
         {/* Fortschrittsbalken */}
-        <div className="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-1.5 mb-8">
+        <div className="w-full bg-[#ebebeb] dark:bg-[#2a2a2a] rounded-full h-1.5 mb-8">
           <div
             role="progressbar"
             aria-valuenow={Math.round(progress)}
@@ -186,13 +186,13 @@ export default function Flashcards() {
           >
             {/* Vorderseite */}
             <div
-              className="absolute inset-0 rounded-2xl shadow-sm border-2 border-gray-100 dark:border-white/10 bg-card"
+              className="absolute inset-0 rounded-2xl shadow-sm border-2 border-[#ebebeb] dark:border-white/10 bg-card"
               style={{ backfaceVisibility: 'hidden' }}
             >
               <div className="absolute inset-0 flex flex-col items-center justify-center p-8">
-                <p className="text-xs text-gray-400 mb-4 uppercase tracking-wide">{card.reversed ? set.language2 : set.language1}</p>
-                <p className="text-2xl font-semibold text-gray-900 dark:text-gray-100 text-center">{card.front}</p>
-                <p className="text-xs text-gray-300 dark:text-gray-600 mt-6">Tippen zum Umdrehen</p>
+                <p className="text-xs text-[#888888] mb-4 uppercase tracking-wide">{card.reversed ? set.language2 : set.language1}</p>
+                <p className="text-2xl font-semibold text-[#111111] dark:text-white text-center">{card.front}</p>
+                <p className="text-xs text-[#cccccc] dark:text-[#444444] mt-6">Tippen zum Umdrehen</p>
               </div>
             </div>
 
@@ -233,7 +233,7 @@ export default function Flashcards() {
         </div>
 
         {!flipped && (
-          <p className="text-center text-gray-300 dark:text-gray-600 text-sm mt-6">
+          <p className="text-center text-[#cccccc] dark:text-[#444444] text-sm mt-6">
             Karte anklicken um die Antwort zu sehen
           </p>
         )}

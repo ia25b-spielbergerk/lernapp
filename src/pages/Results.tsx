@@ -30,7 +30,7 @@ function ScoreCircle({ score }: { score: number }) {
         <ScoreIcon size={52} style={{ color }} />
       </div>
       <p className="text-6xl font-bold" style={{ color }}>{displayed}%</p>
-      <p className="text-gray-400 dark:text-white/40 text-sm mt-2">
+      <p className="text-[#888888] dark:text-white/40 text-sm mt-2">
         {displayed === 100 ? 'Perfekt! Alle richtig!' : displayed >= 80 ? 'Super gemacht!' : displayed >= 50 ? 'Gut, weiter üben!' : 'Noch etwas Übung nötig'}
       </p>
     </div>
@@ -55,7 +55,7 @@ export default function Results() {
     <Layout>
       <div className="max-w-lg mx-auto">
         <div className="mb-4">
-          <Link to={`/sets/${state.setId}/study`} className="text-sm text-gray-400 dark:text-white/40 hover:text-gray-600 dark:hover:text-white/60">
+          <Link to={`/sets/${state.setId}/study`} className="text-sm text-[#888888] dark:text-white/40 hover:text-[#555555] dark:hover:text-white/60">
             ← Zurück zu "{state.setName}"
           </Link>
         </div>
@@ -66,15 +66,15 @@ export default function Results() {
         <div className="grid grid-cols-3 gap-4 mb-8">
           <div className="text-center bg-card border app-border rounded-xl p-4">
             <p className="text-2xl font-bold app-text">{state.answers.length}</p>
-            <p className="text-xs text-gray-400 dark:text-white/40 mt-1">Fragen</p>
+            <p className="text-xs text-[#888888] dark:text-white/40 mt-1">Fragen</p>
           </div>
           <div className="text-center rounded-xl p-4 border" style={{ background: 'rgba(29,158,117,0.09)', borderColor: 'rgba(29,158,117,0.22)' }}>
             <p className="text-2xl font-bold" style={{ color: '#1D9E75' }}>{correct}</p>
-            <p className="text-xs text-gray-400 dark:text-white/40 mt-1">Richtig</p>
+            <p className="text-xs text-[#888888] dark:text-white/40 mt-1">Richtig</p>
           </div>
           <div className="text-center rounded-xl p-4 border" style={{ background: 'rgba(226,75,74,0.09)', borderColor: 'rgba(226,75,74,0.22)' }}>
             <p className="text-2xl font-bold" style={{ color: '#E24B4A' }}>{wrong.length}</p>
-            <p className="text-xs text-gray-400 dark:text-white/40 mt-1">Falsch</p>
+            <p className="text-xs text-[#888888] dark:text-white/40 mt-1">Falsch</p>
           </div>
         </div>
 
@@ -90,7 +90,7 @@ export default function Results() {
                   style={{ background: 'rgba(226,75,74,0.07)', borderColor: 'rgba(226,75,74,0.18)' }}
                 >
                   <div>
-                    {a.front && <p className="text-xs text-gray-400 dark:text-white/40 mb-0.5">{a.front}</p>}
+                    {a.front && <p className="text-xs text-[#888888] dark:text-white/40 mb-0.5">{a.front}</p>}
                     <p className="text-sm line-through" style={{ color: '#E24B4A' }}>{a.selected}</p>
                   </div>
                   <p className="text-sm font-semibold shrink-0" style={{ color: '#1D9E75' }}>→ {a.answer}</p>

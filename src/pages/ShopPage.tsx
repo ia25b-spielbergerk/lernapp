@@ -24,7 +24,7 @@ export default function ShopPage() {
             <ShoppingBag size={40} style={{ color: '#378ADD' }} />
           </div>
           <h2 className="text-xl font-bold app-text mb-3">Bald verfügbar</h2>
-          <p className="text-gray-400 dark:text-white/40 text-sm leading-relaxed max-w-xs">
+          <p className="text-[#888888] dark:text-white/40 text-sm leading-relaxed max-w-xs">
             Hier kannst du bald mit Kristallen Belohnungen freischalten.
           </p>
         </div>
