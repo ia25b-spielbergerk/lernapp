@@ -25,7 +25,7 @@ export default function BottomNav() {
 
   return (
     <nav
-      className="fixed bottom-0 left-0 right-0 z-20 border-t"
+      className="md:hidden fixed bottom-0 left-0 right-0 z-20 border-t"
       style={{ backgroundColor: 'var(--bg-page)', borderTopColor: 'var(--border)' }}
     >
       <div className="max-w-4xl mx-auto flex items-stretch">
