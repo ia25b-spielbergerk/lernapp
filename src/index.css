@@ -58,10 +58,10 @@ html, body, #root {
 
 /* ── Dashboard Gradient Header ── */
 .dashboard-header {
-  background: linear-gradient(160deg, oklch(0.96 0.03 160) 0%, transparent 70%);
+  background: linear-gradient(to bottom, oklch(0.94 0.02 160 / 0.5) 0%, transparent 100%);
 }
 html.dark .dashboard-header {
-  background: linear-gradient(160deg, oklch(0.22 0.08 160) 0%, transparent 65%);
+  background: linear-gradient(to bottom, oklch(0.72 0.18 160 / 0.08) 0%, transparent 100%);
 }
 
 /* ── Klick-Feedback ── */
