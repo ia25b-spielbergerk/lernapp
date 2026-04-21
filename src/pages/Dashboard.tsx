@@ -159,8 +159,8 @@ export default function Dashboard() {
 
   return (
     <Layout>
-      {/* Gradient Header */}
-      <div className="dashboard-header -mx-4 -mt-6 px-4 pt-6 pb-5 mb-5">
+      {/* Header */}
+      <div className="-mx-4 -mt-6 px-4 pt-6 pb-5 mb-5">
         <div className="flex items-start justify-between mb-5">
           <div>
             <p className="text-[13px] font-medium mb-1" style={{ color: 'var(--text-2)' }}>
