@@ -1,13 +1,13 @@
-import { useEffect, useState, useMemo, useRef } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   Flame, Gem, Sun, Cloud, CloudRain, CloudSnow, CloudLightning, CloudDrizzle,
   CircleCheck, ChevronRight, Quote, Check,
-  BookOpen, Plus, Repeat2, ArrowRight, Settings, Zap, User, Moon, LogOut,
+  BookOpen, Plus, Repeat2, ArrowRight, Zap,
 } from 'lucide-react';
 import Layout from '../components/Layout';
 import { useStore } from '../store';
-import { useAuth, getInitials } from '../lib/AuthContext';
+import { useAuth } from '../lib/AuthContext';
 
 // Orange=#EF9F27 · Blue=#378ADD · Green=#1D9E75 · Purple=#7F77DD · Red=#E24B4A
 
@@ -105,7 +105,7 @@ function getGreeting(hour: number): string {
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const { profile, signOut } = useAuth();
+  const { profile } = useAuth();
   const user = useStore((s) => s.user);
   const daily = useStore((s) => s.daily);
   const tasks = useStore((s) => s.tasks);
@@ -114,20 +114,6 @@ export default function Dashboard() {
   const cardStats = useStore((s) => s.cardStats);
   const checkInHabit = useStore((s) => s.checkInHabit);
   const completeTask = useStore((s) => s.completeTask);
-  const darkMode = useStore((s) => s.darkMode);
-  const toggleDarkMode = useStore((s) => s.toggleDarkMode);
-
-  const [avatarMenuOpen, setAvatarMenuOpen] = useState(false);
-  const avatarMenuRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!avatarMenuOpen) return;
-    const handler = (e: MouseEvent) => {
-      if (avatarMenuRef.current && !avatarMenuRef.current.contains(e.target as Node)) setAvatarMenuOpen(false);
-    };
-    document.addEventListener('mousedown', handler);
-    return () => document.removeEventListener('mousedown', handler);
-  }, [avatarMenuOpen]);
 
   const isNewUser = sets.length === 0 && habits.length === 0 && tasks.length === 0;
 
@@ -185,65 +171,8 @@ export default function Dashboard() {
               {profile?.username ? <><br />{profile.username}</> : ''}
             </p>
           </div>
-          <div className="flex items-center gap-2.5 mt-1">
+          <div className="flex items-center mt-1">
             <WeatherWidget />
-            <div className="relative" ref={avatarMenuRef}>
-              <button
-                onClick={() => setAvatarMenuOpen((v) => !v)}
-                className="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold hover:opacity-80 transition-opacity shrink-0 cursor-pointer"
-                style={{ backgroundColor: profile?.avatar_color ?? 'var(--accent)' }}
-                aria-label="Menü öffnen"
-              >
-                {profile?.username ? getInitials(profile.username) || '?' : '?'}
-              </button>
-              {avatarMenuOpen && (
-                <div
-                  className="absolute right-0 top-full mt-2 w-52 rounded-xl border shadow-lg overflow-hidden z-50"
-                  style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border)' }}
-                >
-                  <button
-                    onClick={() => { setAvatarMenuOpen(false); navigate('/profil'); }}
-                    className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-left cursor-pointer app-text app-hover"
-                  >
-                    <User size={15} style={{ color: 'var(--text-2)' }} />
-                    Profil bearbeiten
-                  </button>
-                  <button
-                    onClick={() => toggleDarkMode()}
-                    className="w-full flex items-center justify-between gap-2.5 px-4 py-2.5 text-sm text-left cursor-pointer app-text app-hover"
-                  >
-                    <span className="flex items-center gap-2.5">
-                      {darkMode
-                        ? <Sun size={15} style={{ color: 'var(--text-2)' }} />
-                        : <Moon size={15} style={{ color: 'var(--text-2)' }} />
-                      }
-                      Dark Mode
-                    </span>
-                    <span className="text-[11px] font-semibold px-1.5 py-0.5 rounded" style={{ backgroundColor: 'var(--bg-hover)', color: 'var(--text-2)' }}>
-                      {darkMode ? 'An' : 'Aus'}
-                    </span>
-                  </button>
-                  <button
-                    onClick={() => { setAvatarMenuOpen(false); navigate('/einstellungen'); }}
-                    className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-left cursor-pointer app-text app-hover"
-                  >
-                    <Settings size={15} style={{ color: 'var(--text-2)' }} />
-                    Einstellungen
-                  </button>
-                  <div className="border-t mx-2 my-1" style={{ borderColor: 'var(--border)' }} />
-                  <button
-                    onClick={async () => { setAvatarMenuOpen(false); await signOut(); }}
-                    className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-left cursor-pointer"
-                    style={{ color: '#E24B4A' }}
-                    onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'rgba(226,75,74,0.08)'; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; }}
-                  >
-                    <LogOut size={15} />
-                    Abmelden
-                  </button>
-                </div>
-              )}
-            </div>
           </div>
         </div>
 
