@@ -68,11 +68,11 @@ export default function Results() {
             <p className="text-2xl font-bold app-text">{state.answers.length}</p>
             <p className="text-xs text-[#888888] dark:text-white/40 mt-1">Fragen</p>
           </div>
-          <div className="text-center rounded-xl p-4 border" style={{ background: 'rgba(29,158,117,0.09)', borderColor: 'rgba(29,158,117,0.22)' }}>
+          <div className="text-center rounded-xl p-4 border bg-card app-border">
             <p className="text-2xl font-bold" style={{ color: '#1D9E75' }}>{correct}</p>
             <p className="text-xs text-[#888888] dark:text-white/40 mt-1">Richtig</p>
           </div>
-          <div className="text-center rounded-xl p-4 border" style={{ background: 'rgba(226,75,74,0.09)', borderColor: 'rgba(226,75,74,0.22)' }}>
+          <div className="text-center rounded-xl p-4 border bg-card app-border">
             <p className="text-2xl font-bold" style={{ color: '#E24B4A' }}>{wrong.length}</p>
             <p className="text-xs text-[#888888] dark:text-white/40 mt-1">Falsch</p>
           </div>
@@ -86,8 +86,7 @@ export default function Results() {
               {wrong.map((a, i) => (
                 <div
                   key={i}
-                  className="rounded-xl px-4 py-3 flex items-center justify-between gap-4 border"
-                  style={{ background: 'rgba(226,75,74,0.07)', borderColor: 'rgba(226,75,74,0.18)' }}
+                  className="rounded-xl px-4 py-3 flex items-center justify-between gap-4 border bg-card app-border"
                 >
                   <div>
                     {a.front && <p className="text-xs text-[#888888] dark:text-white/40 mb-0.5">{a.front}</p>}

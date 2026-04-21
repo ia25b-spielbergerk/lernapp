@@ -192,8 +192,8 @@ export default function TestMode() {
           <div
             className="rounded-xl p-4 mb-4 border"
             style={isCorrect
-              ? { background: 'rgba(29,158,117,0.09)', borderColor: 'rgba(29,158,117,0.22)' }
-              : { background: 'rgba(226,75,74,0.09)', borderColor: 'rgba(226,75,74,0.22)' }
+              ? { borderColor: 'rgba(29,158,117,0.35)' }
+              : { borderColor: 'rgba(226,75,74,0.35)' }
             }
           >
             {isCorrect ? (

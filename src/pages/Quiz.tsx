@@ -116,11 +116,11 @@ export default function Quiz() {
     }
     if (option === q.correct) return {
       className: 'border-2',
-      style: { borderColor: 'rgba(29,158,117,0.5)', background: 'rgba(29,158,117,0.09)', color: '#1D9E75' },
+      style: { borderColor: 'rgba(29,158,117,0.5)', color: '#1D9E75' },
     };
     if (option === selected && option !== q.correct) return {
       className: 'border-2',
-      style: { borderColor: 'rgba(226,75,74,0.5)', background: 'rgba(226,75,74,0.09)', color: '#E24B4A' },
+      style: { borderColor: 'rgba(226,75,74,0.5)', color: '#E24B4A' },
     };
     return { className: 'border-[#ebebeb] dark:border-[#2a2a2a] text-[#cccccc] dark:text-[#444444]' };
   };

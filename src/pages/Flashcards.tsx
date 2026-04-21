@@ -219,14 +219,14 @@ export default function Flashcards() {
           <button
             onClick={() => handleAnswer(false)}
             className="flex-1 font-medium py-3 rounded-xl transition-all border-2 cursor-pointer hover:opacity-90"
-            style={{ borderColor: 'rgba(226,75,74,0.35)', color: '#E24B4A', background: 'rgba(226,75,74,0.07)' }}
+            style={{ borderColor: 'rgba(226,75,74,0.35)', color: '#E24B4A' }}
           >
             Nicht gewusst
           </button>
           <button
             onClick={() => handleAnswer(true)}
             className="flex-1 font-medium py-3 rounded-xl transition-all border-2 cursor-pointer hover:opacity-90"
-            style={{ borderColor: 'rgba(29,158,117,0.35)', color: '#1D9E75', background: 'rgba(29,158,117,0.07)' }}
+            style={{ borderColor: 'rgba(29,158,117,0.35)', color: '#1D9E75' }}
           >
             Gewusst <Check size={16} className="inline" />
           </button>

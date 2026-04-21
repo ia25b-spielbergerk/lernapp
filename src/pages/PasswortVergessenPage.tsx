@@ -31,7 +31,7 @@ export default function PasswortVergessenPage() {
 
         {/* Logo */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl mb-4" style={{ backgroundColor: 'rgba(127,119,221,0.12)' }}>
+          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl mb-4 bg-[#f9f9f9] dark:bg-[#1a1a1a]">
             <BookOpen size={28} style={{ color: '#7F77DD' }} />
           </div>
           <h1 className="text-2xl font-bold app-text">Passwort zurücksetzen</h1>

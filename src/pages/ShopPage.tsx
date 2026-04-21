@@ -13,14 +13,14 @@ export default function ShopPage() {
             <ShoppingBag size={20} style={{ color: '#378ADD' }} />
             <h1 className="text-2xl font-bold app-text">Shop</h1>
           </div>
-          <div className="flex items-center gap-2 rounded-xl px-4 py-2 border" style={{ background: 'rgba(55,138,221,0.09)', borderColor: 'rgba(55,138,221,0.22)' }}>
+          <div className="flex items-center gap-2 rounded-xl px-4 py-2 border bg-card app-border">
             <Gem size={18} style={{ color: '#378ADD' }} />
             <span className="text-lg font-bold" style={{ color: '#378ADD' }}>{crystals}</span>
           </div>
         </div>
 
         <div className="flex flex-col items-center justify-center text-center py-24">
-          <div className="w-20 h-20 rounded-2xl flex items-center justify-center mb-6" style={{ background: 'rgba(55,138,221,0.09)' }}>
+          <div className="w-20 h-20 rounded-2xl flex items-center justify-center mb-6 bg-[#f9f9f9] dark:bg-[#1a1a1a]">
             <ShoppingBag size={40} style={{ color: '#378ADD' }} />
           </div>
           <h2 className="text-xl font-bold app-text mb-3">Bald verfügbar</h2>
