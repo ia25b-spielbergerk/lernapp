@@ -148,7 +148,6 @@ export default function Dashboard() {
   }, [cardStats, today]);
 
   const xpToday = todayCardStats.length * 10;
-  const sessionsToday = new Set(todayCardStats.map((s) => s.setId)).size;
   const habitsDoneToday = habits.filter((h) => h.checkIns.includes(today)).length;
 
   const PRIORITY_DOT: Record<string, string> = {
@@ -159,15 +158,15 @@ export default function Dashboard() {
 
   return (
     <Layout>
-      {/* Header */}
-      <div className="-mx-4 -mt-6 px-4 pt-6 pb-5 mb-5">
-        <div className="flex items-start justify-between mb-5">
+      {/* Header — Begrüssung */}
+      <div className="mb-6 md:mb-8">
+        <div className="flex items-start justify-between">
           <div>
-            <p className="text-[13px] font-medium mb-1" style={{ color: 'var(--text-2)' }}>
+            <p className="text-sm mb-1" style={{ color: 'var(--text-2)' }}>
               {WEEKDAYS[now.getDay()]}, {now.getDate()}. {MONTHS[now.getMonth()]}
             </p>
-            <p className="text-[22px] font-bold leading-tight app-text" style={{ letterSpacing: '-0.4px' }}>
-              {getGreeting(now.getHours())},
+            <p className="text-[22px] md:text-3xl font-bold leading-tight app-text" style={{ letterSpacing: '-0.5px' }}>
+              {getGreeting(now.getHours())}
               {profile?.username ? <><br />{profile.username}</> : ''}
             </p>
           </div>
@@ -175,39 +174,47 @@ export default function Dashboard() {
             <WeatherWidget />
           </div>
         </div>
+      </div>
 
-        {/* Streak + Kristalle im Header */}
-        <div className="grid grid-cols-2 gap-3">
-          <div className="flex items-center gap-2.5 rounded-xl px-4 py-3 border bg-card app-border">
-            <Flame size={18} style={{ color: activeToday ? '#EF9F27' : 'var(--text-2)' }} />
-            <div>
-              <p className="text-xl font-bold leading-none" style={{ color: activeToday ? '#EF9F27' : 'var(--text-1)' }}>
-                {user.streak}
-              </p>
-              <p className="text-[11px] mt-0.5" style={{ color: 'var(--text-2)' }}>Tage Streak</p>
-            </div>
+      {/* 4 Stat-Cards — grid-cols-2 mobile, grid-cols-4 desktop */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6 md:mb-8">
+        <div className="flex items-center gap-2.5 rounded-xl px-4 py-3 border bg-card app-border">
+          <Flame size={18} style={{ color: activeToday ? '#EF9F27' : 'var(--text-2)' }} />
+          <div>
+            <p className="text-xl font-bold leading-none" style={{ color: activeToday ? '#EF9F27' : 'var(--text-1)' }}>{user.streak}</p>
+            <p className="text-[11px] mt-0.5" style={{ color: 'var(--text-2)' }}>Tage Streak</p>
           </div>
-          <div className="flex items-center gap-2.5 rounded-xl px-4 py-3 border bg-card app-border">
-            <Gem size={18} style={{ color: 'var(--accent)' }} />
-            <div>
-              <p className="text-xl font-bold leading-none" style={{ color: 'var(--accent)' }}>
-                {user.crystals ?? 0}
-              </p>
-              <p className="text-[11px] mt-0.5" style={{ color: 'var(--text-2)' }}>Kristalle</p>
-            </div>
+        </div>
+        <div className="flex items-center gap-2.5 rounded-xl px-4 py-3 border bg-card app-border">
+          <Gem size={18} style={{ color: 'var(--accent)' }} />
+          <div>
+            <p className="text-xl font-bold leading-none" style={{ color: 'var(--accent)' }}>{user.crystals ?? 0}</p>
+            <p className="text-[11px] mt-0.5" style={{ color: 'var(--text-2)' }}>Kristalle</p>
+          </div>
+        </div>
+        <div className="flex items-center gap-2.5 rounded-xl px-4 py-3 border bg-card app-border">
+          <Zap size={18} style={{ color: 'var(--accent)' }} />
+          <div>
+            <p className="text-xl font-bold leading-none" style={{ color: 'var(--accent)' }}>{xpToday}</p>
+            <p className="text-[11px] mt-0.5" style={{ color: 'var(--text-2)' }}>XP heute</p>
+          </div>
+        </div>
+        <div className="flex items-center gap-2.5 rounded-xl px-4 py-3 border bg-card app-border">
+          <Repeat2 size={18} style={{ color: '#EF9F27' }} />
+          <div>
+            <p className="text-xl font-bold leading-none" style={{ color: '#EF9F27' }}>
+              {habitsDoneToday}<span className="text-sm font-normal" style={{ color: 'var(--text-2)' }}>/{habits.length}</span>
+            </p>
+            <p className="text-[11px] mt-0.5" style={{ color: 'var(--text-2)' }}>Habits heute</p>
           </div>
         </div>
       </div>
 
       {/* Getting-Started — nur für neue Nutzer */}
       {isNewUser && (
-        <div className="mb-5 rounded-2xl border p-5 bg-card app-border">
-          <p className="text-xs font-semibold uppercase tracking-wider mb-1" style={{ color: 'var(--accent)' }}>
-            Erste Schritte
-          </p>
-          <h2 className="text-lg font-bold app-text mb-1">
-            Bereit loszulegen?
-          </h2>
+        <div className="mb-6 rounded-2xl border p-5 bg-card app-border">
+          <p className="text-xs font-semibold uppercase tracking-wider mb-1" style={{ color: 'var(--accent)' }}>Erste Schritte</p>
+          <h2 className="text-lg font-bold app-text mb-1">Bereit loszulegen?</h2>
           <p className="text-sm mb-4 leading-relaxed" style={{ color: '#888888' }}>
             Erstelle dein erstes Vokabelset und fang noch heute an zu lernen.
           </p>
@@ -218,37 +225,25 @@ export default function Dashboard() {
             <BookOpen size={16} /> Erstes Set erstellen <ArrowRight size={15} />
           </Link>
           <div className="flex gap-2">
-            <Link
-              to="/planer"
-              className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-medium border app-border app-hover transition-colors"
-              style={{ color: '#1D9E75' }}
-            >
+            <Link to="/planer" className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-medium border app-border app-hover transition-colors" style={{ color: '#1D9E75' }}>
               <Plus size={13} /> Aufgabe
             </Link>
-            <Link
-              to="/gewohnheiten"
-              className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-medium border app-border app-hover transition-colors"
-              style={{ color: '#EF9F27' }}
-            >
+            <Link to="/gewohnheiten" className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-medium border app-border app-hover transition-colors" style={{ color: '#EF9F27' }}>
               <Repeat2 size={13} /> Gewohnheit
             </Link>
           </div>
         </div>
       )}
 
-      {/* Daily Challenge — mint gradient banner */}
+      {/* Daily Challenge */}
       {daily && daily.cards.length > 0 && !daily.completed && (
         <div
-          className="flex items-center gap-4 rounded-xl px-4 py-4 mb-4"
+          className="flex items-center gap-4 rounded-xl px-4 py-4 mb-6 md:mb-8"
           style={{ background: 'linear-gradient(135deg, oklch(0.62 0.18 160) 0%, oklch(0.52 0.18 180) 100%)' }}
         >
           <div className="flex-1">
-            <p className="text-[10px] font-bold uppercase tracking-wider mb-1" style={{ color: 'rgba(0,0,0,0.45)' }}>
-              Tägliche Challenge
-            </p>
-            <p className="text-base font-bold" style={{ color: '#0a0f0a' }}>
-              {daily.cards.length} Karten warten
-            </p>
+            <p className="text-[10px] font-bold uppercase tracking-wider mb-1" style={{ color: 'rgba(0,0,0,0.45)' }}>Tägliche Challenge</p>
+            <p className="text-base font-bold" style={{ color: '#0a0f0a' }}>{daily.cards.length} Karten warten</p>
           </div>
           <button
             onClick={() => navigate('/daily')}
@@ -260,117 +255,129 @@ export default function Dashboard() {
         </div>
       )}
       {daily?.completed && (
-        <div className="flex items-center gap-2.5 rounded-xl px-4 py-3 mb-4 border bg-card app-border">
+        <div className="flex items-center gap-2.5 rounded-xl px-4 py-3 mb-6 md:mb-8 border bg-card app-border">
           <CircleCheck size={18} style={{ color: '#1D9E75' }} className="shrink-0" />
           <p className="text-sm font-medium" style={{ color: '#1D9E75' }}>Challenge erledigt · {daily.score}%</p>
         </div>
       )}
 
-      {/* Tagesstatistik */}
-      <div className="grid grid-cols-3 gap-2 mb-4">
-        <div className="rounded-xl px-3 py-2.5 border bg-card app-border">
-          <div className="flex items-center gap-1 mb-1">
-            <Zap size={11} style={{ color: 'var(--accent)' }} />
-            <p className="text-[10px]" style={{ color: '#888888' }}>XP heute</p>
+      {/* Zweispalten-Layout: Aufgaben + Habits */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-6 md:mb-8">
+        {/* Heutige Aufgaben */}
+        <div>
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-sm font-semibold app-text">Heutige Aufgaben</h2>
+            <Link to="/planer" className="flex items-center gap-0.5 text-xs transition-opacity hover:opacity-70" style={{ color: '#1D9E75' }}>
+              Alle <ChevronRight size={13} />
+            </Link>
           </div>
-          <p className="text-lg font-bold leading-none" style={{ color: 'var(--accent)' }}>{xpToday}</p>
-        </div>
-        <div className="rounded-xl px-3 py-2.5 border bg-card app-border">
-          <div className="flex items-center gap-1 mb-1">
-            <BookOpen size={11} style={{ color: 'var(--accent)' }} />
-            <p className="text-[10px]" style={{ color: '#888888' }}>Sessions</p>
-          </div>
-          <p className="text-lg font-bold leading-none" style={{ color: 'var(--accent)' }}>{sessionsToday}</p>
-        </div>
-        <div className="rounded-xl px-3 py-2.5 border bg-card app-border">
-          <div className="flex items-center gap-1 mb-1">
-            <Repeat2 size={11} style={{ color: '#EF9F27' }} />
-            <p className="text-[10px]" style={{ color: '#888888' }}>Habits</p>
-          </div>
-          <p className="text-lg font-bold leading-none" style={{ color: '#EF9F27' }}>
-            {habitsDoneToday}<span className="text-xs font-normal opacity-50">/{habits.length}</span>
-          </p>
-        </div>
-      </div>
-
-      {/* Heutige Tasks */}
-      <div className="mb-4">
-        <div className="flex items-center justify-between mb-2">
-          <h2 className="text-sm font-semibold app-text">Heutige Aufgaben</h2>
-          <Link to="/planer" className="flex items-center gap-0.5 text-xs transition-opacity hover:opacity-70" style={{ color: '#1D9E75' }}>
-            Alle <ChevronRight size={13} />
-          </Link>
-        </div>
-        <div className="bg-card border app-border rounded-xl overflow-hidden">
-          {previewTasks.length === 0 ? (
-            <p className="text-xs px-4 py-3 text-center" style={{ color: '#888888' }}>
-              {todayTasks.filter(isTaskDone).length === todayTasks.length && todayTasks.length > 0
-                ? 'Alle Aufgaben erledigt!'
-                : 'Keine Aufgaben für heute'}
-            </p>
-          ) : (
-            previewTasks.map((task, i) => (
-              <button
-                key={task.id}
-                onClick={() => completeTask(task.id, today)}
-                className={`w-full flex items-center gap-3 px-4 py-2.5 text-left app-hover transition-colors cursor-pointer ${
-                  i < previewTasks.length - 1 ? 'border-b app-border' : ''
-                }`}
-              >
-                <div className="w-4 h-4 rounded-full border-2 border-[#d0d0d0] dark:border-[#3a3a3a] shrink-0" />
-                <span className="flex-1 text-sm app-text truncate">{task.title}</span>
-                <span className={`w-2 h-2 rounded-full shrink-0 ${PRIORITY_DOT[task.priority]}`} />
-              </button>
-            ))
-          )}
-        </div>
-      </div>
-
-      {/* Heutige Habits — Orange */}
-      <div className="mb-4">
-        <div className="flex items-center justify-between mb-2">
-          <h2 className="text-sm font-semibold app-text">Gewohnheiten heute</h2>
-          <Link to="/gewohnheiten" className="flex items-center gap-0.5 text-xs transition-opacity hover:opacity-70" style={{ color: '#EF9F27' }}>
-            Alle <ChevronRight size={13} />
-          </Link>
-        </div>
-        <div className="bg-card border app-border rounded-xl overflow-hidden">
-          {habits.length === 0 ? (
-            <p className="text-xs px-4 py-3 text-center" style={{ color: '#888888' }}>Noch keine Gewohnheiten angelegt</p>
-          ) : (
-            habits.map((habit, i) => {
-              const done = habit.checkIns.includes(today);
-              return (
+          <div className="bg-card border app-border rounded-xl overflow-hidden">
+            {previewTasks.length === 0 ? (
+              <p className="text-xs px-4 py-3 text-center" style={{ color: '#888888' }}>
+                {todayTasks.filter(isTaskDone).length === todayTasks.length && todayTasks.length > 0
+                  ? 'Alle Aufgaben erledigt!'
+                  : 'Keine Aufgaben für heute'}
+              </p>
+            ) : (
+              previewTasks.map((task, i) => (
                 <button
-                  key={habit.id}
-                  onClick={() => checkInHabit(habit.id, today)}
+                  key={task.id}
+                  onClick={() => completeTask(task.id, today)}
                   className={`w-full flex items-center gap-3 px-4 py-2.5 text-left app-hover transition-colors cursor-pointer ${
-                    i < habits.length - 1 ? 'border-b app-border' : ''
+                    i < previewTasks.length - 1 ? 'border-b app-border' : ''
                   }`}
                 >
-                  <div
-                    className="w-4 h-4 rounded-full border-2 shrink-0 flex items-center justify-center transition-colors"
-                    style={done
-                      ? { borderColor: '#1D9E75', backgroundColor: '#1D9E75' }
-                      : { borderColor: '#d0d0d0' }
-                    }
-                  >
-                    {done && <Check size={10} className="text-white" strokeWidth={3} />}
-                  </div>
-                  <span className={`flex-1 text-sm truncate transition-colors ${done ? 'line-through' : 'app-text'}`}
-                        style={done ? { color: '#888888' } : undefined}>
-                    {habit.name}
-                  </span>
-                  {habit.streak > 0 && (
-                    <span className="flex items-center gap-0.5 text-xs shrink-0" style={{ color: '#EF9F27' }}>
-                      <Flame size={11} /> {habit.streak}
-                    </span>
-                  )}
+                  <div className="w-4 h-4 rounded-full border-2 border-[#d0d0d0] dark:border-[#3a3a3a] shrink-0" />
+                  <span className="flex-1 text-sm app-text truncate">{task.title}</span>
+                  <span className={`w-2 h-2 rounded-full shrink-0 ${PRIORITY_DOT[task.priority]}`} />
                 </button>
-              );
-            })
-          )}
+              ))
+            )}
+          </div>
         </div>
+
+        {/* Gewohnheiten heute */}
+        <div>
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-sm font-semibold app-text">Gewohnheiten heute</h2>
+            <Link to="/gewohnheiten" className="flex items-center gap-0.5 text-xs transition-opacity hover:opacity-70" style={{ color: '#EF9F27' }}>
+              Alle <ChevronRight size={13} />
+            </Link>
+          </div>
+          <div className="bg-card border app-border rounded-xl overflow-hidden">
+            {habits.length === 0 ? (
+              <p className="text-xs px-4 py-3 text-center" style={{ color: '#888888' }}>Noch keine Gewohnheiten angelegt</p>
+            ) : (
+              habits.map((habit, i) => {
+                const done = habit.checkIns.includes(today);
+                return (
+                  <button
+                    key={habit.id}
+                    onClick={() => checkInHabit(habit.id, today)}
+                    className={`w-full flex items-center gap-3 px-4 py-2.5 text-left app-hover transition-colors cursor-pointer ${
+                      i < habits.length - 1 ? 'border-b app-border' : ''
+                    }`}
+                  >
+                    <div
+                      className="w-4 h-4 rounded-full border-2 shrink-0 flex items-center justify-center transition-colors"
+                      style={done ? { borderColor: '#1D9E75', backgroundColor: '#1D9E75' } : { borderColor: '#d0d0d0' }}
+                    >
+                      {done && <Check size={10} className="text-white" strokeWidth={3} />}
+                    </div>
+                    <span className={`flex-1 text-sm truncate transition-colors ${done ? 'line-through' : 'app-text'}`}
+                          style={done ? { color: '#888888' } : undefined}>
+                      {habit.name}
+                    </span>
+                    {habit.streak > 0 && (
+                      <span className="flex items-center gap-0.5 text-xs shrink-0" style={{ color: '#EF9F27' }}>
+                        <Flame size={11} /> {habit.streak}
+                      </span>
+                    )}
+                  </button>
+                );
+              })
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Lernsets */}
+      <div className="mb-6 md:mb-8">
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="text-sm font-semibold app-text">Lernsets</h2>
+          <Link to="/lernen" className="flex items-center gap-0.5 text-xs transition-opacity hover:opacity-70" style={{ color: 'var(--accent)' }}>
+            Alle <ChevronRight size={13} />
+          </Link>
+        </div>
+        {sets.length === 0 ? (
+          <Link
+            to="/sets/new"
+            className="flex items-center justify-center gap-2 border-2 border-dashed app-border rounded-xl py-5 text-sm transition-colors app-hover"
+            style={{ color: 'var(--text-2)' }}
+          >
+            <Plus size={15} /> Erstes Set erstellen
+          </Link>
+        ) : (
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {sets.slice(0, 3).map((set) => (
+              <Link
+                key={set.id}
+                to={`/sets/${set.id}/study`}
+                className="flex flex-col gap-1 rounded-xl px-4 py-3 border bg-card app-border app-hover transition-colors"
+              >
+                <span className="text-sm font-semibold app-text truncate">{set.name}</span>
+                <span className="text-[11px]" style={{ color: 'var(--text-2)' }}>{set.cards.length} Karten</span>
+              </Link>
+            ))}
+            <Link
+              to="/sets/new"
+              className="flex items-center justify-center gap-1.5 rounded-xl px-4 py-3 border-2 border-dashed app-border app-hover transition-colors text-sm"
+              style={{ color: 'var(--text-2)' }}
+            >
+              <Plus size={14} /> Neues Set
+            </Link>
+          </div>
+        )}
       </div>
 
       {/* Tageszitat */}
