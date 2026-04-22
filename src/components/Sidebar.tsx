@@ -62,7 +62,7 @@ export default function Sidebar() {
 
   return (
     <aside
-      className="hidden md:flex flex-col shrink-0 h-screen sticky top-0 border-r overflow-hidden"
+      className="hidden md:flex flex-col shrink-0 h-screen sticky top-0 border-r"
       style={{
         width: collapsed ? '60px' : '220px',
         backgroundColor: 'var(--sidebar-bg)',
@@ -72,7 +72,7 @@ export default function Sidebar() {
     >
       {/* Logo + Toggle */}
       <div
-        className="flex items-center border-b shrink-0"
+        className="flex items-center border-b shrink-0 overflow-hidden"
         style={{
           borderBottomColor: 'var(--border)',
           height: '56px',
@@ -103,7 +103,7 @@ export default function Sidebar() {
       </div>
 
       {/* Nav Items */}
-      <nav className="flex-1 py-3 overflow-y-auto overflow-x-hidden" style={{ padding: collapsed ? '12px 0' : '12px 8px' }}>
+      <nav className="flex-1 py-3 overflow-y-auto" style={{ overflowX: 'hidden', padding: collapsed ? '12px 0' : '12px 8px' }}>
         {NAV_ITEMS.map(({ path, label, Icon }) => {
           const active = isActive(path);
           return (
@@ -151,15 +151,23 @@ export default function Sidebar() {
         style={{ borderTopColor: 'var(--border)', padding: collapsed ? '12px 0' : '12px 16px' }}
         ref={menuRef}
       >
-        {/* Dropdown — opens upward when expanded, rightward when collapsed */}
-        {menuOpen && (
+        {/* Dropdown — fixed positioning so it always escapes overflow clipping */}
+        {menuOpen && (() => {
+          const rect = menuRef.current?.getBoundingClientRect();
+          const pos = collapsed
+            ? { left: (rect ? rect.right + 8 : 68), bottom: window.innerHeight - (rect ? rect.bottom : 60) }
+            : { left: (rect ? rect.left : 0), bottom: window.innerHeight - (rect ? rect.top : 0) + 8 };
+          return (
           <div
-            className={`absolute w-52 rounded-xl border shadow-lg overflow-hidden z-50 ${
-              collapsed
-                ? 'left-full bottom-0 ml-2'
-                : 'bottom-full left-0 mb-2'
-            }`}
-            style={{ backgroundColor: 'var(--sidebar-bg)', borderColor: 'var(--border)' }}
+            className="rounded-xl border shadow-lg overflow-hidden"
+            style={{
+              position: 'fixed',
+              zIndex: 9999,
+              width: '208px',
+              backgroundColor: 'var(--sidebar-bg)',
+              borderColor: 'var(--border)',
+              ...pos,
+            }}
           >
             <button
               onClick={() => { setMenuOpen(false); navigate('/profil'); }}
@@ -205,7 +213,8 @@ export default function Sidebar() {
               Abmelden
             </button>
           </div>
-        )}
+          );
+        })()}
 
         {/* Avatar row — full-width clickable button */}
         <div className="relative group">
