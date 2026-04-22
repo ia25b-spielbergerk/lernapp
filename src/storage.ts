@@ -44,7 +44,8 @@ export async function saveUser(user: UserData, userId: string): Promise<void> {
     xp: user.xp,
     crystals: user.crystals,
   });
-  if (error) console.error('saveUser:', error.message);
+  if (error) console.error('[DB] saveUser FEHLER:', error.message, error);
+  else console.log('[DB] saveUser OK — xp:', user.xp, 'crystals:', user.crystals, 'streak:', user.streak);
 }
 
 export async function recordActivity(userId: string): Promise<UserData> {
@@ -162,7 +163,8 @@ export async function saveProgress(progress: SetProgress, userId: string): Promi
     },
     { onConflict: 'user_id,set_id' }
   );
-  if (error) console.error('saveProgress:', error.message);
+  if (error) console.error('[DB] saveProgress FEHLER:', error.message, error);
+  else console.log('[DB] saveProgress OK — set:', progress.setId, 'sessions:', progress.totalSessions);
 }
 
 // ── Karten-Statistiken (Supabase → card_stats) ───────────────────────────────
@@ -218,7 +220,8 @@ export async function updateCardResult(
     },
     { onConflict: 'user_id,set_id,card_id' }
   );
-  if (error) console.error('updateCardResult:', error.message);
+  if (error) console.error('[DB] updateCardResult FEHLER:', error.message, error);
+  else console.log('[DB] updateCardResult OK — card:', cardId, 'correct:', updated.correct, 'incorrect:', updated.incorrect);
   return updated;
 }
 
@@ -257,7 +260,8 @@ export async function saveDailyChallenge(daily: DailyState, userId: string): Pro
     },
     { onConflict: 'user_id' }
   );
-  if (error) console.error('saveDailyChallenge:', error.message);
+  if (error) console.error('[DB] saveDailyChallenge FEHLER:', error.message, error);
+  else console.log('[DB] saveDailyChallenge OK — completed:', daily.completed, 'score:', daily.score, 'streak:', daily.challengeStreak);
 }
 
 // ── Tagebuch (Supabase → diary_entries) ─────────────────────────────────────
@@ -488,5 +492,6 @@ export async function saveDailyCrystalTracker(tracker: DailyCrystalTracker, user
     },
     { onConflict: 'user_id,date' }
   );
-  if (error) console.error('saveDailyCrystalTracker:', error.message);
+  if (error) console.error('[DB] saveDailyCrystalTracker FEHLER:', error.message, error);
+  else console.log('[DB] saveDailyCrystalTracker OK — totalCapped:', tracker.totalCapped);
 }
